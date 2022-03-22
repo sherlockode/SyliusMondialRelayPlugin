@@ -9,8 +9,8 @@
     ],
     "license": "MIT",
     "require": {
+        "ext-soap": "*",
         "php": "^7.3",
-        "php-soap": "*",
         "quentinbontemps/php-mondialrelay-api":  "^1.0",
         "sylius/sylius": "~1.10.0"
     },
