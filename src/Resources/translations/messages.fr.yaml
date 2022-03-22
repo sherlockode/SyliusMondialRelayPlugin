@@ -1,0 +1,18 @@
+sylius:
+    form:
+        shipping_calculator:
+            mondial_relay:
+                label: Mondial Relay
+                weight_ranges: Tranches de poids
+                min_weight: Poids min.
+                max_weight: Poids max.
+                shipping_cost: Frais de ports
+
+    mondial_relay:
+        select_a_relay_point: Sélectionner un point relais
+        change_relay_point: Modifier mon point relais
+        choose_relay_point: Choisir
+        search_zipcode: Rechercher par code postal
+        search: Rechercher
+        no_result_for_your_search: Aucun résultat pour votre recherche
+        show_on_map: Voir sur la carte

@@ -1,0 +1,76 @@
+.smr_wrapper p {
+    margin: 0;
+}
+
+.smr_wrapper .current-pickup-point {
+    margin-bottom: 20px;
+}
+
+.smr_wrapper .current-pickup-point button,
+.smr_wrapper .pickup-points-results-list button {
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.smr_wrapper .current-pickup-point button:hover,
+.smr_wrapper .pickup-points-results-list button:hover {
+    text-decoration: none;
+}
+
+.smr_wrapper .pickup-point-card .pickup-point-name,
+.smr_wrapper .pickup-point-card .pickup-point-address {
+    font-size: 0.85rem;
+}
+
+.smr_wrapper .pickup-point-card .pickup-point-address {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
+}
+
+.smr_wrapper .pickup-points-results-list ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.smr_wrapper .pickup-points-results-list li {
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.smr_wrapper .pickup-points-search {
+    display: flex;
+}
+
+.smr_wrapper .pickup-points-search-form,
+.smr_wrapper .pickup-points-search-results {
+    width: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.smr_wrapper .pickup-points-search-form > div {
+    margin-bottom: 20px;
+}
+
+.smr_wrapper .pickup-points-search-results {
+    display: flex;
+    padding: 40px 0 0 20px;
+}
+
+.smr_wrapper .pickup-points-map {
+    height: 100%;
+    min-height: 500px;
+}
+
+.smr_wrapper .pickup-points-search-results .pickup-points-no-results {
+    display: none;
+    width: 100%;
+}
+
+.smr_wrapper .pickup-point-controls button {
+    margin-right: 10px;
+}

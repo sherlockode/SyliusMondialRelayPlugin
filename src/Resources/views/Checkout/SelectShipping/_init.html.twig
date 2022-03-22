@@ -1,0 +1,19 @@
+<div class="current-pickup-point">
+    {% include '@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_current_pickup_point.html.twig' with {pickupPoint: currentPickupPoint} %}
+</div>
+<div class="pickup-points-search" style="display:none;">
+    <div class="pickup-points-search-form">
+        <div>
+        <input type="text" data-search-pickup-points-input placeholder="{{ 'sylius.mondial_relay.search_zipcode'|trans }}" value="{{ zipCode }}"/>
+        <button title="{{ 'sylius.mondial_relay.search'|trans }}" data-search-pickup-points-button type="button">
+            <i class="fa fa-search"></i>
+        </button>
+        </div>
+        <div class="pickup-points-map"></div>
+    </div>
+    <div class="pickup-points-search-results">
+        <div class="pickup-points-no-results" style="display: none;">{{ 'sylius.mondial_relay.no_result_for_your_search'|trans }}</div>
+        <div class="pickup-points-results-list" data-choose-label="{{ 'sylius.mondial_relay.choose_relay_point'|trans }}" data-show-label="{{ 'sylius.mondial_relay.show_on_map'|trans }}"></div>
+
+    </div>
+</div>

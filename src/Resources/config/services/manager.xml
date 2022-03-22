@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sherlockode.sylius_mondial_relay_plugin.manager.point_address_manager" class="Sherlockode\SyliusMondialRelayPlugin\Manager\PointAddressManager" />
+        <service id="sherlockode.sylius_mondial_relay_plugin.manager.order_address_manager" class="Sherlockode\SyliusMondialRelayPlugin\Manager\OrderAddressManager">
+            <argument type="service" id="sylius.custom_factory.address" />
+            <argument type="service" id="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client" />
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.manager.point_address_manager" />
+            <tag name="kernel.event_listener" event="sylius.order.post_complete" method="updateShippingAddress" priority="8" />
+        </service>
+    </services>
+</container>

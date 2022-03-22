@@ -1,0 +1,6 @@
+{% if pickupPoint is not null %}
+    {% include '@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_pickup_point_card.html.twig' %}
+    <button data-load-pickup-point-list type="button">{{ 'sylius.mondial_relay.change_relay_point'|trans }}</button>
+{% else %}
+    <button data-load-pickup-point-list type="button">{{ 'sylius.mondial_relay.select_a_relay_point'|trans }}</button>
+{% endif %}

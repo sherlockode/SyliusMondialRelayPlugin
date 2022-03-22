@@ -1,0 +1,18 @@
+sylius:
+    form:
+        shipping_calculator:
+            mondial_relay:
+                label: Mondial Relay
+                weight_ranges: Weight ranges
+                min_weight: Min. weight
+                max_weight: Max weight.
+                shipping_cost: Shipping costs
+
+    mondial_relay:
+        select_a_relay_point: Select a pickup point
+        change_relay_point: Change my pickup point
+        choose_relay_point: Choose
+        search_zipcode: Search by zipcode
+        search: Search
+        no_result_for_your_search: No result for your search
+        show_on_map: Show on map

@@ -1,0 +1,25 @@
+{
+    "name": "sherlockode/sylius-mondial-relay-plugin",
+    "type": "sylius-plugin",
+    "description": "Sylius plugin for Mondial Relay.",
+    "keywords": [
+        "sylius",
+        "sylius-plugin",
+        "mondial-relay"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3",
+        "php-soap": "*",
+        "quentinbontemps/php-mondialrelay-api":  "^1.0",
+        "sylius/sylius": "~1.10.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Sherlockode\\SyliusMondialRelayPlugin\\": "src/"
+        }
+    }
+}
