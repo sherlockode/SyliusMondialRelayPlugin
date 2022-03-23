@@ -7,6 +7,8 @@ sylius:
                 min_weight: Min. weight
                 max_weight: Max weight.
                 shipping_cost: Shipping costs
+        shipping_method:
+            no_pickup_point_selected: No pickup point selected
 
     mondial_relay:
         select_a_relay_point: Select a pickup point

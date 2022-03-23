@@ -85,6 +85,7 @@ class MondialRelay
 
     onUnselectMondialRelayShipping() {
         this.adapter.onUnselectShippingMethod();
+        document.querySelector(this.selectors.relayPointInput).value = '';
     }
 
     onRelayPointPanelReady() {
