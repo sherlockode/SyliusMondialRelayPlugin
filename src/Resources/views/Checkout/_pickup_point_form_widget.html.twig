@@ -1,4 +1,4 @@
-{% if form.pickupPointId is defined %}
+{% if form.pickupPointId is defined and not form.pickupPointId.rendered %}
     {{ form_row(form.pickupPointId) }}
 {% endif %}
 
