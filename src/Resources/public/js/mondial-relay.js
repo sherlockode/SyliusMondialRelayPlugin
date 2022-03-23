@@ -38,7 +38,7 @@ class MondialRelay
     init() {
         this.addEventListeners();
 
-        if (this.getForm().querySelector('input[type="radio"][name$="[method]"][data-mr="true"]').checked) {
+        if (this.getForm().querySelector('input[type="radio"][name$="[method]"][data-mr="true"]:checked') !== null) {
             this.onSelectMondialRelayShipping();
         }
     }
@@ -73,6 +73,10 @@ class MondialRelay
                 this.onSelectPoint(event.detail);
             }
         }.bind(this), false);
+
+        document.addEventListener('relay_point_panel_ready', function (event) {
+            this.onRelayPointPanelReady();
+        }.bind(this), false);
     }
 
     onSelectMondialRelayShipping() {
@@ -81,6 +85,14 @@ class MondialRelay
 
     onUnselectMondialRelayShipping() {
         this.adapter.onUnselectShippingMethod();
+    }
+
+    onRelayPointPanelReady() {
+        let input = document.querySelector(this.selectors.relayPointInput);
+
+        if (!input.value) {
+            this.onShowSearchPanel();
+        }
     }
 
     onShowSearchPanel() {

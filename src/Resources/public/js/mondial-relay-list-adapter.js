@@ -24,6 +24,9 @@ class MondialRelayListAdapter
         request.send().then(function (response) {
             this.wrapper.innerHTML = response;
             this.wrapper.style.display = 'block';
+
+            let event = new CustomEvent('relay_point_panel_ready');
+            document.dispatchEvent(event);
         }.bind(this));
     }
 
