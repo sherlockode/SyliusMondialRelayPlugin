@@ -27,6 +27,11 @@ class Client
     private $privateKey;
 
     /**
+     * @var array
+     */
+    private $types;
+
+    /**
      * @var ApiClient|null
      */
     private $apiClient;
@@ -37,12 +42,14 @@ class Client
      * @param string $wsdl
      * @param string $merchantId
      * @param string $privateKey
+     * @param array  $types
      */
-    public function __construct(string $wsdl, string $merchantId, string $privateKey)
+    public function __construct(string $wsdl, string $merchantId, string $privateKey, array $types)
     {
         $this->wsdl = $wsdl;
         $this->merchantId = $merchantId;
         $this->privateKey = $privateKey;
+        $this->types = $types;
     }
 
     /**
@@ -69,14 +76,11 @@ class Client
      */
     public function findPickupPointsAround(AddressInterface $address): array
     {
-        return $this->getClient()->findDeliveryPoints([
+        return $this->getClient()->findDeliveryPoints($this->buildQuery([
             'Pays'            => $address->getCountryCode(),
             'Ville'           => $address->getCity(),
             'CP'              => $address->getPostcode(),
-            'DelaiEnvoi'      => '0',
-            'RayonRecherche'  => '20',
-            'NombreResultats' => '10',
-        ]);
+        ]));
     }
 
     /**
@@ -88,13 +92,10 @@ class Client
      */
     public function findPickupPointsByZipCode(string $zipCode): array
     {
-        return $this->getClient()->findDeliveryPoints([
-            'Pays'            => 'FR',
-            'CP'              => $zipCode,
-            'DelaiEnvoi'      => '0',
-            'RayonRecherche'  => '20',
-            'NombreResultats' => '10',
-        ]);
+        return $this->getClient()->findDeliveryPoints($this->buildQuery([
+            'Pays' => 'FR',
+            'CP'   => $zipCode,
+        ]));
     }
 
     /**
@@ -110,5 +111,25 @@ class Client
         }
 
         return $this->apiClient;
+    }
+
+    /**
+     * @param array $query
+     *
+     * @return array
+     */
+    private function buildQuery(array $query): array
+    {
+        $query = array_merge($query, [
+            'DelaiEnvoi'      => '0',
+            'RayonRecherche'  => '20',
+            'NombreResultats' => '10',
+        ]);
+
+        if (count($this->types)) {
+            $query = array_merge($query, ['Action' => implode('|', $this->types)]);
+        }
+
+        return $query;
     }
 }

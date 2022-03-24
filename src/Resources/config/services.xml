@@ -15,6 +15,7 @@
             <argument>%sherlockode_sylius_mondial_relay.wsdl%</argument>
             <argument>%sherlockode_sylius_mondial_relay.merchant_id%</argument>
             <argument>%sherlockode_sylius_mondial_relay.private_key%</argument>
+            <argument>%sherlockode_sylius_mondial_relay.pickup_types%</argument>
         </service>
     </services>
 </container>
