@@ -47,6 +47,14 @@ class MondialRelay
         let form = this.getForm(),
             inputs = form.querySelectorAll('input[type="radio"][name$="[method]"]');
 
+        form.addEventListener('submit', function (event) {
+            if (document.activeElement === document.querySelector(this.selectors.searchInput)) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.onSearch();
+            }
+        }.bind(this), true);
+
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener('change', function (event) {
                 if (event.target.getAttribute('data-mr')) {
@@ -74,7 +82,7 @@ class MondialRelay
             }
         }.bind(this), false);
 
-        document.addEventListener('relay_point_panel_ready', function (event) {
+        document.addEventListener('relay_point_panel_ready', function () {
             this.onRelayPointPanelReady();
         }.bind(this), false);
     }
