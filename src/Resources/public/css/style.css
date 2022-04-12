@@ -66,6 +66,12 @@
     min-height: 500px;
 }
 
+.smr_wrapper .pickup-points-map button {
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
 .smr_wrapper .pickup-points-search-results .pickup-points-no-results {
     display: none;
     width: 100%;

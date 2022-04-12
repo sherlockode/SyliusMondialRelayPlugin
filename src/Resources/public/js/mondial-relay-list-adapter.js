@@ -77,7 +77,8 @@ class MondialRelayListAdapter
         }
 
         let ul = document.createElement('ul'),
-            bounds = new google.maps.LatLngBounds();
+            bounds = new google.maps.LatLngBounds(),
+            chooseLabel = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label');
 
         for (let i = 0; i < results.length; i++) {
             let li = document.createElement('li'),
@@ -122,11 +123,11 @@ class MondialRelayListAdapter
                     lng: parseFloat(results[i].lng),
                 },
                 title: results[i].label,
-                // icon: markerPath,
                 data: {
                     id: results[i].id,
                     label: results[i].label,
                     address: results[i].address,
+                    ctaLabel: chooseLabel
                 }
             });
             marker.setMap(this.map);
@@ -159,6 +160,7 @@ class MondialRelayListAdapter
             content = '<div class="pickup-point-card">' +
                 '<p class="pickup-point-name">' + marker.data.label + '</p>' +
                 '<p class="pickup-point-address">' + marker.data.address + '</p>' +
+                '<button data-select-relay-point="' + marker.data.id + '">' + marker.data.ctaLabel + '</button>' +
                 '</div>';
 
         this.infoWindow = new google.maps.InfoWindow({content: content});
