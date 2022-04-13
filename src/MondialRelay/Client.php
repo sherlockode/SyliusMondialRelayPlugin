@@ -123,7 +123,7 @@ class Client
         $query = array_merge($query, [
             'DelaiEnvoi'      => '0',
             'RayonRecherche'  => '20',
-            'NombreResultats' => '10',
+            'NombreResultats' => '30',
         ]);
 
         if (count($this->types)) {

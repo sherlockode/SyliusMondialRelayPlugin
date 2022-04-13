@@ -1,6 +1,11 @@
 {% if 'sylius_shop_checkout_select_shipping' == app.request.get('_route') %}
+    {% set selectorType = mondial_relay_selector_type() %}
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/ajax-request.js"></script>
+    {% if 'regular' == selectorType %}
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/mondial-relay-list-adapter.js"></script>
+    {% elseif 'fancy' == selectorType %}
+    <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/mondial-relay-fancy-list-adapter.js"></script>
+    {% endif %}
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/mondial-relay.js"></script>
     <script>
         new MondialRelay({
@@ -8,7 +13,8 @@
                 defaultUrl: '{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}',
                 searchUrl: '{{ path('sherlockode_sylius_mondial_relay_search_pickup_points') }}',
                 findUrl: '{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}',
-            }
-        })
+            },
+            adapter: '{{ selectorType }}'
+        });
     </script>
 {% endif %}
