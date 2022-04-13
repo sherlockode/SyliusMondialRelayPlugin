@@ -7,6 +7,7 @@
         </service>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Twig\SyliusMondialRelayRuntime">
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.manager.point_address_manager" />
+            <argument>%sherlockode_sylius_mondial_relay.selector_type%</argument>
             <tag name="twig.runtime" />
         </service>
     </services>

@@ -33,5 +33,9 @@ class SherlockodeSyliusMondialRelayExtension extends Extension
             'sherlockode_sylius_mondial_relay.pickup_types',
             $config['pickup_point_types'] ?? []
         );
+        $container->setParameter(
+            'sherlockode_sylius_mondial_relay.selector_type',
+            $config['selector_type'] ?? 'regular'
+        );
     }
 }

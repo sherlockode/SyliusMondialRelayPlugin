@@ -13,7 +13,7 @@ sylius:
     mondial_relay:
         select_a_relay_point: Sélectionner un point relais
         change_relay_point: Modifier mon point relais
-        choose_relay_point: Choisir
+        choose_relay_point: Sélectionner ce lieu
         search_zipcode: Rechercher par code postal
         search: Rechercher
         no_result_for_your_search: Aucun résultat pour votre recherche
