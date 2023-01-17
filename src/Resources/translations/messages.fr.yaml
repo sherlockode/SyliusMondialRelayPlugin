@@ -18,7 +18,16 @@ sylius:
         search: Rechercher
         no_result_for_your_search: Aucun résultat pour votre recherche
         show_on_map: Voir sur la carte
+        close: Fermé
         modal:
             title: Choix du point de retrait
             close: Retour
             next: Valider
+        day:
+            monday: Lundi
+            tuesday: Mardi
+            wednesday: Mercredi
+            thursday: Jeudi
+            friday: Vendredi
+            saturday: Samedi
+            sunday: Dimanche

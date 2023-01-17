@@ -18,7 +18,16 @@ sylius:
         search: Search
         no_result_for_your_search: No result for your search
         show_on_map: Show on map
+        close: Close
         modal:
             title: Pickup location
             close: Back
             next: Next
+        day:
+            monday: Monday
+            tuesday: Tuesday
+            wednesday: Wednesday
+            thursday: Thursday
+            friday: Friday
+            saturday: Saturday
+            sunday: Sunday
