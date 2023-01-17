@@ -18,3 +18,7 @@ sylius:
         search: Search
         no_result_for_your_search: No result for your search
         show_on_map: Show on map
+        modal:
+            title: Pickup location
+            close: Back
+            next: Next

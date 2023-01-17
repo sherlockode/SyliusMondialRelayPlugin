@@ -9,7 +9,9 @@ class MondialRelay
             searchInput: 'input[data-search-pickup-points-input]',
             searchBtn: 'button[data-search-pickup-points-button]',
             searchResults: '.pickup-points-search-results',
+            modal: document.getElementById('modal-mondial-relay'),
         });
+
         this.urls = this.getOption(options, 'urls');
 
         if (null !== this.urls) {
@@ -82,6 +84,14 @@ class MondialRelay
                     this.onUnselectMondialRelayShipping();
                 }
             }.bind(this), false);
+
+            if (true === inputs[i].hasAttribute('data-mr')) {
+                document.querySelector("[for='"+inputs[i].id+"']").addEventListener('click', function(event) {
+                  if (inputs[i].checked) {
+                    this.onSelectMondialRelayShipping();
+                  }
+                }.bind(this));
+            }
         }
 
         document.addEventListener('click', function (event) {
@@ -125,8 +135,11 @@ class MondialRelay
 
     onShowSearchPanel() {
         let wrapper = this.getWrapper(),
+            modal = $('#modal-mondial-relay'),
             searchPanel = wrapper.querySelector('.pickup-points-search'),
             currentPickupPoint = wrapper.querySelector('.current-pickup-point');
+
+        modal.modal('show');
 
         currentPickupPoint.style.display = 'none';
         searchPanel.style.display = 'flex';
@@ -159,11 +172,7 @@ class MondialRelay
             searchPanel = wrapper.querySelector('.pickup-points-search'),
             currentPickupPoint = wrapper.querySelector('.current-pickup-point');
 
-        this.onHideSearchPanel();
-
         input.value = id;
-        searchPanel.style.display = 'none';
-        searchPanel.querySelector(this.selectors.searchInput).value = '';
 
         request.send().then(function (response) {
             currentPickupPoint.innerHTML = response;
@@ -176,6 +185,6 @@ class MondialRelay
     }
 
     getWrapper() {
-        return this.getForm().querySelector(this.selectors.wrapper);
+        return document.querySelector(this.selectors.wrapper);
     }
 }
