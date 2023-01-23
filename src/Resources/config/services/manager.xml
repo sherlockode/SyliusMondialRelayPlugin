@@ -7,7 +7,8 @@
             <argument type="service" id="sylius.custom_factory.address" />
             <argument type="service" id="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.manager.point_address_manager" />
-            <tag name="kernel.event_listener" event="sylius.order.post_complete" method="updateShippingAddress" priority="8" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="sylius.order.post_select_shipping" method="updateShippingAddress" priority="8" />
         </service>
     </services>
 </container>

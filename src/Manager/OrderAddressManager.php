@@ -2,6 +2,7 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client as MondialRelayClient;
 use Sylius\Component\Core\Factory\AddressFactoryInterface;
 use Sylius\Component\Core\Model\AddressInterface;
@@ -28,21 +29,24 @@ class OrderAddressManager
      */
     private $addressFormater;
 
+    private $em;
+
     /**
-     * OrderAddressManager constructor.
-     *
      * @param AddressFactoryInterface $addressFactory
      * @param MondialRelayClient      $apiClient
      * @param PointAddressManager     $addressFormater
+     * @param EntityManagerInterface  $em
      */
     public function __construct(
         AddressFactoryInterface $addressFactory,
         MondialRelayClient $apiClient,
-        PointAddressManager $addressFormater
+        PointAddressManager $addressFormater,
+        EntityManagerInterface $em
     ) {
         $this->addressFactory = $addressFactory;
         $this->apiClient = $apiClient;
         $this->addressFormater = $addressFormater;
+        $this->em = $em;
     }
 
     /**
@@ -80,7 +84,7 @@ class OrderAddressManager
             return;
         }
 
-        $customer = $order->getCustomer();
+        $shippingAddress = $order->getShippingAddress();
 
         /** @var AddressInterface $address */
         $address = $this->addressFactory->createNew();
@@ -89,11 +93,14 @@ class OrderAddressManager
             $this->addressFormater->getPointLabel($pickupPoint),
             $this->addressFormater->getPointShortAddress($pickupPoint)
         ));
-        $address->setFirstName($customer->getFirstName());
-        $address->setLastName($customer->getLastName());
+        $address->setFirstName($shippingAddress->getFirstName());
+        $address->setLastName($shippingAddress->getLastName());
+        $address->setPhoneNumber($shippingAddress->getPhoneNumber());
         $address->setCity($pickupPoint->city());
         $address->setPostcode($pickupPoint->cp());
         $address->setCountryCode($pickupPoint->country());
         $order->setShippingAddress($address);
+
+        $this->em->flush();
     }
 }
