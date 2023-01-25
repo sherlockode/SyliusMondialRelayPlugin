@@ -3,6 +3,7 @@ class MondialRelay
     constructor(options) {
         this.selectors = this.getOption(options, 'selectors', {
             form: 'form[name="sylius_checkout_select_shipping"]',
+            selectedPointWrapper: 'current-pickup-point',
             relayPointInput: 'input.smr-pickup-point-id',
             wrapper: '.smr_wrapper',
             showListPanelBtn: 'button[data-load-pickup-point-list]',
@@ -54,6 +55,7 @@ class MondialRelay
         if ("fancy" === adapterType) {
             this.adapter = new MondialRelayFancyListAdapter(
                 this.getForm().querySelector(this.selectors.wrapper),
+                this.selectors.selectedPointWrapper,
                 this.urls.defaultUrl,
                 this.selectors.searchResults
             );
@@ -134,17 +136,11 @@ class MondialRelay
     }
 
     onShowSearchPanel() {
-        let wrapper = this.getWrapper(),
-            modal = $('#modal-mondial-relay'),
-            searchPanel = wrapper.querySelector('.pickup-points-search'),
-            currentPickupPoint = wrapper.querySelector('.current-pickup-point');
-
-        modal.modal('show');
-
-        currentPickupPoint.style.display = 'none';
-        searchPanel.style.display = 'flex';
-
         this.adapter.onShowSearchPanel();
+
+        $('#modal-mondial-relay').modal('show');
+        document.getElementById('modal-mondial-relay').querySelector('.pickup-points-search').style.display = 'flex';
+
         this.onSearch();
     }
 
@@ -168,15 +164,13 @@ class MondialRelay
     onSelectPoint(id) {
         let input = document.querySelector(this.selectors.relayPointInput),
             request = new AjaxRequest(this.urls.findUrl, 'GET', {pickupPointId: id}),
-            wrapper = this.getWrapper(),
-            searchPanel = wrapper.querySelector('.pickup-points-search'),
-            currentPickupPoint = wrapper.querySelector('.current-pickup-point');
+            currentPointWrapper = document.getElementById('current-pickup-point');
 
         input.value = id;
 
         request.send().then(function (response) {
-            currentPickupPoint.innerHTML = response;
-            currentPickupPoint.style.display = 'block';
+          currentPointWrapper.innerHTML = response;
+          currentPointWrapper.style.display = 'block';
         }.bind(this));
     }
 

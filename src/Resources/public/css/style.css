@@ -2,33 +2,6 @@
     margin: 0;
 }
 
-.smr_wrapper .current-pickup-point {
-    margin-bottom: 20px;
-}
-
-.smr_wrapper .current-pickup-point button,
-.smr_wrapper .pickup-points-results-list button {
-    background: transparent;
-    border: none;
-    text-decoration: underline;
-    padding: 0;
-}
-
-.smr_wrapper .current-pickup-point button:hover,
-.smr_wrapper .pickup-points-results-list button:hover {
-    text-decoration: none;
-}
-
-.smr_wrapper .pickup-point-card .pickup-point-name,
-.smr_wrapper .pickup-point-card .pickup-point-address {
-    font-size: 0.85rem;
-}
-
-.smr_wrapper .pickup-point-card .pickup-point-address {
-    color: rgba(0, 0, 0, 0.6);
-    font-style: italic;
-}
-
 .smr_wrapper .pickup-points-results-list ul {
     width: 100%;
     list-style: none;
@@ -146,4 +119,31 @@
 
 #modal-mondial-relay .ui.accordion .point-business-hours table {
     margin-top: 16px;
+}
+
+#current-pickup-point p {
+    margin-bottom: 0;
+}
+
+#current-pickup-point button {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    padding: 0;
+    cursor: pointer;
+}
+
+#current-pickup-point button:hover {
+    text-decoration: none;
+}
+
+#current-pickup-point .pickup-point-card .pickup-point-name,
+#current-pickup-point .pickup-point-card .pickup-point-address {
+    font-size: 0.85rem;
+}
+
+#current-pickup-point .pickup-point-card .pickup-point-address {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
 }
