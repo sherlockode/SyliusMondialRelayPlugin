@@ -79,7 +79,6 @@ class MondialRelayFancyListAdapter
         for (let i = 0; i < results.length; i++) {
             let li = document.createElement('li'),
                 card = document.createElement('div'),
-                logo = document.createElement('img'),
                 actions = document.createElement('div'),
                 name = document.createElement('p'),
                 address = document.createElement('p');
@@ -90,8 +89,6 @@ class MondialRelayFancyListAdapter
             address.setAttribute('class', 'pickup-point-address');
             address.textContent = results[i].address;
 
-            logo.setAttribute('src', mrLogo);
-
             card.setAttribute('class', 'pickup-point-card');
             card.appendChild(name);
             card.appendChild(address);
@@ -100,7 +97,6 @@ class MondialRelayFancyListAdapter
 
             li.setAttribute('class', 'relay-point-list-item');
             li.setAttribute('data-relay-point-id', results[i].id);
-            li.appendChild(logo);
             li.appendChild(card);
             li.appendChild(actions);
 
