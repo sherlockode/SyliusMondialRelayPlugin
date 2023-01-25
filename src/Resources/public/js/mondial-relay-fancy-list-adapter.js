@@ -100,8 +100,6 @@ class MondialRelayFancyListAdapter
             businessHours.appendChild(table);
             businessHours.classList.add('point-business-hours');
 
-            logo.setAttribute('src', mrLogo);
-
             card.setAttribute('class', 'pickup-point-card');
             card.appendChild(name);
             card.appendChild(address);
