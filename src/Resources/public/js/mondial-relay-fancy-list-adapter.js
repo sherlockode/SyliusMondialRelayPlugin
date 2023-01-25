@@ -76,12 +76,16 @@ class MondialRelayFancyListAdapter
             chooseLabel = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label'),
             mrLogo = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-logo');
 
+        ul.classList.add('ui', 'accordion');
+
         for (let i = 0; i < results.length; i++) {
             let li = document.createElement('li'),
                 card = document.createElement('div'),
-                actions = document.createElement('div'),
                 name = document.createElement('p'),
-                address = document.createElement('p');
+                address = document.createElement('p'),
+                businessHours = document.createElement('div'),
+                table = document.createElement('table');
+            ;
 
             name.setAttribute('class', 'pickup-point-name');
             name.textContent = results[i].label;
@@ -89,16 +93,23 @@ class MondialRelayFancyListAdapter
             address.setAttribute('class', 'pickup-point-address');
             address.textContent = results[i].address;
 
+            results[i].businessHours.forEach((item) => {
+                this.generateBusinessHoursTable(table, item);
+            });
+
+            businessHours.appendChild(table);
+            businessHours.classList.add('point-business-hours');
+
+            logo.setAttribute('src', mrLogo);
+
             card.setAttribute('class', 'pickup-point-card');
             card.appendChild(name);
             card.appendChild(address);
 
-            actions.setAttribute('class', 'pickup-point-controls');
-
             li.setAttribute('class', 'relay-point-list-item');
             li.setAttribute('data-relay-point-id', results[i].id);
             li.appendChild(card);
-            li.appendChild(actions);
+            li.appendChild(businessHours);
 
             ul.appendChild(li);
 
@@ -131,6 +142,14 @@ class MondialRelayFancyListAdapter
         if (results.length > 1) {
             this.map.fitBounds(bounds);
         }
+
+      $('#modal-mondial-relay .accordion').accordion({
+          selector: {
+              title: '.pickup-point-card',
+              trigger: '.pickup-point-card',
+              content: '.point-business-hours'
+          }
+      });
     }
 
     highlightPickupPoint(list, id) {
@@ -178,5 +197,33 @@ class MondialRelayFancyListAdapter
     onSelectRelayPoint(id) {
         let event = new CustomEvent('select_relay_point', { detail: id });
         document.dispatchEvent(event);
+    }
+
+    generateBusinessHoursTable(table, data) {
+        let row = table.insertRow();
+        let cell = row.insertCell();
+        let text = document.createTextNode(data.label);
+
+        cell.appendChild(text);
+
+        if (data.open1 === '') {
+            cell = row.insertCell();
+            text = document.createTextNode(' - ');
+            cell.appendChild(text);
+            cell.colSpan = 3;
+
+            return;
+        }
+
+        cell = row.insertCell();
+        text = document.createTextNode(data.open1 + ' ' + data.close1);
+        cell.appendChild(text);
+
+        cell = row.insertCell();
+        cell.appendChild(document.createTextNode(data.open2 === '' ? '' : ' - '));
+
+        cell = row.insertCell();
+        text = document.createTextNode(data.open2 + ' ' + data.close2);
+        cell.appendChild(text);
     }
 }

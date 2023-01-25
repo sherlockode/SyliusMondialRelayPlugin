@@ -122,6 +122,7 @@ class CheckoutController
                 'address' => $this->pointAddressManager->getPointFullAddress($point),
                 'lat' => $point->latitude(),
                 'lng' => $point->longitude(),
+                'businessHours' => $this->pointAddressManager->getBusinessHours($point),
             ];
         }, $points)));
     }

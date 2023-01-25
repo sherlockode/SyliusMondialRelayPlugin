@@ -90,7 +90,7 @@
     border-color: #E0E1E2 !important;
 }
 
-#modal-mondial-relay .content {
+#modal-mondial-relay > .content {
     height: 80vh;
     overflow: hidden;
 }
@@ -129,4 +129,21 @@
 
 #modal-mondial-relay .relay-point-list-item.highlight {
     background: #eee;
+}
+
+#modal-mondial-relay .relay-point-list-item td[colspan]:not([colspan="1"]) {
+    text-align: center;
+}
+
+#modal-mondial-relay .ui.accordion .point-business-hours {
+    display: none;
+    font-size: 12px;
+}
+
+#modal-mondial-relay .ui.accordion .point-business-hours.active {
+    display: block;
+}
+
+#modal-mondial-relay .ui.accordion .point-business-hours table {
+    margin-top: 16px;
 }
