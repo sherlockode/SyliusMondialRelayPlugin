@@ -76,6 +76,8 @@ Update your template to include the pickup point field
         {% endfor %}
     </div>
 </div>
+
+{{ include ('@SherlockodeSyliusMondialRelayPlugin/Checkout/_modal.html.twig') }}
 ```
 
 To finish, don't forget to publish assets:

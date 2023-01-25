@@ -58,7 +58,7 @@
 
 .smr_wrapper .pickup-points-search-results {
     display: flex;
-    padding: 40px 0 0 20px;
+    margin-top: 66px;
 }
 
 .smr_wrapper .pickup-points-map {
@@ -79,4 +79,54 @@
 
 .smr_wrapper .pickup-point-controls button {
     margin-right: 10px;
+}
+
+.dimmer #modal-mondial-relay .ui.button.deny {
+    color: unset !important;
+    background: #E0E1E2 !important;
+}
+
+.dimmer #modal-mondial-relay .ui.button.deny:hover {
+    border-color: #E0E1E2 !important;
+}
+
+#modal-mondial-relay .content {
+    height: 80vh;
+    overflow: hidden;
+}
+
+#modal-mondial-relay .pickup-points-search {
+    height: 80vh;
+}
+
+#modal-mondial-relay .pickup-points-search-results {
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+#modal-mondial-relay .pickup-point-controls button {
+    cursor: pointer;
+}
+
+#modal-mondial-relay .pickup-points-input {
+    display: flex;
+    gap: 16px;
+}
+
+#modal-mondial-relay .pickup-points-input input {
+    width: initial;
+    flex-grow: 1;
+}
+
+#modal-mondial-relay .pickup-points-input button {
+    margin: 0;
+}
+
+#modal-mondial-relay .relay-point-list-item {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#modal-mondial-relay .relay-point-list-item.highlight {
+    background: #eee;
 }

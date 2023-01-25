@@ -8,13 +8,10 @@ class MondialRelayFancyListAdapter
         this.markers = {};
 
         document.addEventListener('click', function (event) {
-            if (-1 !== [].indexOf.call(document.querySelectorAll('button[data-select-relay-point]'), event.target)) {
-                this.onSelectRelayPoint(event.target.getAttribute('data-select-relay-point'));
-            }
-
             let listItem = this.getResultListItemFromClick(event.target);
             if (listItem) {
                 let id = listItem.getAttribute('data-relay-point-id');
+                this.onSelectRelayPoint(id);
                 this.highlightPickupPoint(listItem.parentNode, listItem.getAttribute('data-relay-point-id'));
                 if ("undefined" !== typeof(this.markers[id])) {
                     this.map.setCenter(this.markers[id].getPosition());
@@ -68,13 +65,11 @@ class MondialRelayFancyListAdapter
             return;
         }
 
-        if (null === this.map) {
-            this.map = new google.maps.Map(document.querySelector('.pickup-points-map'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 13,
-                disableDefaultUI: true,
-            });
-        }
+        this.map = new google.maps.Map(document.querySelector('.pickup-points-map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 13,
+            disableDefaultUI: true,
+        });
 
         let ul = document.createElement('ul'),
             bounds = new google.maps.LatLngBounds(),
@@ -87,8 +82,7 @@ class MondialRelayFancyListAdapter
                 logo = document.createElement('img'),
                 actions = document.createElement('div'),
                 name = document.createElement('p'),
-                address = document.createElement('p'),
-                selectBtn = document.createElement('button');
+                address = document.createElement('p');
 
             name.setAttribute('class', 'pickup-point-name');
             name.textContent = results[i].label;
@@ -102,13 +96,7 @@ class MondialRelayFancyListAdapter
             card.appendChild(name);
             card.appendChild(address);
 
-            selectBtn.setAttribute('type', 'button');
-            selectBtn.setAttribute('data-select-relay-point', results[i].id);
-            selectBtn.textContent = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label');
-
             actions.setAttribute('class', 'pickup-point-controls');
-
-            actions.appendChild(selectBtn);
 
             li.setAttribute('class', 'relay-point-list-item');
             li.setAttribute('data-relay-point-id', results[i].id);
