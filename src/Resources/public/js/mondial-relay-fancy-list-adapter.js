@@ -1,7 +1,8 @@
 class MondialRelayFancyListAdapter
 {
-    constructor(wrapper, defaultUrl, searchResultsSelector) {
+    constructor(wrapper, selectedPointWrapper, defaultUrl, searchResultsSelector) {
         this.wrapper = wrapper;
+        this.selectedPointWrapper = selectedPointWrapper;
         this.defaultUrl = defaultUrl;
         this.searchResultsSelector = searchResultsSelector;
         this.map = null;
@@ -22,10 +23,13 @@ class MondialRelayFancyListAdapter
 
     onSelectShippingMethod() {
         let request = new AjaxRequest(this.defaultUrl, 'GET');
+        let selectedPointWrapper = document.getElementById(this.selectedPointWrapper);
 
         request.send().then(function (response) {
-            this.wrapper.innerHTML = response;
-            this.wrapper.style.display = 'block';
+            selectedPointWrapper.innerHTML = JSON.parse(response).current;
+
+          this.wrapper.innerHTML = JSON.parse(response).address;
+          this.wrapper.style.display = 'block';
 
             let event = new CustomEvent('relay_point_panel_ready');
             document.dispatchEvent(event);

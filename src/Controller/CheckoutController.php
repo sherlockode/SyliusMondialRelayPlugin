@@ -61,13 +61,13 @@ class CheckoutController
     }
 
     /**
-     * @return Response
+     * @return JsonResponse
      *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function init(): Response
+    public function init(): JsonResponse
     {
         $currentPickupPoint = $zipCode = null;
         $cart = $this->cartContext->getCart();
@@ -89,10 +89,18 @@ class CheckoutController
             $zipCode = $shippingAddress->getPostCode();
         }
 
-        return new Response($this->twig->render(
-            '@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_init.html.twig',
-            ['currentPickupPoint' => $currentPickupPoint, 'zipCode' => $zipCode]
-        ));
+        $current = $this->twig->render('@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_current_pickup_point.html.twig', [
+            'pickupPoint' => $currentPickupPoint,
+        ]);
+
+        $address = $this->twig->render('@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_search_pickup_point.html.twig', [
+            'zipCode' => $zipCode,
+        ]);
+
+        return new JsonResponse([
+            'current' => $current,
+            'address' => $address,
+        ]);
     }
 
     /**

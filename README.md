@@ -70,6 +70,7 @@ Update your template to include the pickup point field
             {# Include the pickup point field here #}
             {% if choice_form.vars.attr["data-mr"] is defined %}
                 {% include '@SherlockodeSyliusMondialRelayPlugin/Checkout/_pickup_point_form_widget.html.twig' %}
+                <div id="current-pickup-point"></div>
             {% endif %}
         {% else %}
             {% include '@SyliusShop/Checkout/SelectShipping/_unavailable.html.twig' %}
