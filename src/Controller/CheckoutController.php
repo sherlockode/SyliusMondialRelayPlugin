@@ -100,6 +100,7 @@ class CheckoutController
         return new JsonResponse([
             'current' => $current,
             'address' => $address,
+            'currentPointId' => null === $currentPickupPoint ? null : $currentPickupPoint->id(),
         ]);
     }
 

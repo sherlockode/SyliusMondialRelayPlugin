@@ -125,6 +125,7 @@ class MondialRelay
     onUnselectMondialRelayShipping() {
         this.adapter.onUnselectShippingMethod();
         document.querySelector(this.selectors.relayPointInput).value = '';
+        document.getElementById(this.selectors.selectedPointWrapper).innerHTML = '';
     }
 
     onRelayPointPanelReady() {

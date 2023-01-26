@@ -26,10 +26,12 @@ class MondialRelayFancyListAdapter
         let selectedPointWrapper = document.getElementById(this.selectedPointWrapper);
 
         request.send().then(function (response) {
-            selectedPointWrapper.innerHTML = JSON.parse(response).current;
+            let jsonResponse = JSON.parse(response);
+            selectedPointWrapper.innerHTML = jsonResponse.current;
+            document.querySelector('.smr-pickup-point-id').value = jsonResponse.currentPointId;
 
-          this.wrapper.innerHTML = JSON.parse(response).address;
-          this.wrapper.style.display = 'block';
+            this.wrapper.innerHTML = JSON.parse(response).address;
+            this.wrapper.style.display = 'block';
 
             let event = new CustomEvent('relay_point_panel_ready');
             document.dispatchEvent(event);
