@@ -22,14 +22,4 @@ class SyliusMondialRelayExtension extends AbstractExtension
             new TwigFilter('pickup_point_address', [SyliusMondialRelayRuntime::class, 'getPickupPointAddress']),
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('mondial_relay_selector_type', [SyliusMondialRelayRuntime::class, 'getSelectorType'])
-        ];
-    }
 }
