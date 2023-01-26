@@ -16,7 +16,7 @@ class MondialRelay
         this.urls = this.getOption(options, 'urls');
 
         if (null !== this.urls) {
-            this.createAdapter(this.getOption(options, 'adapter', 'regular'));
+            this.createAdapter();
             this.init();
         }
     }
@@ -41,29 +41,13 @@ class MondialRelay
         }
     }
 
-    createAdapter(adapterType) {
-        if ("regular" === adapterType) {
-            this.adapter = new MondialRelayListAdapter(
-                this.getForm().querySelector(this.selectors.wrapper),
-                this.urls.defaultUrl,
-                this.selectors.searchResults
-            );
-
-            return;
-        }
-
-        if ("fancy" === adapterType) {
-            this.adapter = new MondialRelayFancyListAdapter(
-                this.getForm().querySelector(this.selectors.wrapper),
-                this.selectors.selectedPointWrapper,
-                this.urls.defaultUrl,
-                this.selectors.searchResults
-            );
-
-            return;
-        }
-
-        throw 'Adapter of type "' + adapterType + '" is not supported';
+    createAdapter() {
+        this.adapter = new MondialRelayFancyListAdapter(
+            this.getForm().querySelector(this.selectors.wrapper),
+            this.selectors.selectedPointWrapper,
+            this.urls.defaultUrl,
+            this.selectors.searchResults
+        );
     }
 
     addEventListeners() {
