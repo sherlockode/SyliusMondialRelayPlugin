@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('wsdl')->isRequired()->end()
                     ->scalarNode('merchant_id')->isRequired()->end()
                     ->scalarNode('private_key')->isRequired()->end()
+                    ->scalarNode('google_map_api_key')->isRequired()->end()
                     ->arrayNode('pickup_point_types')
                         ->scalarPrototype()->end()
                         ->defaultValue([])

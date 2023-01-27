@@ -19,6 +19,13 @@ sherlockode_sylius_mondial_relay:
     wsdl: The mondial relay WSDL
     merchant_id: Your merchant ID
     private_key: Your private key
+    google_map_api_key: '%env(GOOGLE_MAP_API_KEY)%'
+```
+
+```dotenv
+#.env
+
+GOOGLE_MAP_API_KEY=xxxxxxxxxxxx
 ```
 
 Import routing:
