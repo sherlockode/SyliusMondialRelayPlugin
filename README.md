@@ -60,6 +60,8 @@ class Shipment extends BaseShipment
 }
 ```
 
+Don't forget to make a migration or a d:s:u after that
+
 Update your template to include the pickup point field
 
 ```twig
@@ -94,3 +96,7 @@ To finish, don't forget to publish assets:
 $ php bin/console assets:install
 ```
 
+## Configuration
+
+Now you only have to create a new shipping method. 
+For the Shipping charges option, select "Mondial Relay"
