@@ -29,7 +29,7 @@ class SyliusMondialRelayExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('google_api_key', [SyliusMondialRelayRuntime::class, 'getGoogleMapApiKey'])
+            new TwigFunction('google_map_api_key', [SyliusMondialRelayRuntime::class, 'getGoogleMapApiKey'])
         ];
     }
 }
