@@ -129,10 +129,6 @@ class MondialRelay
         this.onSearch();
     }
 
-    onHideSearchPanel() {
-        this.adapter.onHideSearchPanel();
-    }
-
     onSearch() {
         let wrapper = this.getWrapper(),
             searchPanel = wrapper.querySelector('.pickup-points-search'),
