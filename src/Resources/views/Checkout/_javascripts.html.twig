@@ -2,13 +2,16 @@
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/ajax-request.js"></script>
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/mondial-relay-fancy-list-adapter.js"></script>
     <script src="/bundles/sherlockodesyliusmondialrelayplugin/js/mondial-relay.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api_key() }}&callback=Function.prototype"></script>
     <script>
-        new MondialRelay({
-            urls: {
-                defaultUrl: '{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}',
-                searchUrl: '{{ path('sherlockode_sylius_mondial_relay_search_pickup_points') }}',
-                findUrl: '{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}',
-            }
+        window.addEventListener('load', function () {
+            new MondialRelay({
+                urls: {
+                    defaultUrl: '{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}',
+                    searchUrl: '{{ path('sherlockode_sylius_mondial_relay_search_pickup_points') }}',
+                    findUrl: '{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}',
+                }
+            });
         });
     </script>
 {% endif %}

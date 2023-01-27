@@ -17,11 +17,18 @@ class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
     private $pointAddressManager;
 
     /**
-     * @param PointAddressManager $pointAddressManager
+     * @var string
      */
-    public function __construct(PointAddressManager $pointAddressManager)
+    private $googleMapApiKey;
+
+    /**
+     * @param PointAddressManager $pointAddressManager
+     * @param string              $googleMapApiKey
+     */
+    public function __construct(PointAddressManager $pointAddressManager, string $googleMapApiKey)
     {
         $this->pointAddressManager = $pointAddressManager;
+        $this->googleMapApiKey = $googleMapApiKey;
     }
 
     /**
@@ -43,5 +50,13 @@ class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
     public function getPickupPointAddress(Point $point, string $separator = ', '): string
     {
         return $this->pointAddressManager->getPointFullAddress($point, $separator);
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleMapApiKey(): string
+    {
+        return $this->googleMapApiKey;
     }
 }
