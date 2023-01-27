@@ -47,12 +47,6 @@ class MondialRelayFancyListAdapter
         document.querySelector('.pickup-points-map').style.display = 'block';
     }
 
-    onHideSearchPanel() {
-        let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector);
-        resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
-        document.querySelector('.pickup-points-map').style.display = 'none';
-    }
-
     onSearchStart() {
         let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector);
 
