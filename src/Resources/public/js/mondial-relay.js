@@ -1,3 +1,6 @@
+import AjaxRequest from './ajax-request';
+import MondialRelayFancyListAdapter from './mondial-relay-fancy-list-adapter';
+
 class MondialRelay
 {
     constructor(options) {
@@ -163,3 +166,5 @@ class MondialRelay
         return document.querySelector(this.selectors.wrapper);
     }
 }
+
+export default MondialRelay;

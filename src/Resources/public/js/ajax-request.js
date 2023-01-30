@@ -39,3 +39,5 @@ class AjaxRequest
         return this.url + '?' + new URLSearchParams(this.params);
     }
 }
+
+export default AjaxRequest;
