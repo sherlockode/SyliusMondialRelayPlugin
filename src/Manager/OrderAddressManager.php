@@ -29,24 +29,19 @@ class OrderAddressManager
      */
     private $addressFormater;
 
-    private $em;
-
     /**
      * @param AddressFactoryInterface $addressFactory
      * @param MondialRelayClient      $apiClient
      * @param PointAddressManager     $addressFormater
-     * @param EntityManagerInterface  $em
      */
     public function __construct(
         AddressFactoryInterface $addressFactory,
         MondialRelayClient $apiClient,
-        PointAddressManager $addressFormater,
-        EntityManagerInterface $em
+        PointAddressManager $addressFormater
     ) {
         $this->addressFactory = $addressFactory;
         $this->apiClient = $apiClient;
         $this->addressFormater = $addressFormater;
-        $this->em = $em;
     }
 
     /**
@@ -100,7 +95,5 @@ class OrderAddressManager
         $address->setPostcode($pickupPoint->cp());
         $address->setCountryCode($pickupPoint->country());
         $order->setShippingAddress($address);
-
-        $this->em->flush();
     }
 }
