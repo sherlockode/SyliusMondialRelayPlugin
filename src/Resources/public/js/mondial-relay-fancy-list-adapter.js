@@ -8,16 +8,22 @@ class MondialRelayFancyListAdapter
         this.map = null;
         this.markers = {};
 
-        document.addEventListener('click', function (event) {
+        document.getElementById('modal-mondial-relay').addEventListener('click', function (event) {
             let listItem = this.getResultListItemFromClick(event.target);
             if (listItem) {
                 let id = listItem.getAttribute('data-relay-point-id');
-                this.onSelectRelayPoint(id);
                 this.highlightPickupPoint(listItem.parentNode, listItem.getAttribute('data-relay-point-id'));
                 if ("undefined" !== typeof(this.markers[id])) {
                     this.map.setCenter(this.markers[id].getPosition());
                 }
             }
+        }.bind(this));
+
+        document.getElementById('mr-select-btn').addEventListener('click', function() {
+          let el = document.querySelector('.relay-point-list-item.highlight');
+          if (null !== el) {
+            this.onSelectRelayPoint(el.getAttribute('data-relay-point-id'));
+          }
         }.bind(this));
     }
 
@@ -28,6 +34,10 @@ class MondialRelayFancyListAdapter
         request.send().then(function (response) {
             let jsonResponse = JSON.parse(response);
             selectedPointWrapper.innerHTML = jsonResponse.current;
+            if (null === selectedPointWrapper.querySelector('.pickup-point-card')) {
+              selectedPointWrapper.style.display = 'none';
+            }
+
             document.querySelector('.smr-pickup-point-id').value = jsonResponse.currentPointId;
 
             this.wrapper.innerHTML = JSON.parse(response).address;
@@ -133,6 +143,10 @@ class MondialRelayFancyListAdapter
             marker.addListener('click', function () {
                 cb(ul, results[i].id);
                 marker.getMap().setCenter(marker.getPosition());
+
+                let el = document.querySelector('.relay-point-list-item.highlight');
+                $('#modal-mondial-relay .accordion').accordion('open', i);
+                el.scrollIntoView();
             });
         }
 
