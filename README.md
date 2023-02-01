@@ -90,6 +90,13 @@ Update your template to include the pickup point field
 {{ include ('@SherlockodeSyliusMondialRelayPlugin/Checkout/_modal.html.twig') }}
 ```
 
+Update your webpack configuration.
+```js
+// Shop config
+Encore
+    .addEntry('sherlockode-mondial-relay', './vendor/sherlockode/sylius-mondial-relay-plugin/src/Resources/public/js/entry.js')
+```
+
 To finish, don't forget to publish assets:
 
 ```bash

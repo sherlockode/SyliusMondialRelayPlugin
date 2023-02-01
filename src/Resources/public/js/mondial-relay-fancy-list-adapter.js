@@ -1,3 +1,5 @@
+import AjaxRequest from './ajax-request';
+
 class MondialRelayFancyListAdapter
 {
     constructor(wrapper, selectedPointWrapper, defaultUrl, searchResultsSelector) {
@@ -225,3 +227,5 @@ class MondialRelayFancyListAdapter
         cell.appendChild(text);
     }
 }
+
+export default MondialRelayFancyListAdapter;
