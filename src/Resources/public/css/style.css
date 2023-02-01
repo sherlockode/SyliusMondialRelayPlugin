@@ -22,7 +22,6 @@
 .smr_wrapper .pickup-points-search-results {
     width: 50%;
     overflow: hidden;
-    margin-bottom: 20px;
 }
 
 @media only screen and (max-width : 1024px) {
@@ -40,7 +39,7 @@
     }
 }
 
-.smr_wrapper .pickup-points-search-form > div {
+.smr_wrapper .pickup-points-search-form .pickup-points-input {
     margin-bottom: 20px;
 }
 
@@ -61,8 +60,7 @@
 
 @media only screen and (min-width : 1024.1px) {
     .smr_wrapper .pickup-points-map {
-        height: 50vh;
-        min-height: 50vh;
+        height: calc(80vh - 110px);
     }
 }
 
@@ -98,7 +96,7 @@
 }
 
 #modal-mondial-relay .pickup-points-search {
-    height: 80vh;
+    height: calc(80vh - 42px);
 }
 
 #modal-mondial-relay .pickup-points-search-results {
