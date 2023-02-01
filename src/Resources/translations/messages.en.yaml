@@ -31,3 +31,4 @@ sylius:
             friday: Friday
             saturday: Saturday
             sunday: Sunday
+        time_slot: From %from% to %to%

@@ -2,14 +2,15 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Controller;
 
-use MondialRelay\Point\Point;
-use Sherlockode\SyliusMondialRelayPlugin\Manager\PointAddressManager;
-use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client as MondialRelayClient;
+use Sherlockode\SyliusMondialRelayPlugin\Model\OpeningTimeSlot;
+use Sherlockode\SyliusMondialRelayPlugin\Model\Point;
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -21,6 +22,11 @@ use Twig\Error\SyntaxError;
 class CheckoutController
 {
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * @var CartContextInterface
      */
     private $cartContext;
@@ -31,33 +37,28 @@ class CheckoutController
     private $twig;
 
     /**
-     * @var MondialRelayClient
+     * @var MondialRelay
      */
     private $apiClient;
 
     /**
-     * @var PointAddressManager
-     */
-    private $pointAddressManager;
-
-    /**
      * CheckoutController constructor.
      *
+     * @param TranslatorInterface  $translator
      * @param CartContextInterface $cartContext
      * @param Environment          $twig
-     * @param MondialRelayClient   $apiClient
-     * @param PointAddressManager  $pointAddressManager
+     * @param MondialRelay         $apiClient
      */
     public function __construct(
+        TranslatorInterface $translator,
         CartContextInterface $cartContext,
         Environment $twig,
-        MondialRelayClient $apiClient,
-        PointAddressManager $pointAddressManager
+        MondialRelay $apiClient
     ) {
+        $this->translator = $translator;
         $this->cartContext = $cartContext;
         $this->twig = $twig;
         $this->apiClient = $apiClient;
-        $this->pointAddressManager = $pointAddressManager;
     }
 
     /**
@@ -84,7 +85,7 @@ class CheckoutController
         }
 
         if ($currentPickupPoint) {
-            $zipCode = $currentPickupPoint->cp();
+            $zipCode = $currentPickupPoint->getZipCode();
         } elseif ($shippingAddress) {
             $zipCode = $shippingAddress->getPostCode();
         }
@@ -100,7 +101,7 @@ class CheckoutController
         return new JsonResponse([
             'current' => $current,
             'address' => $address,
-            'currentPointId' => null === $currentPickupPoint ? null : $currentPickupPoint->id(),
+            'currentPointId' => null === $currentPickupPoint ? null : $currentPickupPoint->getId(),
         ]);
     }
 
@@ -125,13 +126,33 @@ class CheckoutController
         }
 
         return new JsonResponse(array_values(array_map(function (Point $point) {
+            $timeSlots = [];
+
+            foreach ($point->getOpeningHours() as $timeSlot) {
+                if (!isset($timeSlots[$timeSlot->getDay()])) {
+                    $timeSlots[$timeSlot->getDay()] = [
+                        'label' => $this->translator->trans(sprintf('sylius.mondial_relay.day.%s', $timeSlot->getDayLabel()), [], 'messages'),
+                        'slots' => [],
+                    ];
+                }
+
+                $timeSlots[$timeSlot->getDay()]['slots'][] = $this->translator->trans(
+                    'sylius.mondial_relay.time_slot',
+                    [
+                        '%from%' => substr_replace($timeSlot->getOpeningTime(), ':', 2, 0),
+                        '%to%' => substr_replace($timeSlot->getClosingTime(), ':', 2, 0),
+                    ],
+                    'messages'
+                );
+            }
+
             return [
-                'id' => $point->id(),
-                'label' => $this->pointAddressManager->getPointLabel($point),
-                'address' => $this->pointAddressManager->getPointFullAddress($point),
-                'lat' => $point->latitude(),
-                'lng' => $point->longitude(),
-                'businessHours' => $this->pointAddressManager->getBusinessHours($point),
+                'id' => $point->getId(),
+                'label' => $point->getName(),
+                'address' => $point->getFullAddress(),
+                'lat' => $point->getLatitude(),
+                'lng' => $point->getLongitude(),
+                'businessHours' => array_values($timeSlots),
             ];
         }, $points)));
     }
