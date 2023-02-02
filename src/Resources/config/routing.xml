@@ -16,4 +16,11 @@
             path="/mondial-relay/pickup-point"
             controller="Sherlockode\SyliusMondialRelayPlugin\Controller\CheckoutController::getPickupPoint"
     />
+    <route
+            id="sherlockode_sylius_mondial_relay_admin_print_ticket"
+            path="/%sylius_admin.path_name%/shipments/{id}/mondial-relay/print-ticket"
+            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Admin\ShipmentController::printTicket"
+    >
+        <requirement key="id">\d+</requirement>
+    </route>
 </routes>

@@ -3,9 +3,14 @@
 namespace Sherlockode\SyliusMondialRelayPlugin\MondialRelay;
 
 use Sherlockode\SyliusMondialRelayPlugin\Model\Point;
+use Sherlockode\SyliusMondialRelayPlugin\Model\Ticket;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Client;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Exception\ApiException;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
+use Sylius\Component\Order\Model\OrderInterface;
+use Sylius\Component\Order\Model\OrderItemInterface;
+use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 class MondialRelay
 {
@@ -75,6 +80,79 @@ class MondialRelay
             'DelaiEnvoi'      => '0',
             'RayonRecherche'  => '20',
             'NombreResultats' => '30',
+        ]);
+    }
+
+    /**
+     * @param ShipmentInterface $shipment
+     *
+     * @return Ticket
+     *
+     * @throws ApiException
+     */
+    public function printTicket(ShipmentInterface $shipment): Ticket
+    {
+        $order = $shipment->getOrder();
+        $customer = $order->getCustomer();
+        $shippingAddress = $order->getShippingAddress();
+        $channel = $order->getChannel();
+        $shop = $channel->getShopBillingData();
+        $toLocaleCode = function (string $locale) {
+            return strtoupper(substr($locale, 0, 2));
+        };
+        $getOrderTotalWeight = function (OrderInterface $order) {
+            $totalWeight = array_reduce($order->getItems()->toArray(), function ($sum, OrderItemInterface $orderItem) {
+                if ($orderItem->getVariant()) {
+                    $sum += $orderItem->getVariant()->getWeight();
+                }
+
+                return $sum;
+            }, 0);
+
+            return min(15, $totalWeight);
+        };
+        $gender = CustomerInterface::FEMALE_GENDER === $customer->getGender() ? 'MME' : 'MR';
+        $customerName = sprintf('%s %s %s', $gender, $customer->getLastName(), $customer->getFirstName());
+
+        return $this->client->WSI2CreationEtiquette([
+            'ModeCol' => 'CCC',
+            'ModeLiv' => '24R',
+            'NDossier' => $order->getNumber(),
+            'NClient' => $order->getCustomer() ? $order->getCustomer()->getId() : null,
+            'Expe_Langage' => $toLocaleCode($channel->getDefaultLocale()->getCode()),
+            'Expe_Ad1' => $shop->getCompany(),
+            'Expe_Ad2 ' => null,
+            'Expe_Ad3' => $shop->getStreet(),
+            'Expe_Ad4 ' => null,
+            'Expe_Ville' => $shop->getCity(),
+            'Expe_CP' => $shop->getPostcode(),
+            'Expe_Pays' => $shop->getCountryCode(),
+            'Expe_Tel1' => $channel->getContactPhoneNumber(),
+            'Expe_Tel2' => null,
+            'Expe_Mail' => $channel->getContactEmail(),
+            'Dest_Langage' => $toLocaleCode($order->getLocaleCode()),
+            'Dest_Ad1' => $customerName,
+            'Dest_Ad2' => null,
+            'Dest_Ad3' => $shippingAddress->getStreet(),
+            'Dest_Ad4' => null,
+            'Dest_Ville' => $shippingAddress->getCity(),
+            'Dest_CP' => $shippingAddress->getPostcode(),
+            'Dest_Pays' => $shippingAddress->getCountryCode(),
+            'Dest_Tel1' => $customer->getPhoneNumber(),
+            'Dest_Tel2' => null,
+            'Dest_Mail' => $customer->getEmail(),
+            'Poids' => $getOrderTotalWeight($order),
+            'Longueur' => null,
+            'Taille' => null,
+            'NbColis' => 1,
+            'CRT_Valeur' => 0,
+            'CRT_Devise' => $order->getCurrencyCode(),
+            'Exp_Valeur' => $order->getItemsTotal(),
+            'Exp_Devise' => $order->getCurrencyCode(),
+            'COL_Rel_Pays' => $shippingAddress->getCountryCode(),
+            'COL_Rel' => $shipment->getPickupPointId(),
+            'LIV_Rel_Pays' => $shippingAddress->getCountryCode(),
+            'LIV_Rel' => $shipment->getPickupPointId(),
         ]);
     }
 }

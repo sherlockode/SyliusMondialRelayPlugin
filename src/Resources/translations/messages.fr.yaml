@@ -32,3 +32,5 @@ sylius:
             saturday: Samedi
             sunday: Dimanche
         time_slot: De %from% à %to%
+        print_ticket: Imprimer l'étiquette
+        error_when_printing_ticket: Une erreur est survenue lors de l'impression de l'étiquette
