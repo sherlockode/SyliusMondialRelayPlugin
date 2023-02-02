@@ -7,15 +7,7 @@
         <import resource="services/event_listener.xml"/>
         <import resource="services/form.xml"/>
         <import resource="services/manager.xml"/>
+        <import resource="services/mondial_relay.xml"/>
         <import resource="services/twig.xml"/>
     </imports>
-
-    <services>
-        <service id="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client">
-            <argument>%sherlockode_sylius_mondial_relay.wsdl%</argument>
-            <argument>%sherlockode_sylius_mondial_relay.merchant_id%</argument>
-            <argument>%sherlockode_sylius_mondial_relay.private_key%</argument>
-            <argument>%sherlockode_sylius_mondial_relay.pickup_types%</argument>
-        </service>
-    </services>
 </container>

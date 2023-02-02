@@ -220,25 +220,29 @@ class MondialRelayFancyListAdapter
 
         cell.appendChild(text);
 
-        if (data.open1 === '') {
+        if ("undefined" !== typeof(data.slots) && 0 < data.slots.length) {
             cell = row.insertCell();
-            text = document.createTextNode(' - ');
+            text = document.createTextNode(data.slots[0]);
             cell.appendChild(text);
-            cell.colSpan = 3;
+
+            if ("undefined" !== typeof(data.slots[1])) {
+                cell = row.insertCell();
+                cell.appendChild(document.createTextNode(' - '));
+
+                cell = row.insertCell();
+                text = document.createTextNode(data.slots[1]);
+                cell.appendChild(text);
+            } else {
+                cell.colSpan = 3;
+            }
 
             return;
         }
 
         cell = row.insertCell();
-        text = document.createTextNode(data.open1 + ' ' + data.close1);
+        text = document.createTextNode(' - ');
         cell.appendChild(text);
-
-        cell = row.insertCell();
-        cell.appendChild(document.createTextNode(data.open2 === '' ? '' : ' - '));
-
-        cell = row.insertCell();
-        text = document.createTextNode(data.open2 + ' ' + data.close2);
-        cell.appendChild(text);
+        cell.colSpan = 3;
     }
 }
 

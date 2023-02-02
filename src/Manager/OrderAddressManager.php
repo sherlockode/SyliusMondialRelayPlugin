@@ -2,8 +2,7 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Manager;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Client as MondialRelayClient;
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Core\Factory\AddressFactoryInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -20,28 +19,18 @@ class OrderAddressManager
     private $addressFactory;
 
     /**
-     * @var MondialRelayClient
+     * @var MondialRelay
      */
     private $apiClient;
 
     /**
-     * @var PointAddressManager
-     */
-    private $addressFormater;
-
-    /**
      * @param AddressFactoryInterface $addressFactory
-     * @param MondialRelayClient      $apiClient
-     * @param PointAddressManager     $addressFormater
+     * @param MondialRelay            $apiClient
      */
-    public function __construct(
-        AddressFactoryInterface $addressFactory,
-        MondialRelayClient $apiClient,
-        PointAddressManager $addressFormater
-    ) {
+    public function __construct(AddressFactoryInterface $addressFactory, MondialRelay $apiClient)
+    {
         $this->addressFactory = $addressFactory;
         $this->apiClient = $apiClient;
-        $this->addressFormater = $addressFormater;
     }
 
     /**
@@ -85,15 +74,15 @@ class OrderAddressManager
         $address = $this->addressFactory->createNew();
         $address->setStreet(sprintf(
             '%s, %s',
-            $this->addressFormater->getPointLabel($pickupPoint),
-            $this->addressFormater->getPointShortAddress($pickupPoint)
+            $pickupPoint->getName(),
+            $pickupPoint->getShortAddress(),
         ));
         $address->setFirstName($shippingAddress->getFirstName());
         $address->setLastName($shippingAddress->getLastName());
         $address->setPhoneNumber($shippingAddress->getPhoneNumber());
-        $address->setCity($pickupPoint->city());
-        $address->setPostcode($pickupPoint->cp());
-        $address->setCountryCode($pickupPoint->country());
+        $address->setCity($pickupPoint->getCity());
+        $address->setPostcode($pickupPoint->getZipCode());
+        $address->setCountryCode($pickupPoint->getCountry());
         $order->setShippingAddress($address);
     }
 }

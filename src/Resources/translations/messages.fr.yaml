@@ -31,3 +31,4 @@ sylius:
             friday: Vendredi
             saturday: Samedi
             sunday: Dimanche
+        time_slot: De %from% à %to%

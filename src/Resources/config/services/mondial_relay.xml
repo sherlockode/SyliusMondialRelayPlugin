@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge" class="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay">
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.client" />
+        </service>
+        <service id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.client" class="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Client">
+            <argument>%sherlockode_sylius_mondial_relay.wsdl%</argument>
+            <argument>%sherlockode_sylius_mondial_relay.merchant_id%</argument>
+            <argument>%sherlockode_sylius_mondial_relay.private_key%</argument>
+            <argument>%sherlockode_sylius_mondial_relay.pickup_types%</argument>
+        </service>
+    </services>
+</container>
