@@ -29,6 +29,7 @@ class SherlockodeSyliusMondialRelayExtension extends Extension
         $container->setParameter('sherlockode_sylius_mondial_relay.wsdl', $config['wsdl'] ?? '');
         $container->setParameter('sherlockode_sylius_mondial_relay.merchant_id', $config['merchant_id'] ?? '');
         $container->setParameter('sherlockode_sylius_mondial_relay.private_key', $config['private_key'] ?? '');
+        $container->setParameter('sherlockode_sylius_mondial_relay.base_url', $config['mondial_relay_base_url'] ?? '');
         $container->setParameter('sherlockode_sylius_mondial_relay.google_map_api_key', $config['google_map_api_key'] ?? '');
         $container->setParameter(
             'sherlockode_sylius_mondial_relay.pickup_types',

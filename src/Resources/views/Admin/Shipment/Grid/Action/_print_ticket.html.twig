@@ -1,0 +1,4 @@
+{% if shipment is defined and shipment.state is constant('Sylius\\Component\\Shipping\\Model\\ShipmentInterface::STATE_READY') %}
+    {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+    {{ buttons.default(path('sherlockode_sylius_mondial_relay_admin_print_ticket', {'id': shipment.id}), 'sylius.mondial_relay.print_ticket', null, 'print') }}
+{% endif %}

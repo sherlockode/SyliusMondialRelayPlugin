@@ -32,3 +32,5 @@ sylius:
             saturday: Saturday
             sunday: Sunday
         time_slot: From %from% to %to%
+        print_ticket: Print ticket
+        error_when_printing_ticket: An error occurred when printing ticket

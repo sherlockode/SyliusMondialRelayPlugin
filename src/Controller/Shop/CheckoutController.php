@@ -1,8 +1,7 @@
 <?php
 
-namespace Sherlockode\SyliusMondialRelayPlugin\Controller;
+namespace Sherlockode\SyliusMondialRelayPlugin\Controller\Shop;
 
-use Sherlockode\SyliusMondialRelayPlugin\Model\OpeningTimeSlot;
 use Sherlockode\SyliusMondialRelayPlugin\Model\Point;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Order\Context\CartContextInterface;

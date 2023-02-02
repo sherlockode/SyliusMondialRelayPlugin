@@ -1,0 +1,12 @@
+sylius_ui:
+    events:
+        sylius.admin.shipment.grid.ship:
+            blocks:
+                mondial_relay:
+                    template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Shipment/Grid/Action/_print_ticket.html.twig"
+                    priority: 5
+        sylius.admin.order.show.shipment_content:
+            blocks:
+                mondial_relay:
+                    template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/Shipment/_print_ticket.html.twig"
+                    priority: 35

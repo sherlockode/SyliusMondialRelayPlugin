@@ -2,15 +2,22 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api;
 
+use Sherlockode\SyliusMondialRelayPlugin\Model\Ticket;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Exception\ApiException;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Factory\PointFactory;
-use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Factory\RequestFactory;
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Factory\TicketFactory;
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Request\GenericRequest;
 
 /**
  * Class Client
  */
 class Client
 {
+    /**
+     * @var TicketFactory
+     */
+    private $ticketFactory;
+
     /**
      * @var string
      */
@@ -39,13 +46,20 @@ class Client
     /**
      * Client constructor.
      *
-     * @param string $wsdl
-     * @param string $merchantId
-     * @param string $privateKey
-     * @param array  $types
+     * @param TicketFactory $ticketFactory
+     * @param string        $wsdl
+     * @param string        $merchantId
+     * @param string        $privateKey
+     * @param array         $types
      */
-    public function __construct(string $wsdl, string $merchantId, string $privateKey, array $types)
-    {
+    public function __construct(
+        TicketFactory $ticketFactory,
+        string $wsdl,
+        string $merchantId,
+        string $privateKey,
+        array $types
+    ) {
+        $this->ticketFactory = $ticketFactory;
         $this->wsdl = $wsdl;
         $this->merchantId = $merchantId;
         $this->privateKey = $privateKey;
@@ -53,19 +67,19 @@ class Client
     }
 
     /**
-     * @param array $request
+     * @param array $payload
      *
      * @return array
      *
      * @throws ApiException
      */
-    public function WSI4PointRelaisRecherche(array $request): array
+    public function WSI4PointRelaisRecherche(array $payload): array
     {
-        $requestFactory = new RequestFactory();
-        $request = $requestFactory->create($this->merchantId, $this->privateKey, $request);
+        $request = new GenericRequest($this->merchantId, $this->privateKey, $payload);
+        $request->sign();
 
         try {
-            $response = $this->getClient()->WSI4_PointRelais_Recherche($request);
+            $response = $this->getClient()->WSI4_PointRelais_Recherche($request->getPayload());
         } catch (\SoapFault $soapFault) {
             throw new ApiException();
         }
@@ -81,6 +95,31 @@ class Client
         }
 
         return array_map([new PointFactory(), 'create'], $details);
+    }
+
+    /**
+     * @param array $payload
+     *
+     * @return Ticket
+     *
+     * @throws ApiException
+     */
+    public function WSI2CreationEtiquette(array $payload): Ticket
+    {
+        $request = new GenericRequest($this->merchantId, $this->privateKey, $payload);
+        $request->sign();
+
+        try {
+            $response = $this->getClient()->WSI2_CreationEtiquette($request->getPayload());
+        } catch (\SoapFault $soapFault) {
+            throw new ApiException();
+        }
+
+        if ($response->WSI2_CreationEtiquetteResult->STAT) {
+            throw new ApiException();
+        }
+
+        return $this->ticketFactory->create($response->WSI2_CreationEtiquetteResult);
     }
 
     /**
