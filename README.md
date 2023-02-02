@@ -28,6 +28,7 @@ sherlockode_sylius_mondial_relay:
     merchant_id: Your merchant ID
     private_key: Your private key
     google_map_api_key: '%env(GOOGLE_MAP_API_KEY)%'
+    enable_ticket_printing: true
 ```
 
 ```dotenv

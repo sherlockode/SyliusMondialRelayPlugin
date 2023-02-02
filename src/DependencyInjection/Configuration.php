@@ -32,6 +32,9 @@ class Configuration implements ConfigurationInterface
                         ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
+                    ->booleanNode('enable_ticket_printing')
+                        ->defaultValue(true)
+                    ->end()
                 ->end()
             ->end()
         ;

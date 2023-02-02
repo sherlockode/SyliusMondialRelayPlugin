@@ -41,24 +41,32 @@ class ShipmentController
     private $mondialRelay;
 
     /**
+     * @var bool
+     */
+    private $enableTicketPrinting;
+
+    /**
      * @param RepositoryInterface   $shipmentRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @param RequestStack          $requestStack
      * @param TranslatorInterface   $translator
      * @param MondialRelay          $mondialRelay
+     * @param bool                  $enableTicketPrinting
      */
     public function __construct(
         RepositoryInterface $shipmentRepository,
         UrlGeneratorInterface $urlGenerator,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        MondialRelay $mondialRelay
+        MondialRelay $mondialRelay,
+        bool $enableTicketPrinting
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->urlGenerator = $urlGenerator;
         $this->requestStack = $requestStack;
         $this->translator = $translator;
         $this->mondialRelay = $mondialRelay;
+        $this->enableTicketPrinting = $enableTicketPrinting;
     }
 
     /**
@@ -68,6 +76,10 @@ class ShipmentController
      */
     public function printTicket(int $id): Response
     {
+        if (!$this->enableTicketPrinting) {
+            throw new BadRequestException('Ticket printing is disable');
+        }
+
         $shipment = $this->shipmentRepository->find($id);
 
         if (!$shipment) {

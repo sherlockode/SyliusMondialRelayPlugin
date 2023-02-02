@@ -8,6 +8,7 @@
             <argument type="service" id="request_stack" />
             <argument type="service" id="translator" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge" />
+            <argument>%sherlockode_sylius_mondial_relay.enable_ticket_printing%</argument>
             <tag name="controller.service_arguments" />
         </service>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController">
