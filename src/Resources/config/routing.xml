@@ -4,17 +4,17 @@
     <route
             id="sherlockode_sylius_mondial_relay_select_shipping"
             path="/mondial-relay/select-shipping"
-            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\CheckoutController::init"
+            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::init"
     />
     <route
             id="sherlockode_sylius_mondial_relay_search_pickup_points"
             path="/mondial-relay/search-pickup-points"
-            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\CheckoutController::searchPickupPoints"
+            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::searchPickupPoints"
     />
     <route
             id="sherlockode_sylius_mondial_relay_get_pickup_point"
             path="/mondial-relay/pickup-point"
-            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\CheckoutController::getPickupPoint"
+            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::getPickupPoint"
     />
     <route
             id="sherlockode_sylius_mondial_relay_admin_print_ticket"
