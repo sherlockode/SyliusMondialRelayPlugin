@@ -13,14 +13,6 @@ $ composer require sherlockode/sylius-mondial-relay-plugin
 Complete the configuration:
 
 ```yaml
-# config/packages/_sylius.yaml
-
-imports:
-    # ...
-    - { resource: "@SherlockodeSyliusMondialRelayPlugin/Resources/config/config.yaml" }
-```
-
-```yaml
 # config/packages/sherlockode_sylius_mondial_relay.yaml
 
 sherlockode_sylius_mondial_relay:
