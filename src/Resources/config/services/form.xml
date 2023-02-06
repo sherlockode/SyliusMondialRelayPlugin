@@ -2,11 +2,13 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Type\ShipmentType">
+        <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Extension\ShipmentTypeExtension">
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="translator"/>
             <argument>%sylius.model.shipping_method.class%</argument>
             <tag name="form.type_extension" extended-type="Sylius\Bundle\CoreBundle\Form\Type\Checkout\ShipmentType" />
+        </service>
+        <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Extension\ShippingMethodChoiceTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\ShippingBundle\Form\Type\ShippingMethodChoiceType" />
         </service>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Type\MondialRelayConfigurationType">
             <argument type="service" id="sylius.context.channel" />

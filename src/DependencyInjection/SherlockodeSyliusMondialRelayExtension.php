@@ -5,12 +5,13 @@ namespace Sherlockode\SyliusMondialRelayPlugin\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 /**
  * Class SherlockodeSyliusMondialRelayExtension
  */
-class SherlockodeSyliusMondialRelayExtension extends Extension
+class SherlockodeSyliusMondialRelayExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * @param array            $configs
@@ -39,5 +40,15 @@ class SherlockodeSyliusMondialRelayExtension extends Extension
             'sherlockode_sylius_mondial_relay.pickup_types',
             $config['pickup_point_types'] ?? []
         );
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container): void
+    {
+        if ($container->hasExtension('twig')) {
+            $container->prependExtensionConfig('twig', ['form_themes' => ['@SherlockodeSyliusMondialRelayPlugin/form_theme.html.twig']]);
+        }
     }
 }

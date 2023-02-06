@@ -7,8 +7,6 @@ sylius:
                 min_weight: Poids min.
                 max_weight: Poids max.
                 shipping_cost: Frais de ports
-        shipping_method:
-            no_pickup_point_selected: Vous n'avez pas sélectionné de point relais
 
     mondial_relay:
         select_a_relay_point: Sélectionner un point relais

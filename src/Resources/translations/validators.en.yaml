@@ -1,0 +1,4 @@
+sylius:
+    form:
+        shipping_method:
+            no_pickup_point_selected: No pickup point selected
