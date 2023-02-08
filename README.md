@@ -63,34 +63,6 @@ class Shipment extends BaseShipment
 
 Don't forget to make a migration or a d:s:u after that
 
-Update your template to include the pickup point field
-
-```twig
-{# @SyliusShopBundle/Checkout/SelectShipping/_shipment.html.twig #}
-
-<div class="ui segment">
-    <div class="ui dividing header">{{ 'sylius.ui.shipment'|trans }} #{{ loop.index }}</div>
-    <div class="ui fluid stackable items" {{ sylius_test_html_attribute('shipments') }}>
-        {{ form_errors(form.method) }}
-
-        {% for key, choice_form in form.method %}
-            {% set fee = form.method.vars.shipping_costs[choice_form.vars.value] %}
-            {% set method = form.method.vars.choices[key].data %}
-            {% include '@SyliusShop/Checkout/SelectShipping/_choice.html.twig' with {'form': choice_form, 'method': method, 'fee': fee} %}
-            {# Include the pickup point field here #}
-            {% if choice_form.vars.attr["data-mr"] is defined %}
-                {% include '@SherlockodeSyliusMondialRelayPlugin/Checkout/_pickup_point_form_widget.html.twig' %}
-                <div id="current-pickup-point"></div>
-            {% endif %}
-        {% else %}
-            {% include '@SyliusShop/Checkout/SelectShipping/_unavailable.html.twig' %}
-        {% endfor %}
-    </div>
-</div>
-
-{{ include ('@SherlockodeSyliusMondialRelayPlugin/Checkout/_modal.html.twig') }}
-```
-
 Update your webpack configuration.
 ```js
 // Shop config

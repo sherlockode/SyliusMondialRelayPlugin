@@ -37,6 +37,7 @@ class MondialRelay
     }
 
     init() {
+        this.fixCurrentPointPosition();
         this.addEventListeners();
 
         if (this.getForm().querySelector('input[type="radio"][name$="[method]"][data-mr="true"]:checked') !== null) {
@@ -46,11 +47,27 @@ class MondialRelay
 
     createAdapter() {
         this.adapter = new MondialRelayFancyListAdapter(
-            this.getForm().querySelector(this.selectors.wrapper),
+            document.querySelector(this.selectors.wrapper),
             this.selectors.selectedPointWrapper,
             this.urls.defaultUrl,
             this.selectors.searchResults
         );
+    }
+
+    fixCurrentPointPosition() {
+        let currentPointWrapper = document.getElementById(this.selectors.selectedPointWrapper);
+
+        if (!currentPointWrapper) {
+            return;
+        }
+
+        let itemParent = currentPointWrapper.closest('.item');
+
+        if (itemParent) {
+            itemParent.parentNode.appendChild(currentPointWrapper);
+        }
+
+        currentPointWrapper.style.display = 'block';
     }
 
     addEventListeners() {
@@ -75,7 +92,7 @@ class MondialRelay
             }.bind(this), false);
 
             if (true === inputs[i].hasAttribute('data-mr')) {
-                document.querySelector("[for='"+inputs[i].id+"']").addEventListener('click', function(event) {
+                document.querySelector("[for='"+inputs[i].id+"']").addEventListener('click', function() {
                   if (inputs[i].checked) {
                     this.onSelectMondialRelayShipping();
                   }
@@ -148,7 +165,7 @@ class MondialRelay
     onSelectPoint(id) {
         let input = document.querySelector(this.selectors.relayPointInput),
             request = new AjaxRequest(this.urls.findUrl, 'GET', {pickupPointId: id}),
-            currentPointWrapper = document.getElementById('current-pickup-point');
+            currentPointWrapper = document.getElementById(this.selectors.selectedPointWrapper);
 
         input.value = id;
 

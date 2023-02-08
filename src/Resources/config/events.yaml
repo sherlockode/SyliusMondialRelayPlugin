@@ -10,3 +10,7 @@ sylius_ui:
                 mondial_relay:
                     template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/Shipment/_print_ticket.html.twig"
                     priority: 35
+        sylius.shop.layout.after_body:
+            blocks:
+                mondial_relay:
+                    template: "@SherlockodeSyliusMondialRelayPlugin/Checkout/_modal.html.twig"
