@@ -66,19 +66,21 @@ class MondialRelay
 
     /**
      * @param string $zipCode
+     * @param array  $action
      * @param string $country
      *
      * @return Point[]
      *
      * @throws ApiException
      */
-    public function findPickupPointsByZipCode(string $zipCode, string $country = 'FR'): array
+    public function findPickupPointsByZipCode(string $zipCode, ?string $action, string $country = 'FR'): array
     {
         return $this->client->WSI4PointRelaisRecherche([
             'Pays' => $country,
-            'CP'   => $zipCode,
-            'DelaiEnvoi'      => '0',
-            'RayonRecherche'  => '20',
+            'CP' => $zipCode,
+            'Action' => $action,
+            'DelaiEnvoi' => '0',
+            'RayonRecherche' => '20',
             'NombreResultats' => '30',
         ]);
     }

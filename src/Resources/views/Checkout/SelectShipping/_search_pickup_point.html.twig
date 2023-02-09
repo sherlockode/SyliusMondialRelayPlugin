@@ -1,11 +1,14 @@
 <div class="pickup-points-search">
     <div class="pickup-points-search-form ui form">
         <div class="pickup-points-input">
-            <input type="text" data-search-pickup-points-input placeholder="{{ 'sylius.mondial_relay.search_zipcode'|trans }}" value="{{ zipCode|default('') }}"/>
-            <button title="{{ 'sylius.mondial_relay.search'|trans }}" data-search-pickup-points-button type="button" class="ui primary button">{{ 'sylius.mondial_relay.search'|trans }}</button>
+            {{ form_start(form, {'attr': {'class': 'search-pickup-point-form'}}) }}
+            {{ form_row(form.zipCode) }}
+            {{ form_row(form.types) }}
+            <button title="{{ 'sylius.mondial_relay.search'|trans }}" type="submit" class="ui primary button">{{ 'sylius.mondial_relay.search'|trans }}</button>
+            {{ form_end(form) }}
         </div>
-        <div class="pickup-points-map"></div>
     </div>
+    <div class="pickup-points-map"></div>
     <div class="pickup-points-search-results">
         <div class="pickup-points-no-results" style="display: none;">{{ 'sylius.mondial_relay.no_result_for_your_search'|trans }}</div>
         <div

@@ -12,6 +12,7 @@ sylius:
         select_a_relay_point: Select a pickup point
         change_relay_point: Change my pickup point
         choose_relay_point: Choose
+        zipcode: Zipcode
         search_zipcode: Search by zipcode
         search: Search
         no_result_for_your_search: No result for your search
@@ -32,3 +33,6 @@ sylius:
         time_slot: From %from% to %to%
         print_ticket: Print ticket
         error_when_printing_ticket: An error occurred when printing ticket
+        pickup_point_types:
+            24r: Pickup
+            drive: Drive

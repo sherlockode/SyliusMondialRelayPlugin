@@ -10,8 +10,7 @@ class MondialRelay
             relayPointInput: 'input.smr-pickup-point-id',
             wrapper: '.smr_wrapper',
             showListPanelBtn: 'button[data-load-pickup-point-list]',
-            searchInput: 'input[data-search-pickup-points-input]',
-            searchBtn: 'button[data-search-pickup-points-button]',
+            searchForm: '.pickup-points-input form.search-pickup-point-form',
             searchResults: '.pickup-points-search-results',
             modal: document.getElementById('modal-mondial-relay'),
         });
@@ -71,16 +70,7 @@ class MondialRelay
     }
 
     addEventListeners() {
-        let form = this.getForm(),
-            inputs = form.querySelectorAll('input[type="radio"][name$="[method]"]');
-
-        form.addEventListener('submit', function (event) {
-            if (document.activeElement === document.querySelector(this.selectors.searchInput)) {
-                event.preventDefault();
-                event.stopPropagation();
-                this.onSearch();
-            }
-        }.bind(this), true);
+        let inputs = this.getForm().querySelectorAll('input[type="radio"][name$="[method]"]');
 
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener('change', function (event) {
@@ -105,8 +95,13 @@ class MondialRelay
             if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.showListPanelBtn), event.target)) {
                 this.onShowSearchPanel();
             }
+        }.bind(this), false);
+
+        document.addEventListener('submit', function (event) {
             // Trigger relay points search
-            if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.searchBtn), event.target)) {
+            if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.searchForm), event.target)) {
+                event.preventDefault();
+                event.stopPropagation();
                 this.onSearch();
             }
         }.bind(this), false);
@@ -150,10 +145,12 @@ class MondialRelay
     }
 
     onSearch() {
-        let wrapper = this.getWrapper(),
-            searchPanel = wrapper.querySelector('.pickup-points-search'),
-            query = searchPanel.querySelector(this.selectors.searchInput).value,
-            request = new AjaxRequest(this.urls.searchUrl, 'GET', {zipCode: query});
+        let searchForm = this.getSearchForm(),
+            request = new AjaxRequest(
+                searchForm.getAttribute('action'),
+                searchForm.getAttribute('method').toUpperCase(),
+                new URLSearchParams(new FormData(searchForm))
+            );
 
         this.adapter.onSearchStart();
 
@@ -177,6 +174,10 @@ class MondialRelay
 
     getForm() {
         return document.querySelector(this.selectors.form);
+    }
+
+    getSearchForm() {
+        return document.querySelector(this.selectors.searchForm);
     }
 
     getWrapper() {
