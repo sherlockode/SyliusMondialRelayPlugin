@@ -10,7 +10,6 @@
             <argument>%sherlockode_sylius_mondial_relay.wsdl%</argument>
             <argument>%sherlockode_sylius_mondial_relay.merchant_id%</argument>
             <argument>%sherlockode_sylius_mondial_relay.private_key%</argument>
-            <argument>%sherlockode_sylius_mondial_relay.pickup_types%</argument>
         </service>
         <service id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.factory.ticket" class="Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Factory\TicketFactory">
             <argument>%sherlockode_sylius_mondial_relay.base_url%</argument>
