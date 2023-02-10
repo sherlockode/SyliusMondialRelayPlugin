@@ -10,6 +10,7 @@
             id="sherlockode_sylius_mondial_relay_search_pickup_points"
             path="/mondial-relay/search-pickup-points"
             controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::searchPickupPoints"
+            methods="GET"
     />
     <route
             id="sherlockode_sylius_mondial_relay_get_pickup_point"

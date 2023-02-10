@@ -12,6 +12,7 @@ sylius:
         select_a_relay_point: Sélectionner un point relais
         change_relay_point: Modifier mon point relais
         choose_relay_point: Sélectionner ce lieu
+        zipcode: Code postal
         search_zipcode: Rechercher par code postal
         search: Rechercher
         no_result_for_your_search: Aucun résultat pour votre recherche
@@ -32,3 +33,6 @@ sylius:
         time_slot: De %from% à %to%
         print_ticket: Imprimer l'étiquette
         error_when_printing_ticket: Une erreur est survenue lors de l'impression de l'étiquette
+        pickup_point_types:
+            24r: Relais colis
+            drive: Drive

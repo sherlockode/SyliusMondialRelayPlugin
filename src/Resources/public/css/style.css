@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+.smr_wrapper .pickup-points-results-list {
+    width: 100%;
+}
+
 .smr_wrapper .pickup-points-results-list ul {
     width: 100%;
     list-style: none;
@@ -16,11 +20,10 @@
 
 .smr_wrapper .pickup-points-search {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.smr_wrapper .pickup-points-search-form,
 .smr_wrapper .pickup-points-search-results {
-    width: 50%;
     overflow: hidden;
 }
 
@@ -29,13 +32,13 @@
         flex-direction: column;
     }
 
-    .smr_wrapper .pickup-points-search-form,
     .smr_wrapper .pickup-points-search-results {
         width: 100%;
     }
 
-    .smr_wrapper .pickup-points-search-form {
-        height: 500px;
+    .smr_wrapper .pickup-points-search-form .search-pickup-point-form {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -45,7 +48,6 @@
 
 .smr_wrapper .pickup-points-search-results {
     display: flex;
-    margin-top: 66px;
 }
 
 @media only screen and (max-width : 1024px) {
@@ -73,6 +75,7 @@
 .smr_wrapper .pickup-points-search-results .pickup-points-no-results {
     display: none;
     width: 100%;
+    text-align: center;
 }
 
 .smr_wrapper .pickup-point-controls button {
@@ -97,6 +100,40 @@
 
 #modal-mondial-relay .pickup-points-search {
     height: calc(80vh - 42px);
+}
+
+#modal-mondial-relay .pickup-points-search-form {
+    flex-basis: 100%;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-form > div {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-form label {
+    margin: 0 20px 0 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-form input[type="radio"] ~ label {
+    margin-left: 5px !important;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-form > button {
+    margin: 0 0 0 auto;
+}
+
+#modal-mondial-relay .pickup-points-search-results,
+#modal-mondial-relay .pickup-points-map {
+    flex-basis: 50%;
 }
 
 #modal-mondial-relay .pickup-points-search-results {
@@ -180,4 +217,36 @@
 #current-pickup-point .pickup-point-card .pickup-point-address {
     color: rgba(0, 0, 0, 0.6);
     font-style: italic;
+}
+
+@media only screen and (max-width : 1024px) {
+    #modal-mondial-relay .pickup-points-search {
+        height: auto;
+    }
+
+    #modal-mondial-relay .pickup-points-search-form,
+    #modal-mondial-relay .pickup-points-search-results,
+    #modal-mondial-relay .pickup-points-map {
+        flex-basis: auto;
+    }
+
+    #modal-mondial-relay .pickup-points-map {
+        min-height: 300px;
+    }
+
+    #modal-mondial-relay .pickup-points-search-form .search-pickup-point-form {
+        width: auto;
+    }
+
+    #modal-mondial-relay .pickup-points-search-form .search-pickup-point-form > div {
+        margin-right: 0;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #modal-mondial-relay .pickup-points-search-form .search-pickup-point-form > button {
+        margin: 0;
+        display: block;
+        width: 100%;
+    }
 }

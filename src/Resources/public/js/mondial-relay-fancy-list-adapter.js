@@ -63,6 +63,7 @@ class MondialRelayFancyListAdapter
         let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector);
 
         resultWrapper.querySelector('.pickup-points-no-results').style.display = 'none';
+        resultWrapper.querySelector('.pickup-points-results-list').style.display = 'flex';
         resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
         this.markers = {};
     }
@@ -72,6 +73,7 @@ class MondialRelayFancyListAdapter
 
         if (0 === results.length) {
             resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
+            resultWrapper.querySelector('.pickup-points-results-list').style.display = 'none';
             resultWrapper.querySelector('.pickup-points-no-results').style.display = 'block';
 
             return;
