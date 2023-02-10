@@ -36,10 +36,6 @@ class SherlockodeSyliusMondialRelayExtension extends Extension implements Prepen
                 $config['enable_ticket_printing'] ?? ''
         );
         $container->setParameter('sherlockode_sylius_mondial_relay.google_map_api_key', $config['google_map_api_key'] ?? '');
-        $container->setParameter(
-            'sherlockode_sylius_mondial_relay.pickup_types',
-            $config['pickup_point_types'] ?? []
-        );
     }
 
     /**

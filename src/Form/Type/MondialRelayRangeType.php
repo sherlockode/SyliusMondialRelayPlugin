@@ -49,12 +49,5 @@ class MondialRelayRangeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('currency');
-//        $resolver
-//            ->setDefaults([
-//                'data_class' => null,
-//                'limit' => 10,
-//            ])
-//            ->setAllowedTypes('limit', 'integer')
-        ;
     }
 }

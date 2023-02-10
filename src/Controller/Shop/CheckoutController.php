@@ -186,37 +186,6 @@ class CheckoutController
     }
 
     /**
-     * @return Response
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function getSelectedPickupPoint(): Response
-    {
-        $pickupPoint = null;
-        $cart = $this->cartContext->getCart();
-        $shippingAddress = $cart->getShippingAddress();
-        $shipment = $cart->getShipments()->filter(function (ShipmentInterface $shipment) {
-            return null !== $shipment->getPickupPointId();
-        });
-
-        if ($shipment->count()) {
-            $pickupPoint = $this->apiClient->getPickupPoint(
-                $shipment->first()->getPickupPointId(),
-                $shippingAddress->getCountryCode()
-            );
-        }
-
-        $availablePoints = $this->apiClient->findPickupPointsAround($shippingAddress);
-
-        return new Response($this->twig->render(
-            '@SherlockodeSyliusMondialRelayPlugin/Checkout/current_pickup_point.html.twig',
-            ['pickupPoint' => $pickupPoint, 'availablePoints' => $availablePoints]
-        ));
-    }
-
-    /**
      * @param Request $request
      *
      * @return Response

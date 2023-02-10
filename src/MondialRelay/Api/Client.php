@@ -34,11 +34,6 @@ class Client
     private $privateKey;
 
     /**
-     * @var array
-     */
-    private $types;
-
-    /**
      * @var \SoapClient
      */
     private $soap;
@@ -50,20 +45,17 @@ class Client
      * @param string        $wsdl
      * @param string        $merchantId
      * @param string        $privateKey
-     * @param array         $types
      */
     public function __construct(
         TicketFactory $ticketFactory,
         string $wsdl,
         string $merchantId,
-        string $privateKey,
-        array $types
+        string $privateKey
     ) {
         $this->ticketFactory = $ticketFactory;
         $this->wsdl = $wsdl;
         $this->merchantId = $merchantId;
         $this->privateKey = $privateKey;
-        $this->types = $types;
     }
 
     /**
