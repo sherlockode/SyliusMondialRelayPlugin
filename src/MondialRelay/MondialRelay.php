@@ -65,9 +65,9 @@ class MondialRelay
     }
 
     /**
-     * @param string $zipCode
-     * @param array  $action
-     * @param string $country
+     * @param string       $zipCode
+     * @param string|null  $action
+     * @param string       $country
      *
      * @return Point[]
      *

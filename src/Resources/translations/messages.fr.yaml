@@ -36,3 +36,69 @@ sylius:
         pickup_point_types:
             24r: Relais colis
             drive: Drive
+        api:
+            errors:
+                default: Erreur inconnue
+                invalid_merchant: Enseigne invalide
+                empty_merchant_number: Numéro d'enseigne vide ou inexistant
+                invalid_merchant_account_number: Numéro de compte enseigne invalide
+                invalid_merchant_shipment_reference: Numéro de dossier enseigne invalide
+                invalid_consignee_reference: Numéro de client enseigne invalide
+                invalid_password_or_hash: Mot de passe ou hachage invalide
+                unknown_or_not_unique_city: Ville non reconnu ou non unique
+                invalid_collection_type: Type de collecte invalide
+                invalid_collection_pickup_point_number: Numéro de Relais de Collecte invalide
+                invalid_collection_pickup_point_country: Pays de Relais de collecte invalide
+                invalid_delivery_type: Type de livraison invalide
+                invalid_delivery_pickup_point_number: Numéro de Relais de livraison invalide
+                invalid_delivery_pickup_point_country: Pays de Relais de livraison invalide
+                invalid_parcel_weight: Poids du colis invalide
+                invalid_developed_length: Taille (Longueur + Hauteur) du colis invalide
+                invalid_parcel_size: Taille du Colis invalide
+                invalid_shipment_number: Numéro d'expédition ou de suivi invalide
+                invalid_assembly_time: Temps de montage invalide
+                invalid_collection_or_delivery_mode: Mode de collecte ou de livraison invalide
+                invalid_collection_mode: Mode de collecte invalide
+                invalid_delivery_mode: Mode de livraison invalide
+                invalid_address_l1: Adresse (L1) invalide
+                invalid_address_l2: Adresse (L2) invalide
+                invalid_address_l3: Adresse (L3) invalide
+                invalid_address_l4: Adresse (L4) invalide
+                invalid_city: Ville invalide
+                invalid_zipcode: Code postal invalide
+                invalid_country: Pays invalide
+                invalid_phone_number: Numéro de téléphone invalide
+                invalid_email: Adresse e-mail invalide
+                missing_parameters: Paramètres manquants
+                invalid_code_value: Montant CRT invalide
+                invalid_code_currency: Devise CRT invalide
+                invalid_shipment_value: Valeur du colis invalide
+                invalid_shipment_value_currency: Devise de la valeur du colis invalide
+                end_of_shipments_number_range_reached: Plage de numéro d'expédition épuisée
+                invalid_number_of_parcels: Nombre de colis invalide
+                multi_parcel_not_allowed: Multi-Colis Relais Interdit
+                invalid_action: Action invalide
+                invalid_text_field: Champ texte libre invalide
+                invalid_notification_request: Top avisage invalide
+                invalid_extra_delivery_information: Instruction de livraison invalide
+                invalid_insurance: Assurance invalide
+                invalid_appointment: Top rendez-vous invalide
+                invalid_take_back: Top reprise invalide
+                invalid_latitude: Latitude invalide
+                invalid_longitude: Longitude invalide
+                invalid_merchant_code: Code Enseigne invalide
+                invalid_pickup_point_number: Numéro de Point Relais invalide
+                invalid_pickup_point_type: Nature de point de vente non valide
+                invalid_language: Langue invalide
+                invalid_collection_country: Pays de Collecte invalide
+                invalid_delivery_country: Pays de Livraison invalide
+                invalid_tracking_code_recorded_parcel: "Code tracing : Colis enregistré"
+                invalid_tracking_code_processing_parcel: "Code tracing : Colis en traitement chez Mondial Relay"
+                invalid_tracking_code_delivered_parcel: "Code tracing : Colis livré"
+                invalid_tracking_code_anomaly: "Code tracing : Anomalie"
+                unknown_parcel: Colis Inexistant
+                merchant_account_not_enabled: Compte Enseigne non activé
+                invalid_store_type: Type d'enseigne incorrect en Base
+                invalid_security_key: Clé de sécurité invalide
+                generic_error: Erreur générique
+                system_generic_error: Erreur générique du service
