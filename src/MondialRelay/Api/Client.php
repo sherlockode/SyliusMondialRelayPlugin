@@ -94,21 +94,17 @@ class Client
      *
      * @return Ticket
      *
-     * @throws ApiException
+     * @throws \Exception
      */
     public function WSI2CreationEtiquette(array $payload): Ticket
     {
         $request = new GenericRequest($this->merchantId, $this->privateKey, $payload);
         $request->sign();
 
-        try {
-            $response = $this->getClient()->WSI2_CreationEtiquette($request->getPayload());
-        } catch (\SoapFault $soapFault) {
-            throw new ApiException();
-        }
+        $response = $this->getClient()->WSI2_CreationEtiquette($request->getPayload());
 
         if ($response->WSI2_CreationEtiquetteResult->STAT) {
-            throw new ApiException();
+            throw new ApiException($response->WSI2_CreationEtiquetteResult->STAT);
         }
 
         return $this->ticketFactory->create($response->WSI2_CreationEtiquetteResult);

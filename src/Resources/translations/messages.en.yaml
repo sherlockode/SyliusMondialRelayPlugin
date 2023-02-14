@@ -36,3 +36,69 @@ sylius:
         pickup_point_types:
             24r: Pickup
             drive: Drive
+        api:
+            errors:
+                default: Unknown error
+                invalid_merchant: Incorrect merchant
+                empty_merchant_number: Merchant number empty
+                invalid_merchant_account_number: Incorrect merchant account numbe
+                invalid_merchant_shipment_reference: Incorrect Merchant shipment reference
+                invalid_consignee_reference: Incorrect Consignee reference
+                invalid_password_or_hash: Incorrect password or hash
+                unknown_or_not_unique_city: Unknown or not unique city
+                invalid_collection_type: Incorrect type of collection
+                invalid_collection_pickup_point_number: Incorrect collection Pickup point number
+                invalid_collection_pickup_point_country: Incorrect collection Pickup point country
+                invalid_delivery_type: Incorrect type of delivery
+                invalid_delivery_pickup_point_number: Incorrect delivery Pickup point number
+                invalid_delivery_pickup_point_country: Incorrect delivery Pickup point country
+                invalid_parcel_weight: Incorrect parcel weight
+                invalid_developed_length: Incorrect developped lenght
+                invalid_parcel_size: Incorrect parcel size
+                invalid_shipment_number: Incorrect shipment number
+                invalid_assembly_time: Incorrect assembly time
+                invalid_collection_or_delivery_mode: Incorrect mode of collection or delivery
+                invalid_collection_mode: Incorrect mode of collection
+                invalid_delivery_mode: Incorrect mode of delivery
+                invalid_address_l1: Incorrect address (L1)
+                invalid_address_l2: Incorrect address (L2)
+                invalid_address_l3: Incorrect address (L3)
+                invalid_address_l4: Incorrect address (L4)
+                invalid_city: Incorrect city
+                invalid_zipcode: Incorrect zipcode
+                invalid_country: Incorrect country
+                invalid_phone_number: Incorrect phone number
+                invalid_email: Incorrect email address
+                missing_parameters: Missing parameters
+                invalid_code_value: Incorrect COD value
+                invalid_code_currency: Incorrect COD currency
+                invalid_shipment_value: Incorrect shipment value
+                invalid_shipment_value_currency: Incorrect shipment value currency
+                end_of_shipments_number_range_reached: End of shipments number range reached
+                invalid_number_of_parcels: Incorrect number of parcels
+                multi_parcel_not_allowed: Multi-Parcel not permitted at pickup point
+                invalid_action: Incorrect action
+                invalid_text_field: Incorrect text field
+                invalid_notification_request: Incorrect notification request
+                invalid_extra_delivery_information: Incorrect extra delivery information
+                invalid_insurance: Incorrect insurance
+                invalid_appointment: Incorrect appointement
+                invalid_take_back: Incorrect take back
+                invalid_latitude: Incorrect latitude
+                invalid_longitude: Incorrect longitude
+                invalid_merchant_code: Incorrect merchant code
+                invalid_pickup_point_number: Invalid pickup point
+                invalid_pickup_point_type: Incorrect pickup point type
+                invalid_language: Incorrect language
+                invalid_collection_country: Incorrect country of collection
+                invalid_delivery_country: Incorrect country of delivery
+                invalid_tracking_code_recorded_parcel: "Tracking code : Recorded parcel"
+                invalid_tracking_code_processing_parcel: "Tracking code : Parcel in process at Mondial Relay"
+                invalid_tracking_code_delivered_parcel: "Tracking code : Delivered parcel"
+                invalid_tracking_code_anomaly: "Tracking code : Anomaly"
+                unknown_parcel: Unknown parcel
+                merchant_account_not_enabled: Merchant account not activated
+                invalid_store_type: Invalid merchant type
+                invalid_security_key: Incorrect security key
+                generic_error: Generic error
+                system_generic_error: System generic error

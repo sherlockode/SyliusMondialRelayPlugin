@@ -2,6 +2,8 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Controller\Admin;
 
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\ErrorCode;
+use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\Api\Exception\ApiException;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
@@ -97,10 +99,16 @@ class ShipmentController
         try {
             $ticket = $this->mondialRelay->printTicket($shipment);
         } catch (\Exception $exception) {
-            $message = $this->translator->trans('sylius.mondial_relay.error_when_printing_ticket', [], 'messages');
-            $this->requestStack->getSession()
-                ->getFlashBag()
-                ->add('error', $message);
+            $message = 'sylius.mondial_relay.error_when_printing_ticket';
+
+            if ($exception instanceof ApiException) {
+                $message = 'sylius.mondial_relay.api.errors.' . ErrorCode::getErrorMessageKey($exception->getCode());
+            }
+
+            $this->requestStack->getSession()->getFlashBag()->add(
+                'error',
+                $this->translator->trans($message, [], 'messages')
+            );
 
             return new RedirectResponse($this->urlGenerator->generate('sylius_admin_order_show', [
                 'id' => $shipment->getOrder()->getId(),

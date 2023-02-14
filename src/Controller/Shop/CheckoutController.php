@@ -97,10 +97,13 @@ class CheckoutController
         });
 
         if ($shipment->count()) {
-            $currentPickupPoint = $this->apiClient->getPickupPoint(
-                $shipment->first()->getPickupPointId(),
-                $shippingAddress->getCountryCode(),
-            );
+            try {
+                $currentPickupPoint = $this->apiClient->getPickupPoint(
+                    $shipment->first()->getPickupPointId(),
+                    $shippingAddress->getCountryCode(),
+                );
+            } catch (\Exception $e) {
+            }
         }
 
         if ($currentPickupPoint) {
@@ -201,10 +204,13 @@ class CheckoutController
         $shippingAddress = $cart->getShippingAddress();
 
         if ($request->query->has('pickupPointId')) {
-            $pickupPoint = $this->apiClient->getPickupPoint(
-                $request->query->get('pickupPointId'),
-                $shippingAddress->getCountryCode()
-            );
+            try {
+                $pickupPoint = $this->apiClient->getPickupPoint(
+                    $request->query->get('pickupPointId'),
+                    $shippingAddress->getCountryCode()
+                );
+            } catch (\Exception $e) {
+            }
         }
 
         return new Response($this->twig->render(
