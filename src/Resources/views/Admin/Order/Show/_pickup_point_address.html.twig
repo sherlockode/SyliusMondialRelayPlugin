@@ -1,0 +1,42 @@
+{% for shipment in order.shipments %}
+    {% set pickupPoint = shipment|mondial_relay_pickup_point %}
+    {% if pickupPoint is not null %}
+        <h4 class="ui attached styled header">
+            {{ 'sylius.mondial_relay.pickup_point_address'|trans }}
+        </h4>
+        <div class="ui attached segment" id="pickup-point-address-{{ shipment.id }}">
+            <address>
+            {% if order.shippingAddress is not null %}
+                <strong>{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</strong>
+            {% endif %}
+            {% if pickupPoint.name is not empty %}
+                <br>{{ pickupPoint.name }}
+            {% endif %}
+            {% if pickupPoint.nameComplement is not empty %}
+                <br>{{ pickupPoint.nameComplement }}
+            {% endif %}
+            {% if pickupPoint.street is not empty %}
+                <br>{{ pickupPoint.street }}
+            {% endif %}
+            {% if pickupPoint.streetComplement is not empty %}
+                <br>{{ pickupPoint.streetComplement }}
+            {% endif %}
+            {% if pickupPoint.zipCode is not empty or pickupPoint.city is not empty %}
+                <br>
+                {% if pickupPoint.country is not empty %}
+                    <i class="flag {{ pickupPoint.country|lower }}"></i>
+                {% endif %}
+                {% if pickupPoint.zipCode is not empty %}
+                    {{ pickupPoint.zipCode }}
+                {% endif %}
+                {% if pickupPoint.city is not empty %}
+                    {{ pickupPoint.city }}
+                {% endif %}
+            {% endif %}
+            </address>
+        </div>
+        <div class="ui attached segment">
+            {{ include('@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/Shipment/_print_ticket.html.twig') }}
+        </div>
+    {% endif %}
+{% endfor %}

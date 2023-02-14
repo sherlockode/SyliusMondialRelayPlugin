@@ -4,6 +4,7 @@ namespace Sherlockode\SyliusMondialRelayPlugin\Twig\Extension;
 
 use Sherlockode\SyliusMondialRelayPlugin\Twig\SyliusMondialRelayRuntime;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
@@ -11,6 +12,13 @@ use Twig\TwigFunction;
  */
 class SyliusMondialRelayExtension extends AbstractExtension
 {
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('mondial_relay_pickup_point', [SyliusMondialRelayRuntime::class, 'getPickupPoint'])
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

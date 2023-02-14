@@ -36,6 +36,7 @@ sylius:
         pickup_point_types:
             24r: Relais colis
             drive: Drive
+        pickup_point_address: Adresse du point relais
         api:
             errors:
                 default: Erreur inconnue

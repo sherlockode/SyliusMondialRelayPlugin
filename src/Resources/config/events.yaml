@@ -5,11 +5,11 @@ sylius_ui:
                 mondial_relay:
                     template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Shipment/Grid/Action/_print_ticket.html.twig"
                     priority: 5
-        sylius.admin.order.show.shipment_content:
+        sylius.admin.order.show.sidebar:
             blocks:
                 mondial_relay:
-                    template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/Shipment/_print_ticket.html.twig"
-                    priority: 35
+                    template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/_pickup_point_address.html.twig"
+                    priority: 37
         sylius.shop.layout.after_body:
             blocks:
                 mondial_relay:
