@@ -7,7 +7,10 @@
             <argument type="service" id="router" />
             <argument type="service" id="request_stack" />
             <argument type="service" id="translator" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="twig" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge" />
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.manager.order" />
             <argument>%sherlockode_sylius_mondial_relay.enable_ticket_printing%</argument>
             <tag name="controller.service_arguments" />
         </service>

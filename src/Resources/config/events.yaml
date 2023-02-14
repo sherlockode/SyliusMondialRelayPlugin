@@ -10,6 +10,10 @@ sylius_ui:
                 mondial_relay:
                     template: "@SherlockodeSyliusMondialRelayPlugin/Admin/Order/Show/_pickup_point_address.html.twig"
                     priority: 37
+        sylius.admin.layout.javascripts:
+            blocks:
+                mondial_relay_scripts:
+                    template: "@SherlockodeSyliusMondialRelayPlugin/Admin/_javascripts.html.twig"
         sylius.shop.layout.after_body:
             blocks:
                 mondial_relay:

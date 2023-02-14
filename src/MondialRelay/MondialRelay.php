@@ -87,12 +87,13 @@ class MondialRelay
 
     /**
      * @param ShipmentInterface $shipment
+     * @param array             $userData
      *
      * @return Ticket
      *
      * @throws ApiException
      */
-    public function printTicket(ShipmentInterface $shipment): Ticket
+    public function printTicket(ShipmentInterface $shipment, array $userData): Ticket
     {
         $order = $shipment->getOrder();
         $customer = $order->getCustomer();
@@ -102,17 +103,6 @@ class MondialRelay
         $shop = $channel->getShopBillingData();
         $toLocaleCode = function (string $locale) {
             return strtoupper(substr($locale, 0, 2));
-        };
-        $getOrderTotalWeight = function (OrderInterface $order) {
-            $totalWeight = array_reduce($order->getItems()->toArray(), function ($sum, OrderItemInterface $orderItem) {
-                if ($orderItem->getVariant()) {
-                    $sum += $orderItem->getVariant()->getWeight();
-                }
-
-                return $sum;
-            }, 0);
-
-            return min(15, $totalWeight);
         };
         $gender = CustomerInterface::FEMALE_GENDER === $customer->getGender() ? 'MME' : 'MR';
         $customerName = sprintf(
@@ -149,10 +139,10 @@ class MondialRelay
             'Dest_Tel1' => $customer->getPhoneNumber(),
             'Dest_Tel2' => null,
             'Dest_Mail' => $customer->getEmail(),
-            'Poids' => $getOrderTotalWeight($order),
-            'Longueur' => null,
+            'Poids' => $userData['weight'] ?? 15,
+            'Longueur' => $userData['size'] ?? null,
             'Taille' => null,
-            'NbColis' => 1,
+            'NbColis' => $userData['parcelCount'] ?? 1,
             'CRT_Valeur' => 0,
             'CRT_Devise' => $order->getCurrencyCode(),
             'Exp_Valeur' => $order->getItemsTotal(),

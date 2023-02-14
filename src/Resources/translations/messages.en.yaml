@@ -32,6 +32,9 @@ sylius:
             sunday: Sunday
         time_slot: From %from% to %to%
         print_ticket: Print ticket
+        parcel_count: Parcel count
+        parcel_weight: Parcel weight (gr)
+        parcel_size: Parcel size (cm)
         error_when_printing_ticket: An error occurred when printing ticket
         pickup_point_types:
             24r: Pickup
