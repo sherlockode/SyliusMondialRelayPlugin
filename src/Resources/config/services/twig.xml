@@ -6,6 +6,7 @@
             <tag name="twig.extension" />
         </service>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Twig\SyliusMondialRelayRuntime">
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge"/>
             <argument>%sherlockode_sylius_mondial_relay.google_map_api_key%</argument>
             <argument>%sherlockode_sylius_mondial_relay.enable_ticket_printing%</argument>
             <tag name="twig.runtime" />

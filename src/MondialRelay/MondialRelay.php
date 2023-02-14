@@ -97,6 +97,7 @@ class MondialRelay
         $order = $shipment->getOrder();
         $customer = $order->getCustomer();
         $shippingAddress = $order->getShippingAddress();
+        $billingAddress = $order->getBillingAddress();
         $channel = $order->getChannel();
         $shop = $channel->getShopBillingData();
         $toLocaleCode = function (string $locale) {
@@ -114,7 +115,12 @@ class MondialRelay
             return min(15, $totalWeight);
         };
         $gender = CustomerInterface::FEMALE_GENDER === $customer->getGender() ? 'MME' : 'MR';
-        $customerName = sprintf('%s %s %s', $gender, $customer->getLastName(), $customer->getFirstName());
+        $customerName = sprintf(
+            '%s %s %s',
+            $gender,
+            $shippingAddress->getLastName(),
+            $shippingAddress->getFirstName()
+        );
 
         return $this->client->WSI2CreationEtiquette([
             'ModeCol' => 'CCC',
@@ -135,11 +141,11 @@ class MondialRelay
             'Dest_Langage' => $toLocaleCode($order->getLocaleCode()),
             'Dest_Ad1' => $customerName,
             'Dest_Ad2' => null,
-            'Dest_Ad3' => $shippingAddress->getStreet(),
+            'Dest_Ad3' => substr($billingAddress->getStreet(),0, 32),
             'Dest_Ad4' => null,
-            'Dest_Ville' => $shippingAddress->getCity(),
-            'Dest_CP' => $shippingAddress->getPostcode(),
-            'Dest_Pays' => $shippingAddress->getCountryCode(),
+            'Dest_Ville' => substr($billingAddress->getCity(), 0, 26),
+            'Dest_CP' => $billingAddress->getPostcode(),
+            'Dest_Pays' => $billingAddress->getCountryCode(),
             'Dest_Tel1' => $customer->getPhoneNumber(),
             'Dest_Tel2' => null,
             'Dest_Mail' => $customer->getEmail(),
