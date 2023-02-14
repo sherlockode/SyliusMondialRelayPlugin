@@ -1,0 +1,26 @@
+{% form_theme form with ['@SyliusAdmin/Form/theme.html.twig'] %}
+
+{{ form_start(form, {'attr': {'class': 'ui modal mr-print-ticket-modal'}}) }}
+    <div class="header">
+        {{ 'sylius.mondial_relay.print_ticket'|trans }}
+    </div>
+    <div class="content">
+        <div class="ui form">
+            {{ form_errors(form) }}
+            <div class="two fields">
+                {{ form_row(form.parcelCount) }}
+                {{ form_row(form.weight) }}
+            </div>
+            <div class="two fields">
+                {{ form_row(form.size) }}
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button type="button" class="ui grey deny button">{{ 'sylius.ui.cancel'|trans }}</button>
+        <button type="submit" class="ui teal right labeled icon button">
+            <i class="icon print"></i>
+            {{ 'sylius.mondial_relay.print_ticket'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}

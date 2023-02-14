@@ -6,7 +6,7 @@ class AjaxRequest
         this.params = params;
     }
 
-    send() {
+    send(payload) {
         const url = this.getRealUrl();
         const method = this.method;
 
@@ -27,7 +27,7 @@ class AjaxRequest
             };
 
             request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            request.send();
+            request.send(payload);
         });
     }
 

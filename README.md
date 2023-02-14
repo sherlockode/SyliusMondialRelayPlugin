@@ -63,11 +63,17 @@ class Shipment extends BaseShipment
 
 Don't forget to make a migration or a d:s:u after that
 
-Update your webpack configuration.
+Update your webpack configuration to add entries both in shop config and admin config:
 ```js
 // Shop config
 Encore
-    .addEntry('sherlockode-mondial-relay', './vendor/sherlockode/sylius-mondial-relay-plugin/src/Resources/public/js/entry.js')
+  // ...
+  .addEntry('sherlockode-mondial-relay', './vendor/sherlockode/sylius-mondial-relay-plugin/src/Resources/public/js/entry.js')
+
+// Admin config
+Encore
+  // ...
+  .addEntry('sherlockode-mondial-relay', './SyliusMondialRelayPlugin/src/Resources/public/js/admin.js')
 ```
 
 To finish, don't forget to publish assets:

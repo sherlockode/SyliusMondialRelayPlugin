@@ -32,6 +32,9 @@ sylius:
             sunday: Dimanche
         time_slot: De %from% à %to%
         print_ticket: Imprimer l'étiquette
+        parcel_count: Nombre de colis
+        parcel_weight: Poids des colis (gr)
+        parcel_size: Longueur des colis (cm)
         error_when_printing_ticket: Une erreur est survenue lors de l'impression de l'étiquette
         pickup_point_types:
             24r: Relais colis
