@@ -9,6 +9,7 @@ class MondialRelayFancyListAdapter
         this.searchResultsSelector = searchResultsSelector;
         this.map = null;
         this.markers = {};
+        this.currentPickupPointId = null;
 
         document.getElementById('modal-mondial-relay').addEventListener('click', function (event) {
             let listItem = this.getResultListItemFromClick(event.target);
@@ -16,6 +17,7 @@ class MondialRelayFancyListAdapter
                 let id = listItem.getAttribute('data-relay-point-id');
                 this.highlightPickupPoint(listItem.parentNode, listItem.getAttribute('data-relay-point-id'));
                 if ("undefined" !== typeof(this.markers[id])) {
+                    this.currentPickupPointId = id;
                     this.map.setCenter(this.markers[id].getPosition());
                 }
             }
@@ -40,7 +42,8 @@ class MondialRelayFancyListAdapter
               selectedPointWrapper.style.display = 'none';
             }
 
-            document.querySelector('.smr-pickup-point-id').value = jsonResponse.currentPointId;
+            this.currentPickupPointId = jsonResponse.currentPointId;
+            document.querySelector('.smr-pickup-point-id').value = this.currentPickupPointId;
 
             this.wrapper.innerHTML = JSON.parse(response).address;
             this.wrapper.style.display = 'block';
@@ -88,7 +91,8 @@ class MondialRelayFancyListAdapter
         let ul = document.createElement('ul'),
             bounds = new google.maps.LatLngBounds(),
             chooseLabel = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label'),
-            mrLogo = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-logo');
+            mrLogo = this.getMarkerIcon(),
+            mrLogoSelected = this.getSelectedMarkerIcon();
 
         ul.classList.add('ui', 'accordion');
 
@@ -99,7 +103,6 @@ class MondialRelayFancyListAdapter
                 address = document.createElement('p'),
                 businessHours = document.createElement('div'),
                 table = document.createElement('table');
-            ;
 
             name.setAttribute('class', 'pickup-point-name');
             name.textContent = results[i].label;
@@ -137,21 +140,20 @@ class MondialRelayFancyListAdapter
                     address: results[i].address,
                     ctaLabel: chooseLabel
                 },
-                icon: mrLogo,
+                icon: results[i].id === this.currentPickupPointId ? mrLogoSelected : mrLogo,
             });
             marker.setMap(this.map);
             bounds.extend(marker.getPosition());
             this.markers[results[i].id] = marker;
-            let cb = this.highlightPickupPoint;
 
             marker.addListener('click', function () {
-                cb(ul, results[i].id);
+                this.highlightPickupPoint(ul, results[i].id);
                 marker.getMap().setCenter(marker.getPosition());
 
                 let el = document.querySelector('.relay-point-list-item.highlight');
                 $('#modal-mondial-relay .accordion').accordion('open', i);
                 el.scrollIntoView();
-            });
+            }.bind(this));
         }
 
         resultWrapper.querySelector('.pickup-points-results-list').appendChild(ul);
@@ -171,7 +173,8 @@ class MondialRelayFancyListAdapter
     highlightPickupPoint(list, id) {
         let items = list.querySelectorAll('li'),
             listItem = list.querySelector('li[data-relay-point-id="' + id + '"]'),
-            wrapper = list;
+            wrapper = list,
+            marker = this.markers[id];
 
         while (wrapper !== null && !wrapper.classList.contains('pickup-points-results-list')) {
             wrapper = wrapper.parentNode;
@@ -194,6 +197,13 @@ class MondialRelayFancyListAdapter
         }
 
         listItem.classList.add('highlight');
+
+        if (null !== this.currentPickupPointId && "undefined" !== typeof(this.markers[this.currentPickupPointId])) {
+            this.markers[this.currentPickupPointId].setIcon(this.getMarkerIcon());
+        }
+
+        this.currentPickupPointId = id;
+        marker.setIcon(this.getSelectedMarkerIcon());
     }
 
     getResultListItemFromClick(target) {
@@ -245,6 +255,18 @@ class MondialRelayFancyListAdapter
         text = document.createTextNode(' - ');
         cell.appendChild(text);
         cell.colSpan = 3;
+    }
+
+    getMarkerIcon() {
+        return this.wrapper.querySelector(this.searchResultsSelector)
+          .querySelector('.pickup-points-results-list')
+          .getAttribute('data-marker');
+    }
+
+    getSelectedMarkerIcon() {
+        return this.wrapper.querySelector(this.searchResultsSelector)
+          .querySelector('.pickup-points-results-list')
+          .getAttribute('data-marker-selected');
     }
 }
 
