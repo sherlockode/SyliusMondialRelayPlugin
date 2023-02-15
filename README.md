@@ -76,12 +76,6 @@ Encore
   .addEntry('sherlockode-mondial-relay', './SyliusMondialRelayPlugin/src/Resources/public/js/admin.js')
 ```
 
-To finish, don't forget to publish assets:
-
-```bash
-$ php bin/console assets:install
-```
-
 ## Configuration
 
 Now you only have to create a new shipping method. 
