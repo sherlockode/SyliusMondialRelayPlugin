@@ -113,8 +113,8 @@ class MondialRelay
         );
 
         return $this->client->WSI2CreationEtiquette([
-            'ModeCol' => 'CCC',
-            'ModeLiv' => '24R',
+            'ModeCol' => $userData['collectionMode'] ?? 'REL',
+            'ModeLiv' => $userData['deliveryMode'] ?? '24R',
             'NDossier' => $order->getNumber(),
             'NClient' => $order->getCustomer() ? $order->getCustomer()->getId() : null,
             'Expe_Langage' => $toLocaleCode($channel->getDefaultLocale()->getCode()),

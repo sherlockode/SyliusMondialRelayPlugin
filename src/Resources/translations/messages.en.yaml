@@ -32,6 +32,9 @@ sylius:
             sunday: Sunday
         time_slot: From %from% to %to%
         print_ticket: Print ticket
+        please_select_a_value: Please select a value
+        collection_mode: Mode de collecte
+        delivery_mode: Mode de livraison
         parcel_count: Parcel count
         parcel_weight: Parcel weight (gr)
         parcel_size: Parcel size (cm)
@@ -39,6 +42,18 @@ sylius:
         pickup_point_types:
             24r: Pickup
             drive: Drive
+        collection_modes:
+            ccc: CCC
+            cdr: CDR
+            cds: CDS
+            rel: REL
+        delivery_modes:
+            lcc: Take back
+            24r: Pickup point delivery
+            24l: Pickup point delivery XL
+            hom: Home delivery < 30Kg
+            ld1: Home delivery with appointment (LD1)
+            lds: Home delivery with appointment (LDS)
         pickup_point_address: Pickup point address
         api:
             errors:
