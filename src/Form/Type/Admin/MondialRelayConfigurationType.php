@@ -1,6 +1,6 @@
 <?php
 
-namespace Sherlockode\SyliusMondialRelayPlugin\Form\Type;
+namespace Sherlockode\SyliusMondialRelayPlugin\Form\Type\Admin;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Component\Form\AbstractType;

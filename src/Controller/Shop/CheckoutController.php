@@ -2,7 +2,7 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Controller\Shop;
 
-use Sherlockode\SyliusMondialRelayPlugin\Form\Type\SearchPickupPointType;
+use Sherlockode\SyliusMondialRelayPlugin\Form\Type\Shop\SearchPickupPointType;
 use Sherlockode\SyliusMondialRelayPlugin\Model\Point;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Order\Context\CartContextInterface;

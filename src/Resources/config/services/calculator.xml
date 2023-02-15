@@ -3,7 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Calculator\MondialRelayCalculator">
-            <tag name="sylius.shipping_calculator" calculator="mondial_relay" form-type="Sherlockode\SyliusMondialRelayPlugin\Form\Type\MondialRelayConfigurationType" label="sylius.form.shipping_calculator.mondial_relay.label" />
+            <tag name="sylius.shipping_calculator" calculator="mondial_relay" form-type="Sherlockode\SyliusMondialRelayPlugin\Form\Type\Admin\MondialRelayConfigurationType" label="sylius.form.shipping_calculator.mondial_relay.label" />
         </service>
     </services>
 </container>

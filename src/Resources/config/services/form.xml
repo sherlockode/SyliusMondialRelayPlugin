@@ -10,7 +10,7 @@
         <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Extension\ShippingMethodChoiceTypeExtension">
             <tag name="form.type_extension" extended-type="Sylius\Bundle\ShippingBundle\Form\Type\ShippingMethodChoiceType" />
         </service>
-        <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Type\MondialRelayConfigurationType">
+        <service id="Sherlockode\SyliusMondialRelayPlugin\Form\Type\Admin\MondialRelayConfigurationType">
             <argument type="service" id="sylius.context.channel" />
             <tag name="form.type" />
         </service>
