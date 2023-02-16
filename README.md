@@ -73,7 +73,7 @@ Encore
 // Admin config
 Encore
   // ...
-  .addEntry('sherlockode-mondial-relay', './SyliusMondialRelayPlugin/src/Resources/public/js/admin.js')
+  .addEntry('sherlockode-mondial-relay', './vendor/sherlockode/sylius-mondial-relay-plugin/src/Resources/public/js/admin.js')
 ```
 
 ## Configuration
