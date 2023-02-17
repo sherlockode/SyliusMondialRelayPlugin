@@ -1,9 +1,35 @@
-# Sylius Mondial Relay plugin
+# Sherlockode SyliusMondialRelayPlugin
 
+----
+
+[ ![](https://img.shields.io/packagist/l/sherlockode/sylius-mondial-relay-plugin) ](https://packagist.org/packages/sherlockode/sylius-mondial-relay-plugin "License")
+[ ![](https://img.shields.io/packagist/v/sherlockode/sylius-mondial-relay-plugin) ](https://packagist.org/packages/sherlockode/sylius-mondial-relay-plugin "Version")
+[ ![](https://poser.pugx.org/sherlockode/sylius-mondial-relay-plugin/downloads)](https://packagist.org/packages/sherlockode/sylius-mondial-relay-plugin "Total Downloads")
+[ ![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://www.sherlockode.fr/contactez-nous/?utm_source=github&utm_medium=referral&utm_campaign=plugins_mondial_relay)
+
+
+## Table of Content
+
+***
+
+* [Overview](#overview)
+* [Installation](#installation)
+    * [Usage](#usage)
+* [Demo](#demo-sylius-shop)
+* [License](#license)
+* [Contact](#contact)
+
+# Overview
+
+----
 This plugin enables Mondial Relay shipping method on your Sylius website.
+Note that this plugin only works with a google map API Key in order to display a map in the FO.
 
-## Installation
+----
 
+# Installation
+
+----
 Install the plugin with composer:
 
 ```bash
@@ -76,7 +102,48 @@ Encore
   .addEntry('sherlockode-mondial-relay', './vendor/sherlockode/sylius-mondial-relay-plugin/src/Resources/public/js/admin.js')
 ```
 
-## Configuration
+----
 
-Now you only have to create a new shipping method. 
+## Usage
+
+Now you only have to create a new shipping method.
 For the Shipping charges option, select "Mondial Relay"
+
+----
+
+# Demo Sylius Shop
+
+---
+
+We created a demo app with some useful use-cases of plugins!
+Visit [sylius-demo.sherlockode.fr](https://sylius-demo.sherlockode.fr/) to take a look at it. The admin can be accessed under
+[sylius-demo.sherlockode.fr/admin/login](https://sylius-demo.sherlockode.fr/admin/login) link.
+Plugins that we have used in the demo:
+
+| Plugin name                  | GitHub                                                     | Sylius' Store |
+|------------------------------|------------------------------------------------------------|---------------|
+| Advance Content Bundle (ACB) | https://github.com/sherlockode/SyliusAdvancedContentPlugin | -             |
+| Mondial Relay                | https://github.com/sherlockode/SyliusMondialRelayPlugin    | -             |
+| Checkout Plugin              | https://github.com/sherlockode/SyliusCheckoutPlugin        | -             |
+| FAQ                          | https://github.com/sherlockode/SyliusFAQPlugin             | -             |
+
+## Additional resources for developers
+
+---
+To learn more about our contribution workflow and more, we encourage you to use the following resources:
+* [Sylius Documentation](https://docs.sylius.com/en/latest/)
+* [Sylius Contribution Guide](https://docs.sylius.com/en/latest/contributing/)
+* [Sylius Online Course](https://sylius.com/online-course/)
+
+## License
+
+---
+
+This plugin's source code is completely free and released under the terms of the MIT license.
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
+
+## Contact
+
+---
+If you want to contact us, the best way is to fill the form on [our website](https://www.sherlockode.fr/contactez-nous/?utm_source=github&utm_medium=referral&utm_campaign=plugins_mondial_relay) or send us an e-mail to contact@sherlockode.fr with your question(s). We guarantee that we answer as soon as we can!
