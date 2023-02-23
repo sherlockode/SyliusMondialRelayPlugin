@@ -12,7 +12,8 @@ class MondialRelay
             showListPanelBtn: 'button[data-load-pickup-point-list]',
             searchForm: '.pickup-points-input form.search-pickup-point-form',
             searchResults: '.pickup-points-search-results',
-            modal: document.getElementById('modal-mondial-relay'),
+            modalId: 'modal-mondial-relay',
+            closeModalBtn: '.close-modal'
         });
 
         this.urls = this.getOption(options, 'urls');
@@ -95,6 +96,10 @@ class MondialRelay
             if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.showListPanelBtn), event.target)) {
                 this.onShowSearchPanel();
             }
+            // Click to close modal
+            if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.closeModalBtn), event.target)) {
+                this.onHideSearchPanel();
+            }
         }.bind(this), false);
 
         document.addEventListener('submit', function (event) {
@@ -137,11 +142,22 @@ class MondialRelay
 
     onShowSearchPanel() {
         this.adapter.onShowSearchPanel();
+        let modal = document.getElementById(this.selectors.modalId);
 
-        $('#modal-mondial-relay').modal('show');
-        document.getElementById('modal-mondial-relay').querySelector('.pickup-points-search').style.display = 'flex';
+        if (modal) {
+            $(modal).modal('show');
+            modal.querySelector('.pickup-points-search').style.display = 'flex';
 
-        this.onSearch();
+            this.onSearch();
+        }
+    }
+
+    onHideSearchPanel() {
+        let modal = document.getElementById(this.selectors.modalId);
+
+        if (modal) {
+            $(modal).modal('hide');
+        }
     }
 
     onSearch() {

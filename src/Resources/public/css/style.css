@@ -13,14 +13,12 @@
     padding: 0;
 }
 
-.smr_wrapper .pickup-points-results-list li {
-    width: 100%;
-    margin-bottom: 0.5em;
-}
-
 .smr_wrapper .pickup-points-search {
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
+    height: 60vh;
+    overflow: hidden;
 }
 
 .smr_wrapper .pickup-points-search-results {
@@ -57,13 +55,7 @@
 }
 
 .smr_wrapper .pickup-points-map {
-    height: 100%;
-}
-
-@media only screen and (min-width : 1024.1px) {
-    .smr_wrapper .pickup-points-map {
-        height: calc(80vh - 110px);
-    }
+    max-height: 100%;
 }
 
 .smr_wrapper .pickup-points-map button {
@@ -82,6 +74,49 @@
     margin-right: 10px;
 }
 
+@media only screen and (min-width : 1440px) {
+    .dimmer #modal-mondial-relay { width: 1280px; }
+}
+
+.dimmer #modal-mondial-relay .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dimmer #modal-mondial-relay .close-modal {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.dimmer #modal-mondial-relay .close-modal::before,
+.dimmer #modal-mondial-relay .close-modal::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    inset: 0;
+    left: 10px;
+    transition: background-color 0.25s ease;
+}
+
+.dimmer #modal-mondial-relay .close-modal:hover::before,
+.dimmer #modal-mondial-relay .close-modal:hover::after {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.dimmer #modal-mondial-relay .close-modal::before {
+    transform: rotate(45deg);
+}
+
+.dimmer #modal-mondial-relay .close-modal::after {
+    transform: rotate(-45deg);
+}
+
 .dimmer #modal-mondial-relay .ui.button.deny {
     color: unset !important;
     background: #E0E1E2 !important;
@@ -93,13 +128,8 @@
 
 @media only screen and (min-width : 1024.1px) {
     #modal-mondial-relay > .content {
-        height: 80vh;
         overflow: hidden;
     }
-}
-
-#modal-mondial-relay .pickup-points-search {
-    height: calc(80vh - 42px);
 }
 
 #modal-mondial-relay .pickup-points-search-form {
@@ -131,9 +161,12 @@
     margin: 0 0 0 auto;
 }
 
-#modal-mondial-relay .pickup-points-search-results,
+#modal-mondial-relay .pickup-points-search-results {
+    flex-basis: 40%;
+}
+
 #modal-mondial-relay .pickup-points-map {
-    flex-basis: 50%;
+    flex-basis: 60%;
 }
 
 #modal-mondial-relay .pickup-points-search-results {
@@ -143,7 +176,6 @@
 
 @media only screen and (max-width : 1024px) {
     #modal-mondial-relay .pickup-points-search-results {
-        max-height: 30vh;
         display: block;
     }
 }
@@ -167,29 +199,45 @@
 }
 
 #modal-mondial-relay .relay-point-list-item {
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-#modal-mondial-relay .relay-point-list-item.highlight {
-    background: #eee;
+    width: 100%;
 }
 
 #modal-mondial-relay .relay-point-list-item td[colspan]:not([colspan="1"]) {
     text-align: center;
 }
 
-#modal-mondial-relay .ui.accordion .point-business-hours {
+#modal-mondial-relay .relay-point-list-item .pickup-point-card {
+    border-left: solid 2px #f6abb6;
+    margin: 0 0 0.35em 0.5em;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#modal-mondial-relay .relay-point-list-item.highlight .pickup-point-card,
+#modal-mondial-relay .relay-point-list-item:hover .pickup-point-card {
+    border-left-color: #96154a;
+    background: #eee;
+}
+
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .pickup-point-name {
+    color: #96154a;
+}
+
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .pickup-point-address {
+    font-size: 0.85em;
+}
+
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .point-business-hours {
     display: none;
-    font-size: 12px;
+    font-size: 0.85em;
 }
 
-#modal-mondial-relay .ui.accordion .point-business-hours.active {
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .point-business-hours table {
+    margin-top: 1em;
+}
+
+#modal-mondial-relay .relay-point-list-item.highlight .pickup-point-card .point-business-hours {
     display: block;
-}
-
-#modal-mondial-relay .ui.accordion .point-business-hours table {
-    margin-top: 16px;
 }
 
 #current-pickup-point p {
