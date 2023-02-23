@@ -1,6 +1,7 @@
 {% if pickupPoint is defined %}
 <div class="pickup-point-card">
     <p class="pickup-point-name">{{ pickupPoint.name }}</p>
-    <p class="pickup-point-address">{{ pickupPoint.fullAddress }}</p>
+    <p class="pickup-point-address">{{ pickupPoint.shortAddress }}</p>
+    <p class="pickup-point-address">{{ pickupPoint.zipCode }} {{ pickupPoint.city }}</p>
 </div>
 {% endif %}

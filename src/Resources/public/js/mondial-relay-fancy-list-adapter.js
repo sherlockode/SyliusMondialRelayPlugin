@@ -38,9 +38,6 @@ class MondialRelayFancyListAdapter
         request.send().then(function (response) {
             let jsonResponse = JSON.parse(response);
             selectedPointWrapper.innerHTML = jsonResponse.current;
-            if (null === selectedPointWrapper.querySelector('.pickup-point-card')) {
-              selectedPointWrapper.style.display = 'none';
-            }
 
             this.currentPickupPointId = jsonResponse.currentPointId;
             document.querySelector('.smr-pickup-point-id').value = this.currentPickupPointId;
@@ -86,6 +83,10 @@ class MondialRelayFancyListAdapter
             center: { lat: -34.397, lng: 150.644 },
             zoom: 13,
             disableDefaultUI: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP,
+            },
         });
 
         let ul = document.createElement('ul'),
@@ -101,6 +102,7 @@ class MondialRelayFancyListAdapter
                 card = document.createElement('div'),
                 name = document.createElement('p'),
                 address = document.createElement('p'),
+                addressComplement = document.createElement('p'),
                 businessHours = document.createElement('div'),
                 table = document.createElement('table');
 
@@ -109,6 +111,21 @@ class MondialRelayFancyListAdapter
 
             address.setAttribute('class', 'pickup-point-address');
             address.textContent = results[i].address;
+
+            let complement = [];
+
+            if (results[i].zipCode) {
+                complement.push(results[i].zipCode);
+            }
+
+            if (results[i].city) {
+                complement.push(results[i].city);
+            }
+
+            if (complement.length > 0) {
+                addressComplement.setAttribute('class', 'pickup-point-address');
+                addressComplement.textContent = complement.join(' ');
+            }
 
             results[i].businessHours.forEach((item) => {
                 this.generateBusinessHoursTable(table, item);
@@ -120,6 +137,9 @@ class MondialRelayFancyListAdapter
             card.setAttribute('class', 'pickup-point-card');
             card.appendChild(name);
             card.appendChild(address);
+            if (complement.length > 0) {
+                card.appendChild(addressComplement);
+            }
             card.appendChild(businessHours);
 
             li.setAttribute('class', 'relay-point-list-item');

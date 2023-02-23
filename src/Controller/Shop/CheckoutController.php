@@ -180,7 +180,10 @@ class CheckoutController
             return [
                 'id' => $point->getId(),
                 'label' => $point->getName(),
-                'address' => $point->getFullAddress(),
+                'address' => $point->getShortAddress(),
+                'zipCode' => $point->getZipCode(),
+                'city' => $point->getCity(),
+                'country' => $point->getCountry(),
                 'lat' => $point->getLatitude(),
                 'lng' => $point->getLongitude(),
                 'businessHours' => array_values($timeSlots),
