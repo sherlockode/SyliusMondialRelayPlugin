@@ -120,11 +120,11 @@ class MondialRelayFancyListAdapter
             card.setAttribute('class', 'pickup-point-card');
             card.appendChild(name);
             card.appendChild(address);
+            card.appendChild(businessHours);
 
             li.setAttribute('class', 'relay-point-list-item');
             li.setAttribute('data-relay-point-id', results[i].id);
             li.appendChild(card);
-            li.appendChild(businessHours);
 
             ul.appendChild(li);
 
@@ -154,6 +154,10 @@ class MondialRelayFancyListAdapter
                 $('#modal-mondial-relay .accordion').accordion('open', i);
                 el.scrollIntoView();
             }.bind(this));
+        }
+
+        if (null !== this.currentPickupPointId) {
+            this.highlightPickupPoint(ul, this.currentPickupPointId);
         }
 
         resultWrapper.querySelector('.pickup-points-results-list').appendChild(ul);
