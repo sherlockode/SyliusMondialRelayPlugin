@@ -104,15 +104,15 @@ class MondialRelayFancyListAdapter
                 address = document.createElement('p'),
                 addressComplement = document.createElement('p'),
                 businessHours = document.createElement('div'),
-                table = document.createElement('table');
+                table = document.createElement('table'),
+                complement = [],
+                liClasses = ['relay-point-list-item'];
 
             name.setAttribute('class', 'pickup-point-name');
             name.textContent = results[i].label;
 
             address.setAttribute('class', 'pickup-point-address');
             address.textContent = results[i].address;
-
-            let complement = [];
 
             if (results[i].zipCode) {
                 complement.push(results[i].zipCode);
@@ -125,6 +125,10 @@ class MondialRelayFancyListAdapter
             if (complement.length > 0) {
                 addressComplement.setAttribute('class', 'pickup-point-address');
                 addressComplement.textContent = complement.join(' ');
+            }
+
+            if (!this.pointIsOpen(results[i].businessHours)) {
+                liClasses.push('close');
             }
 
             results[i].businessHours.forEach((item) => {
@@ -142,7 +146,7 @@ class MondialRelayFancyListAdapter
             }
             card.appendChild(businessHours);
 
-            li.setAttribute('class', 'relay-point-list-item');
+            li.setAttribute('class', liClasses.join(' '));
             li.setAttribute('data-relay-point-id', results[i].id);
             li.appendChild(card);
 
@@ -256,29 +260,63 @@ class MondialRelayFancyListAdapter
 
         cell.appendChild(text);
 
-        if ("undefined" !== typeof(data.slots) && 0 < data.slots.length) {
+        if ("undefined" === typeof(data.slots) || 0 >= data.slots.length) {
             cell = row.insertCell();
-            text = document.createTextNode(data.slots[0]);
-            cell.appendChild(text);
+            cell.appendChild(document.createTextNode(' - '));
+            cell.colSpan = 2;
 
-            if ("undefined" !== typeof(data.slots[1])) {
+            return;
+        }
+
+        if ("undefined" === typeof(data.slots[1])) {
+            let isAfternoonSlot = parseInt(data.slots[0].from.substring(0, 2)) >= 12;
+
+            if (isAfternoonSlot) {
                 cell = row.insertCell();
                 cell.appendChild(document.createTextNode(' - '));
+            }
 
+            cell = row.insertCell();
+            cell.appendChild(document.createTextNode(data.slots[0].from + ' - ' + data.slots[0].to));
+
+            if (!isAfternoonSlot) {
                 cell = row.insertCell();
-                text = document.createTextNode(data.slots[1]);
-                cell.appendChild(text);
-            } else {
-                cell.colSpan = 3;
+                cell.appendChild(document.createTextNode(' - '));
             }
 
             return;
         }
 
         cell = row.insertCell();
-        text = document.createTextNode(' - ');
-        cell.appendChild(text);
-        cell.colSpan = 3;
+        cell.appendChild(document.createTextNode(data.slots[0].from + ' - ' + data.slots[0].to));
+        cell = row.insertCell();
+        cell.appendChild(document.createTextNode(data.slots[1].from + ' - ' + data.slots[1].to));
+    }
+
+    pointIsOpen(businessHours) {
+        let now = new Date();
+
+        for (let i = 0; i < businessHours.length; i++) {
+            if (now.getDay() !== businessHours[i].day) {
+                continue;
+            }
+
+            for (let j = 0; j < businessHours[i].slots.length; j++) {
+                let start = new Date(),
+                    end = new Date(),
+                    from = businessHours[i].slots[j].from,
+                    to = businessHours[i].slots[j].to;
+
+                start.setHours(parseInt(from.substring(0, 2)), parseInt(from.substring(from.length - 2, from.length)));
+                end.setHours(parseInt(to.substring(0, 2)), parseInt(to.substring(to.length - 2, to.length)));
+
+                if (now.getTime() > start.getTime() && now.getTime() < end.getTime()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     getMarkerIcon() {

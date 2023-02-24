@@ -17,9 +17,22 @@ class OpeningTimeSlotFactory
     {
         $timeSlot = new OpeningTimeSlot();
         $timeSlot->setDay($day);
-        $timeSlot->setOpeningTime($openingTime);
-        $timeSlot->setClosingTime($closingTime);
+        $timeSlot->setOpeningTime($this->toDateTime($openingTime));
+        $timeSlot->setClosingTime($this->toDateTime($closingTime));
 
         return $timeSlot;
+    }
+
+    /**
+     * @param string $time
+     *
+     * @return \DateTimeInterface
+     */
+    private function toDateTime(string $time): \DateTimeInterface
+    {
+        $dateTime = new \DateTime();
+        $dateTime->setTime((int)substr($time, 0, 2), (int)substr($time, 2, 2));
+
+        return $dateTime;
     }
 }

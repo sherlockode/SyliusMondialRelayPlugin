@@ -10,12 +10,12 @@ class OpeningTimeSlot
     private $day;
 
     /**
-     * @var string
+     * @var \DateTimeInterface
      */
     private $openingTime;
 
     /**
-     * @var string
+     * @var \DateTimeInterface
      */
     private $closingTime;
 
@@ -40,19 +40,19 @@ class OpeningTimeSlot
     }
 
     /**
-     * @return string|null
+     * @return \DateTimeInterface|null
      */
-    public function getOpeningTime(): ?string
+    public function getOpeningTime(): ?\DateTimeInterface
     {
         return $this->openingTime;
     }
 
     /**
-     * @param string|null $openingTime
+     * @param \DateTimeInterface|null $openingTime
      *
      * @return $this
      */
-    public function setOpeningTime(?string $openingTime): self
+    public function setOpeningTime(?\DateTimeInterface $openingTime): self
     {
         $this->openingTime = $openingTime;
 
@@ -60,19 +60,19 @@ class OpeningTimeSlot
     }
 
     /**
-     * @return string|null
+     * @return \DateTimeInterface|null
      */
-    public function getClosingTime(): ?string
+    public function getClosingTime(): ?\DateTimeInterface
     {
         return $this->closingTime;
     }
 
     /**
-     * @param string|null $closingTime
+     * @param \DateTimeInterface|null $closingTime
      *
      * @return $this
      */
-    public function setClosingTime(?string $closingTime): self
+    public function setClosingTime(?\DateTimeInterface $closingTime): self
     {
         $this->closingTime = $closingTime;
 
