@@ -30,7 +30,6 @@ sylius:
             friday: Vendredi
             saturday: Samedi
             sunday: Dimanche
-        time_slot: De %from% à %to%
         print_ticket: Imprimer l'étiquette
         please_select_a_value: Veuillez choisir une valeur
         collection_mode: Mode de collecte

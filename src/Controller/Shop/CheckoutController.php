@@ -162,19 +162,16 @@ class CheckoutController
             foreach ($point->getOpeningHours() as $timeSlot) {
                 if (!isset($timeSlots[$timeSlot->getDay()])) {
                     $timeSlots[$timeSlot->getDay()] = [
+                        'day' => $timeSlot->getDay(),
                         'label' => $this->translator->trans(sprintf('sylius.mondial_relay.day.%s', $timeSlot->getDayLabel()), [], 'messages'),
                         'slots' => [],
                     ];
                 }
 
-                $timeSlots[$timeSlot->getDay()]['slots'][] = $this->translator->trans(
-                    'sylius.mondial_relay.time_slot',
-                    [
-                        '%from%' => substr_replace($timeSlot->getOpeningTime(), ':', 2, 0),
-                        '%to%' => substr_replace($timeSlot->getClosingTime(), ':', 2, 0),
-                    ],
-                    'messages'
-                );
+                $timeSlots[$timeSlot->getDay()]['slots'][] = [
+                    'from' => $timeSlot->getOpeningTime() ? $timeSlot->getOpeningTime()?->format('H\hi') : null,
+                    'to' => $timeSlot->getClosingTime() ? $timeSlot->getClosingTime()?->format('H\hi') : null,
+                ];
             }
 
             return [

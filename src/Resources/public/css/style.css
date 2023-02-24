@@ -205,14 +205,22 @@
 }
 
 #modal-mondial-relay .relay-point-list-item .pickup-point-card {
-    border-left: solid 2px #f6abb6;
+    border-left: solid 2px rgba(0, 0, 0, 0.25);
     margin: 0 0 0.35em 0.5em;
     padding: 10px;
     cursor: pointer;
 }
 
-#modal-mondial-relay .relay-point-list-item.highlight .pickup-point-card,
-#modal-mondial-relay .relay-point-list-item:hover .pickup-point-card {
+#modal-mondial-relay .relay-point-list-item.close {
+    opacity: 0.6;
+}
+
+#modal-mondial-relay .relay-point-list-item:not(.close) .pickup-point-card {
+    border-left-color:  #f6abb6;
+}
+
+#modal-mondial-relay .relay-point-list-item.highlight.close .pickup-point-card,
+#modal-mondial-relay .relay-point-list-item:hover:not(.close) .pickup-point-card {
     border-left-color: #96154a;
     background: #eee;
 }
@@ -232,6 +240,16 @@
 
 #modal-mondial-relay .relay-point-list-item .pickup-point-card .point-business-hours table {
     margin-top: 1em;
+}
+
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .point-business-hours table td {
+    padding: 3px 10px;
+    text-align: center;
+}
+
+#modal-mondial-relay .relay-point-list-item .pickup-point-card .point-business-hours table tr td:first-child {
+    padding-left: 0;
+    text-align: left;
 }
 
 #modal-mondial-relay .relay-point-list-item.highlight .pickup-point-card .point-business-hours {
