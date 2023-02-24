@@ -21,6 +21,7 @@
             <argument type="service" id="sylius.context.cart.composite" />
             <argument type="service" id="twig" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge" />
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.google.place" />
             <tag name="controller.service_arguments" />
         </service>
     </services>

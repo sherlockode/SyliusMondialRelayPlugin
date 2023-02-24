@@ -5,9 +5,10 @@
                 defaultUrl: '{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}',
                 searchUrl: '{{ path('sherlockode_sylius_mondial_relay_search_pickup_points') }}',
                 findUrl: '{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}',
+                autocompleteUrl: '{{ path('sherlockode_sylius_mondial_relay_autocomplete') }}'
             }
         }
     </script>
     {{ encore_entry_script_tags('sherlockode-mondial-relay', null, 'shop') }}
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api_key() }}&callback=Function.prototype"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key() }}&callback=Function.prototype"></script>
 {% endif %}

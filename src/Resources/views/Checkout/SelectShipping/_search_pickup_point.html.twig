@@ -2,7 +2,12 @@
     <div class="pickup-points-search-form ui form">
         <div class="pickup-points-input">
             {{ form_start(form, {'attr': {'class': 'search-pickup-point-form'}}) }}
-            {{ form_row(form.zipCode) }}
+            <div class="search-pickup-point-autocomplete">
+                {{ form_label(form.zipCode) }}
+                {{ form_widget(form.zipCode, {'attr': {'autocomplete': 'off', 'data-mr-autocomplete': 'true'}}) }}
+                {{ form_widget(form.suggestion) }}
+                <ul></ul>
+            </div>
             {{ form_row(form.types) }}
             <button title="{{ 'sylius.mondial_relay.search'|trans }}" type="submit" class="ui primary button">{{ 'sylius.mondial_relay.search'|trans }}</button>
             {{ form_end(form) }}

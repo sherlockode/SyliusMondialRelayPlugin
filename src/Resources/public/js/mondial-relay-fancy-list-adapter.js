@@ -2,14 +2,28 @@ import AjaxRequest from './ajax-request';
 
 class MondialRelayFancyListAdapter
 {
-    constructor(wrapper, selectedPointWrapper, defaultUrl, searchResultsSelector) {
+    constructor(wrapper, selectedPointWrapper, defaultUrl, autocompleteUrl, autocompleteWrapperSelector, searchResultsSelector) {
         this.wrapper = wrapper;
         this.selectedPointWrapper = selectedPointWrapper;
         this.defaultUrl = defaultUrl;
+        this.autocompleteUrl = autocompleteUrl;
+        this.autocompleteWrapperSelector = autocompleteWrapperSelector;
         this.searchResultsSelector = searchResultsSelector;
         this.map = null;
         this.markers = {};
         this.currentPickupPointId = null;
+        this.debounce = (function () {
+            return function (func, delay = 300) {
+                let timeout;
+
+                return function (...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        func.apply(this, args);
+                    }, delay);
+                }
+            }
+        })();
 
         document.getElementById('modal-mondial-relay').addEventListener('click', function (event) {
             let listItem = this.getResultListItemFromClick(event.target);
@@ -20,6 +34,20 @@ class MondialRelayFancyListAdapter
                     this.currentPickupPointId = id;
                     this.map.setCenter(this.markers[id].getPosition());
                 }
+
+                return;
+            }
+
+            if (event.target.getAttribute('data-autocomplete-item')) {
+                return this.onSelectAutocompleteItem(event.target);
+            }
+        }.bind(this));
+
+        document.getElementById('modal-mondial-relay').addEventListener('keyup', function (event) {
+            if (event.target.getAttribute('data-mr-autocomplete')) {
+                this.debounce(function () {
+                    this.autocomplete();
+                }.bind(this), 100)();
             }
         }.bind(this));
 
@@ -57,6 +85,19 @@ class MondialRelayFancyListAdapter
 
     onShowSearchPanel() {
         document.querySelector('.pickup-points-map').style.display = 'block';
+
+        let autocompleteWrapper = this.wrapper.querySelector(this.autocompleteWrapperSelector),
+            autocompleteInput = autocompleteWrapper.querySelector('input[type="text"]');
+
+        autocompleteInput.removeEventListener('blur', this.onBlurAutocompleteInput);
+        autocompleteInput.addEventListener('blur', this.onBlurAutocompleteInput.bind(this));
+    }
+
+    onHideSearchPanel() {
+        let autocompleteWrapper = this.wrapper.querySelector(this.autocompleteWrapperSelector),
+            autocompleteInput = autocompleteWrapper.querySelector('input[type="text"]');
+
+        autocompleteInput.removeEventListener('blur', this.onBlurAutocompleteInput);
     }
 
     onSearchStart() {
@@ -329,6 +370,61 @@ class MondialRelayFancyListAdapter
         return this.wrapper.querySelector(this.searchResultsSelector)
           .querySelector('.pickup-points-results-list')
           .getAttribute('data-marker-selected');
+    }
+
+    autocomplete() {
+        let autocompleteWrapper = this.wrapper.querySelector(this.autocompleteWrapperSelector),
+            queryInput = autocompleteWrapper.querySelector('input[type="text"]'),
+            suggestionInput = autocompleteWrapper.querySelector('input[type="hidden"]'),
+            resultsList = autocompleteWrapper.querySelector('ul'),
+            request = new AjaxRequest(this.autocompleteUrl, 'GET', {
+            query: queryInput.value,
+        });
+
+        resultsList.style.display = 'none';
+        suggestionInput.value = '';
+
+        request.send().then(function (response) {
+            let places = JSON.parse(response);
+
+            resultsList.innerHTML = '';
+
+            for (let i = 0; i < places.length; i++) {
+                let li = document.createElement('li')
+                li.setAttribute('data-autocomplete-item', places[i].id);
+                li.appendChild(document.createTextNode(places[i].label));
+                resultsList.appendChild(li);
+            }
+
+            resultsList.style.display = 'block';
+        });
+    }
+
+    onSelectAutocompleteItem(item) {
+        let autocompleteWrapper = this.wrapper.querySelector(this.autocompleteWrapperSelector),
+            resultsList = autocompleteWrapper.querySelector('ul'),
+            queryInput = autocompleteWrapper.querySelector('input[type="text"]'),
+            suggestionInput = autocompleteWrapper.querySelector('input[type="hidden"]'),
+            query = item.innerText.trim();
+
+        queryInput.value = query;
+        suggestionInput.value = item.getAttribute('data-autocomplete-item');
+        resultsList.style.display = 'none';
+        resultsList.innerHTML = '';
+
+        if (query) {
+            document.dispatchEvent(new CustomEvent('search_pickup_points'));
+        }
+    }
+
+    onBlurAutocompleteInput = function () {
+        let autocompleteWrapper = this.wrapper.querySelector(this.autocompleteWrapperSelector),
+            list = autocompleteWrapper.querySelector('ul');
+
+        this.debounce(function () {
+            list.style.display = 'none';
+            list.innerHTML = '';
+        }.bind(this), 300)();
     }
 }
 

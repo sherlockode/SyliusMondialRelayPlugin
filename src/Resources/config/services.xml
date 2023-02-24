@@ -6,6 +6,7 @@
         <import resource="services/controller.xml"/>
         <import resource="services/event_listener.xml"/>
         <import resource="services/form.xml"/>
+        <import resource="services/google.xml"/>
         <import resource="services/manager.xml"/>
         <import resource="services/mondial_relay.xml"/>
         <import resource="services/twig.xml"/>

@@ -18,6 +18,11 @@
             controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::getPickupPoint"
     />
     <route
+            id="sherlockode_sylius_mondial_relay_autocomplete"
+            path="/mondial-relay/place-autocomplete"
+            controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController::autocomplete"
+    />
+    <route
             id="sherlockode_sylius_mondial_relay_admin_print_ticket"
             path="/%sylius_admin.path_name%/shipments/{id}/mondial-relay/print-ticket"
             controller="Sherlockode\SyliusMondialRelayPlugin\Controller\Admin\ShipmentController::printTicket"
