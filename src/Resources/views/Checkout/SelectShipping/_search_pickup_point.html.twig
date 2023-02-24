@@ -9,6 +9,11 @@
                 <ul></ul>
             </div>
             {{ form_row(form.types) }}
+            <div>
+                <button type="button" class="ui icon mini primary button" data-mr-geolocalisation>
+                    <i class="icon crosshairs"></i>
+                </button>
+            </div>
             <button title="{{ 'sylius.mondial_relay.search'|trans }}" type="submit" class="ui primary button">{{ 'sylius.mondial_relay.search'|trans }}</button>
             {{ form_end(form) }}
         </div>
