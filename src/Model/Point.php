@@ -455,8 +455,8 @@ class Point
     public function getShortAddress(): string
     {
         $address = array_filter([
-            $this->getStreet(),
-            $this->getStreetComplement()
+            trim($this->getStreet()),
+            trim($this->getStreetComplement())
         ]);
 
         return implode(', ', $address);
