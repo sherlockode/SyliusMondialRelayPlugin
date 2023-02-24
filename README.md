@@ -45,14 +45,8 @@ sherlockode_sylius_mondial_relay:
     wsdl: The mondial relay WSDL
     merchant_id: Your merchant ID
     private_key: Your private key
-    google_map_api_key: '%env(GOOGLE_MAP_API_KEY)%'
+    google_api_key: '%env(GOOGLE_API_KEY)%'
     enable_ticket_printing: true
-```
-
-```dotenv
-#.env
-
-GOOGLE_MAP_API_KEY=xxxxxxxxxxxx
 ```
 
 Import routing:
@@ -106,8 +100,17 @@ Encore
 
 ## Usage
 
+### Shipping method configuration
+
 Now you only have to create a new shipping method.
 For the Shipping charges option, select "Mondial Relay"
+
+### Google API integration
+
+In order to show a map to select pickup points, you need to enable Google Map API for your token.
+You can do it in the [Google Cloud Console](https://console.cloud.google.com)
+
+Additionally, you may want to enable Google Place API to show places suggestions when searching pickup points. 
 
 ----
 
