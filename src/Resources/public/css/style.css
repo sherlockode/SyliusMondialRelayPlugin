@@ -148,6 +148,31 @@
     align-items: center;
 }
 
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-autocomplete {
+    position: relative;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-autocomplete ul {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    width: 100%;
+    display: none;
+    right: 0;
+    top: 45px;
+    z-index: 2;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-autocomplete ul li {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+#modal-mondial-relay .pickup-points-search-form .search-pickup-point-autocomplete ul li:hover {
+    background: #eee;
+}
+
 #modal-mondial-relay .pickup-points-search-form .search-pickup-point-form label {
     margin: 0 20px 0 0 !important;
     padding-bottom: 0 !important;

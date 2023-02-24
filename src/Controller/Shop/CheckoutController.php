@@ -3,6 +3,7 @@
 namespace Sherlockode\SyliusMondialRelayPlugin\Controller\Shop;
 
 use Sherlockode\SyliusMondialRelayPlugin\Form\Type\Shop\SearchPickupPointType;
+use Sherlockode\SyliusMondialRelayPlugin\Google\Place;
 use Sherlockode\SyliusMondialRelayPlugin\Model\Point;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
 use Sylius\Component\Order\Context\CartContextInterface;
@@ -55,6 +56,11 @@ class CheckoutController
     private $apiClient;
 
     /**
+     * @var Place
+     */
+    private $googlePlace;
+
+    /**
      * CheckoutController constructor.
      *
      * @param TranslatorInterface   $translator
@@ -63,6 +69,7 @@ class CheckoutController
      * @param CartContextInterface  $cartContext
      * @param Environment           $twig
      * @param MondialRelay          $apiClient
+     * @param Place                 $googlePlace
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -70,7 +77,8 @@ class CheckoutController
         FormFactoryInterface $formFactory,
         CartContextInterface $cartContext,
         Environment $twig,
-        MondialRelay $apiClient
+        MondialRelay $apiClient,
+        Place $googlePlace
     ) {
         $this->translator = $translator;
         $this->urlGenerator = $urlGenerator;
@@ -78,6 +86,7 @@ class CheckoutController
         $this->cartContext = $cartContext;
         $this->twig = $twig;
         $this->apiClient = $apiClient;
+        $this->googlePlace = $googlePlace;
     }
 
     /**
@@ -143,7 +152,16 @@ class CheckoutController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $zipCode = $form->get('zipCode')->getData();
+            $suggestion = $form->get('suggestion')->getData();
             $actions = $form->get('types')->getData();
+
+            if ($suggestion) {
+                $suggestedZipCode = $this->googlePlace->retrieveSuggestionZipCode($suggestion);
+
+                if ($suggestedZipCode) {
+                    $zipCode = $suggestedZipCode;
+                }
+            }
 
             try {
                 if ($zipCode) {
@@ -217,6 +235,22 @@ class CheckoutController
             '@SherlockodeSyliusMondialRelayPlugin/Checkout/SelectShipping/_current_pickup_point.html.twig',
             ['pickupPoint' => $pickupPoint]
         ));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function autocomplete(Request $request): JsonResponse
+    {
+        $query = $request->query->get('query');
+
+        if (!$query) {
+            return new JsonResponse();
+        }
+
+        return new JsonResponse($this->googlePlace->getPlaces($query));
     }
 
     /**

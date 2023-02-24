@@ -4,6 +4,7 @@ namespace Sherlockode\SyliusMondialRelayPlugin\Form\Type\Shop;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -22,6 +23,7 @@ class SearchPickupPointType extends AbstractType
                     'placeholder' => 'sylius.mondial_relay.search_zipcode',
                 ],
             ])
+            ->add('suggestion', HiddenType::class)
             ->add('types', ChoiceType::class, [
                 'label' => false,
                 'expanded' => true,

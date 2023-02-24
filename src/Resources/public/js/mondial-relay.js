@@ -13,7 +13,8 @@ class MondialRelay
             searchForm: '.pickup-points-input form.search-pickup-point-form',
             searchResults: '.pickup-points-search-results',
             modalId: 'modal-mondial-relay',
-            closeModalBtn: '.close-modal'
+            closeModalBtn: '.close-modal',
+            autocompleteWrapper: '.search-pickup-point-autocomplete'
         });
 
         this.urls = this.getOption(options, 'urls');
@@ -50,6 +51,8 @@ class MondialRelay
             document.querySelector(this.selectors.wrapper),
             this.selectors.selectedPointWrapper,
             this.urls.defaultUrl,
+            this.urls.autocompleteUrl,
+            this.selectors.autocompleteWrapper,
             this.selectors.searchResults
         );
     }
@@ -120,6 +123,10 @@ class MondialRelay
         document.addEventListener('relay_point_panel_ready', function () {
             this.onRelayPointPanelReady();
         }.bind(this), false);
+
+        document.addEventListener('search_pickup_points', function () {
+            this.onSearch();
+        }.bind(this), false);
     }
 
     onSelectMondialRelayShipping() {
@@ -153,6 +160,7 @@ class MondialRelay
     }
 
     onHideSearchPanel() {
+        this.adapter.onHideSearchPanel();
         let modal = document.getElementById(this.selectors.modalId);
 
         if (modal) {

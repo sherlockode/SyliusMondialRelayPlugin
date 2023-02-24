@@ -21,7 +21,7 @@ class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
     /**
      * @var string
      */
-    private $googleMapApiKey;
+    private $googleApiKey;
 
     /**
      * @var bool
@@ -30,22 +30,22 @@ class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
 
     /**
      * @param MondialRelay $apiClient
-     * @param string       $googleMapApiKey
+     * @param string       $googleApiKey
      * @param bool         $enableTicketPrinting
      */
-    public function __construct(MondialRelay $apiClient, string $googleMapApiKey, bool $enableTicketPrinting)
+    public function __construct(MondialRelay $apiClient, string $googleApiKey, bool $enableTicketPrinting)
     {
         $this->apiClient = $apiClient;
-        $this->googleMapApiKey = $googleMapApiKey;
+        $this->googleApiKey = $googleApiKey;
         $this->enableTicketPrinting = $enableTicketPrinting;
     }
 
     /**
      * @return string
      */
-    public function getGoogleMapApiKey(): string
+    public function getGoogleApiKey(): string
     {
-        return $this->googleMapApiKey;
+        return $this->googleApiKey;
     }
 
     /**

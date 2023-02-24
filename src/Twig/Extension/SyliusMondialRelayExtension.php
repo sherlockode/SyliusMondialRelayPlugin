@@ -25,7 +25,7 @@ class SyliusMondialRelayExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('google_map_api_key', [SyliusMondialRelayRuntime::class, 'getGoogleMapApiKey']),
+            new TwigFunction('google_api_key', [SyliusMondialRelayRuntime::class, 'getGoogleApiKey']),
             new TwigFunction(
                 'is_mondial_relay_ticket_printing_enable',
                 [SyliusMondialRelayRuntime::class, 'isTicketPrintingEnable']

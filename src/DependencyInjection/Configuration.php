@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('wsdl')->isRequired()->end()
                     ->scalarNode('merchant_id')->isRequired()->end()
                     ->scalarNode('private_key')->isRequired()->end()
-                    ->scalarNode('google_map_api_key')->isRequired()->end()
+                    ->scalarNode('google_api_key')->isRequired()->end()
                     ->scalarNode('mondial_relay_base_url')
                         ->cannotBeEmpty()
                         ->defaultValue('https://www.mondialrelay.com')
