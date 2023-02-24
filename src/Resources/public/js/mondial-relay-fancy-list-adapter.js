@@ -426,6 +426,10 @@ class MondialRelayFancyListAdapter
             list.innerHTML = '';
         }.bind(this), 300)();
     }
+
+    setMapCenter(coordinates) {
+        this.map.setCenter(coordinates);
+    }
 }
 
 export default MondialRelayFancyListAdapter;

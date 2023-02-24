@@ -14,7 +14,8 @@ class MondialRelay
             searchResults: '.pickup-points-search-results',
             modalId: 'modal-mondial-relay',
             closeModalBtn: '.close-modal',
-            autocompleteWrapper: '.search-pickup-point-autocomplete'
+            autocompleteWrapper: '.search-pickup-point-autocomplete',
+            geolocationBtn: '[data-mr-geolocalisation]',
         });
 
         this.urls = this.getOption(options, 'urls');
@@ -103,6 +104,10 @@ class MondialRelay
             if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.closeModalBtn), event.target)) {
                 this.onHideSearchPanel();
             }
+
+            if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.geolocationBtn), event.target)) {
+                this.processGeolocation();
+            }
         }.bind(this), false);
 
         document.addEventListener('submit', function (event) {
@@ -127,6 +132,19 @@ class MondialRelay
         document.addEventListener('search_pickup_points', function () {
             this.onSearch();
         }.bind(this), false);
+    }
+
+    processGeolocation() {
+        if ("undefined" !== typeof(navigator.geolocation)) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    this.adapter.setMapCenter({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                }.bind(this)
+            )
+        }
     }
 
     onSelectMondialRelayShipping() {
