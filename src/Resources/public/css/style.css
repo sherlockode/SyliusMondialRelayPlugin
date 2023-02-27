@@ -2,17 +2,6 @@
     margin: 0;
 }
 
-.smr_wrapper .pickup-points-results-list {
-    width: 100%;
-}
-
-.smr_wrapper .pickup-points-results-list ul {
-    width: 100%;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
 .smr_wrapper .pickup-points-search {
     display: flex;
     flex-wrap: wrap;
@@ -44,10 +33,6 @@
     height: 50px;
 }
 
-.smr_wrapper .pickup-points-search-results {
-    display: flex;
-}
-
 @media only screen and (max-width : 1024px) {
     .smr_wrapper .pickup-points-search-results {
         margin-top: 20px;
@@ -62,12 +47,6 @@
     border: none;
     background: transparent;
     padding: 0;
-}
-
-.smr_wrapper .pickup-points-search-results .pickup-points-no-results {
-    display: none;
-    width: 100%;
-    text-align: center;
 }
 
 .smr_wrapper .pickup-point-controls button {
@@ -191,10 +170,62 @@
 }
 
 #modal-mondial-relay .pickup-points-search-results {
+    display: flex;
+    flex-direction: column;
     flex-basis: 40%;
     max-height: 100%;
-    overflow-y: scroll;
     height: calc(100% - 70px);
+    overflow-y: hidden;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-no-results {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-results-list {
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+#modal-mondial-relay .pickup-points-search-results.no-pagination .pickup-points-results-list {
+    height: 100%;
+}
+
+#modal-mondial-relay .pickup-points-search-results ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-results-list ul {
+    overflow-y: scroll;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-pagination {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 0 20px;
+    align-items: flex-end;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-pagination button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-pagination li:not(.current) button {
+    cursor: pointer;
+}
+
+#modal-mondial-relay .pickup-points-search-results .pickup-points-pagination li:hover button,
+#modal-mondial-relay .pickup-points-search-results .pickup-points-pagination li.current button {
+    color: #96154a;
 }
 
 @media only screen and (max-width : 1024px) {

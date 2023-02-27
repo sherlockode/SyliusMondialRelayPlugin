@@ -11,6 +11,7 @@ class MondialRelayFancyListAdapter
         this.searchResultsSelector = searchResultsSelector;
         this.map = null;
         this.markers = {};
+        this.itemsPerPage = 6;
         this.currentPickupPointId = null;
         this.debounce = (function () {
             return function (func, delay = 300) {
@@ -105,7 +106,9 @@ class MondialRelayFancyListAdapter
 
         resultWrapper.querySelector('.pickup-points-no-results').style.display = 'none';
         resultWrapper.querySelector('.pickup-points-results-list').style.display = 'flex';
+        resultWrapper.querySelector('.pickup-points-pagination').style.display = 'flex';
         resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
+        resultWrapper.querySelector('.pickup-points-pagination').innerHTML = '';
         this.markers = {};
     }
 
@@ -114,7 +117,9 @@ class MondialRelayFancyListAdapter
 
         if (0 === results.length) {
             resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
+            resultWrapper.querySelector('.pickup-points-pagination').innerHTML = '';
             resultWrapper.querySelector('.pickup-points-results-list').style.display = 'none';
+            resultWrapper.querySelector('.pickup-points-pagination').style.display = 'none';
             resultWrapper.querySelector('.pickup-points-no-results').style.display = 'block';
 
             return;
@@ -130,13 +135,11 @@ class MondialRelayFancyListAdapter
             },
         });
 
-        let ul = document.createElement('ul'),
+        let resultsList = document.createElement('ul'),
             bounds = new google.maps.LatLngBounds(),
             chooseLabel = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label'),
             mrLogo = this.getMarkerIcon(),
             mrLogoSelected = this.getSelectedMarkerIcon();
-
-        ul.classList.add('ui', 'accordion');
 
         for (let i = 0; i < results.length; i++) {
             let li = document.createElement('li'),
@@ -191,7 +194,7 @@ class MondialRelayFancyListAdapter
             li.setAttribute('data-relay-point-id', results[i].id);
             li.appendChild(card);
 
-            ul.appendChild(li);
+            resultsList.appendChild(li);
 
             let marker = new google.maps.Marker({
                 position: {
@@ -212,7 +215,7 @@ class MondialRelayFancyListAdapter
             this.markers[results[i].id] = marker;
 
             marker.addListener('click', function () {
-                this.highlightPickupPoint(ul, results[i].id);
+                this.highlightPickupPoint(resultsList, results[i].id);
                 marker.getMap().setCenter(marker.getPosition());
 
                 let el = document.querySelector('.relay-point-list-item.highlight');
@@ -222,13 +225,15 @@ class MondialRelayFancyListAdapter
         }
 
         if (null !== this.currentPickupPointId) {
-            this.highlightPickupPoint(ul, this.currentPickupPointId);
+            this.highlightPickupPoint(resultsList, this.currentPickupPointId);
         }
 
-        resultWrapper.querySelector('.pickup-points-results-list').appendChild(ul);
+        resultWrapper.querySelector('.pickup-points-results-list').appendChild(resultsList);
         if (results.length > 1) {
             this.map.fitBounds(bounds);
         }
+
+        this.setPagination();
 
       $('#modal-mondial-relay .accordion').accordion({
           selector: {
@@ -237,6 +242,68 @@ class MondialRelayFancyListAdapter
               content: '.point-business-hours'
           }
       });
+    }
+
+    setPagination() {
+        let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector),
+            resultsList = resultWrapper.querySelector('.pickup-points-results-list'),
+            paginationList = resultWrapper.querySelector('.pickup-points-pagination'),
+            itemsCount = resultsList.querySelectorAll('.relay-point-list-item').length,
+            pagesCount = Math.ceil(itemsCount / this.itemsPerPage);
+
+        resultWrapper.classList.remove('no-pagination');
+        paginationList.innerHTML = '';
+
+        if (1 >= pagesCount) {
+            resultWrapper.classList.add('no-pagination');
+
+            return;
+        }
+
+        for (let i = 0; i < pagesCount; i++) {
+            let page = i + 1,
+                li = document.createElement('li'),
+                btn = document.createElement('button'),
+                pageLabel = document.createTextNode(page.toString());
+
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('data-page', page.toString());
+            btn.appendChild(pageLabel);
+            li.appendChild(btn);
+
+            paginationList.appendChild(li);
+
+            btn.addEventListener('click', function () {
+                return this.showPage(i + 1);
+            }.bind(this));
+        }
+
+        this.showPage(1);
+    }
+
+    showPage(page) {
+        let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector),
+            resultsList = resultWrapper.querySelector('.pickup-points-results-list'),
+            paginationList = resultWrapper.querySelector('.pickup-points-pagination'),
+            resultItems = resultsList.querySelectorAll('.relay-point-list-item'),
+            pageItems = paginationList.querySelectorAll('li'),
+            offset = (page - 1) * this.itemsPerPage + 1;
+
+        for (let i = 0; i < resultItems.length; i++) {
+            if (i + 1 >= offset && i + 1 < offset + this.itemsPerPage) {
+                resultItems[i].style.display = 'list-item';
+            } else {
+                resultItems[i].style.display = 'none';
+            }
+        }
+
+        for (let i = 0; i < pageItems.length; i++) {
+            pageItems[i].classList.remove('current');
+
+            if (i + 1 === page) {
+                pageItems[i].classList.add('current');
+            }
+        }
     }
 
     highlightPickupPoint(list, id) {
