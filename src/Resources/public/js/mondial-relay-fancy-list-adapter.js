@@ -234,14 +234,15 @@ class MondialRelayFancyListAdapter
         }
 
         this.setPagination();
+        $('#modal-mondial-relay').modal('refresh');
 
-      $('#modal-mondial-relay .accordion').accordion({
-          selector: {
-              title: '.pickup-point-card',
-              trigger: '.pickup-point-card',
-              content: '.point-business-hours'
-          }
-      });
+        $('#modal-mondial-relay .accordion').accordion({
+            selector: {
+                title: '.pickup-point-card',
+                trigger: '.pickup-point-card',
+                content: '.point-business-hours'
+            }
+        });
     }
 
     setPagination() {
