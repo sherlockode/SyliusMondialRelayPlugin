@@ -532,7 +532,37 @@ class MondialRelayFancyListAdapter
     }
 
     setMapCenter(coordinates) {
-        this.map.setCenter(coordinates);
+        let geocoder = new google.maps.Geocoder(),
+            map = this.map;
+
+        return new Promise(function (resolve, reject) {
+            geocoder.geocode({location: coordinates}).then(
+                function (response) {
+                    let zipCode = null;
+
+                    for (let i = 0; i < response.results.length; i++) {
+                        let item = response.results[i];
+                        for (let j = 0; j < item.address_components.length; j++) {
+                            if (-1 !== item.address_components[j].types.indexOf('postal_code')) {
+                                zipCode = item.address_components[j].short_name;
+
+                                break;
+                            }
+                        }
+
+                        if (zipCode) {
+                            break;
+                        }
+                    }
+
+                    if (zipCode) {
+                        map.setCenter(coordinates);
+
+                        return resolve(zipCode);
+                    }
+                }
+            ).catch(reject);
+        });
     }
 }
 
