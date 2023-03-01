@@ -12,6 +12,7 @@ class MondialRelayFancyListAdapter
         this.map = null;
         this.markers = {};
         this.itemsPerPage = 6;
+        this.currentPage = 1;
         this.currentPickupPointId = null;
         this.debounce = (function () {
             return function (func, delay = 300) {
@@ -114,6 +115,8 @@ class MondialRelayFancyListAdapter
 
     onSearchResultsChange(results) {
         let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector);
+        this.currentPage = 1;
+        this.markers = {};
 
         if (0 === results.length) {
             resultWrapper.querySelector('.pickup-points-results-list').innerHTML = '';
@@ -136,7 +139,6 @@ class MondialRelayFancyListAdapter
         });
 
         let resultsList = document.createElement('ul'),
-            bounds = new google.maps.LatLngBounds(),
             chooseLabel = resultWrapper.querySelector('.pickup-points-results-list').getAttribute('data-choose-label'),
             mrLogo = this.getMarkerIcon(),
             mrLogoSelected = this.getSelectedMarkerIcon();
@@ -210,8 +212,6 @@ class MondialRelayFancyListAdapter
                 },
                 icon: results[i].id === this.currentPickupPointId ? mrLogoSelected : mrLogo,
             });
-            marker.setMap(this.map);
-            bounds.extend(marker.getPosition());
             this.markers[results[i].id] = marker;
 
             marker.addListener('click', function () {
@@ -229,11 +229,9 @@ class MondialRelayFancyListAdapter
         }
 
         resultWrapper.querySelector('.pickup-points-results-list').appendChild(resultsList);
-        if (results.length > 1) {
-            this.map.fitBounds(bounds);
-        }
 
         this.setPagination();
+        this.showMarkers();
         $('#modal-mondial-relay').modal('refresh');
 
         $('#modal-mondial-relay .accordion').accordion({
@@ -243,6 +241,35 @@ class MondialRelayFancyListAdapter
                 content: '.point-business-hours'
             }
         });
+    }
+
+    showMarkers() {
+        let resultWrapper = this.wrapper.querySelector(this.searchResultsSelector),
+            resultsList = resultWrapper.querySelector('.pickup-points-results-list'),
+            items = resultsList.querySelectorAll('.relay-point-list-item'),
+            bounds = new google.maps.LatLngBounds(),
+            count = 0;
+
+        for (let i = 0; i < items.length; i++) {
+            let id = items[i].getAttribute('data-relay-point-id'),
+                marker = this.markers[id] || null;
+
+            if (!this.isOffsetVisible(i) || !marker) {
+                if (marker) {
+                    marker.setMap(null);
+                }
+
+                continue;
+            }
+
+            marker.setMap(this.map);
+            bounds.extend(marker.getPosition());
+            count++;
+        }
+
+        if (count > 0) {
+            this.map.fitBounds(bounds);
+        }
     }
 
     setPagination() {
@@ -287,11 +314,12 @@ class MondialRelayFancyListAdapter
             resultsList = resultWrapper.querySelector('.pickup-points-results-list'),
             paginationList = resultWrapper.querySelector('.pickup-points-pagination'),
             resultItems = resultsList.querySelectorAll('.relay-point-list-item'),
-            pageItems = paginationList.querySelectorAll('li'),
-            offset = (page - 1) * this.itemsPerPage + 1;
+            pageItems = paginationList.querySelectorAll('li');
+
+        this.currentPage = page;
 
         for (let i = 0; i < resultItems.length; i++) {
-            if (i + 1 >= offset && i + 1 < offset + this.itemsPerPage) {
+            if (this.isOffsetVisible(i)) {
                 resultItems[i].style.display = 'list-item';
             } else {
                 resultItems[i].style.display = 'none';
@@ -305,6 +333,14 @@ class MondialRelayFancyListAdapter
                 pageItems[i].classList.add('current');
             }
         }
+
+        this.showMarkers();
+    }
+
+    isOffsetVisible(index) {
+        let offset = (this.currentPage - 1) * this.itemsPerPage + 1;
+
+        return index + 1 >= offset && index + 1 < offset + this.itemsPerPage;
     }
 
     highlightPickupPoint(list, id) {
