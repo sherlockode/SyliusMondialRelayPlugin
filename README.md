@@ -116,6 +116,21 @@ You can do it in the [Google Cloud Console](https://console.cloud.google.com)
 
 Additionally, you may want to enable Google Place API to show places suggestions when searching pickup points. 
 
+### Print expedition tickets
+
+When an order has been placed with Mondial Relay, you can print the expedition ticket from the Sylius admin.
+Go on the order details page and use the "Print ticket" button. 
+
+![image](https://user-images.githubusercontent.com/12657400/222398571-bdc7072a-b0ee-483e-9db0-19526983f0da.png)
+
+This feature can be disabled from the bundle configuration:
+
+```yaml
+sherlockode_sylius_mondial_relay:
+    # ...
+    enable_ticket_printing: false
+```
+
 ----
 
 # Demo Sylius Shop
