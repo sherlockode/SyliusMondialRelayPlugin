@@ -105,7 +105,10 @@ class MondialRelay
                 this.onHideSearchPanel();
             }
 
-            if (-1 !== [].indexOf.call(document.querySelectorAll(this.selectors.geolocationBtn), event.target)) {
+            if (
+                -1 !== [].indexOf.call(document.querySelectorAll(this.selectors.geolocationBtn), event.target) ||
+                -1 !== [].indexOf.call(document.querySelectorAll(this.selectors.geolocationBtn), event.target.parentNode)
+            ) {
                 this.processGeolocation();
             }
         }.bind(this), false);
@@ -136,15 +139,32 @@ class MondialRelay
 
     processGeolocation() {
         if ("undefined" !== typeof(navigator.geolocation)) {
+            let btn = document.querySelector(this.selectors.geolocationBtn);
+            btn.setAttribute('disabled', 'disabled');
+
             navigator.geolocation.getCurrentPosition(
                 function (position) {
                     this.adapter.setMapCenter({
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
-                    });
-                }.bind(this)
+                    }).then(function (zipCode) {
+                        btn.removeAttribute('disabled');
+                        this.changeLocation(zipCode);
+                    }.bind(this));
+                }.bind(this),
+                function () {
+                    btn.removeAttribute('disabled');
+                }
             )
         }
+    }
+
+    changeLocation(location) {
+        let searchForm = this.getSearchForm(),
+            locationField = searchForm.querySelector('input[name$="\[zipCode\]"]');
+
+        locationField.value = location;
+        this.onSearch();
     }
 
     onSelectMondialRelayShipping() {
