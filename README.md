@@ -23,7 +23,9 @@
 
 ----
 This plugin enables Mondial Relay shipping method on your Sylius website.
-Note that this plugin only works with a google map API Key in order to display a map in the FO.
+Note that this plugin only works with a Google map API Key in order to display a map in the FO.
+
+![image](https://user-images.githubusercontent.com/12657400/222396640-ecdf3c1d-7532-4ee9-85d7-44bdf628936c.png)
 
 ----
 
@@ -104,6 +106,8 @@ Encore
 
 Now you only have to create a new shipping method.
 For the Shipping charges option, select "Mondial Relay"
+
+![image](https://user-images.githubusercontent.com/12657400/222396964-61c3871c-247b-454c-92f4-c1a8e3d13c42.png)
 
 ### Google API integration
 
