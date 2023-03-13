@@ -14,6 +14,18 @@ use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 class MondialRelay
 {
+    public const COLLECTION_MODE_REL = 'REL';
+    public const COLLECTION_MODE_CCC = 'CCC';
+    public const COLLECTION_MODE_CDR = 'CDR';
+    public const COLLECTION_MODE_CDS = 'CDS';
+
+    public const DELIVERY_MODE_24R = '24R';
+    public const DELIVERY_MODE_24L = '24L';
+    public const DELIVERY_MODE_HOM = 'HOM';
+    public const DELIVERY_MODE_LD1 = 'LD1';
+    public const DELIVERY_MODE_LDS = 'LDS';
+    public const DELIVERY_MODE_LCC = 'LCC';
+
     /**
      * @var Client
      */
@@ -113,8 +125,8 @@ class MondialRelay
         );
 
         return $this->client->WSI2CreationEtiquette([
-            'ModeCol' => $userData['collectionMode'] ?? 'REL',
-            'ModeLiv' => $userData['deliveryMode'] ?? '24R',
+            'ModeCol' => $userData['collectionMode'] ?? self::COLLECTION_MODE_REL,
+            'ModeLiv' => $userData['deliveryMode'] ?? self::DELIVERY_MODE_24R,
             'NDossier' => $order->getNumber(),
             'NClient' => $order->getCustomer() ? $order->getCustomer()->getId() : null,
             'Expe_Langage' => $toLocaleCode($channel->getDefaultLocale()->getCode()),
