@@ -15,13 +15,13 @@
             <tag name="controller.service_arguments" />
         </service>
         <service id="Sherlockode\SyliusMondialRelayPlugin\Controller\Shop\CheckoutController">
-            <argument type="service" id="translator" />
             <argument type="service" id="router" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.context.cart.composite" />
             <argument type="service" id="twig" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.mondial_relay.bridge" />
             <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.google.place" />
+            <argument type="service" id="sherlockode.sylius_mondial_relay_plugin.serializer.point" />
             <tag name="controller.service_arguments" />
         </service>
     </services>
