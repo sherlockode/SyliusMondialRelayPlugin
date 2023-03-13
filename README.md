@@ -23,7 +23,6 @@
 
 ----
 This plugin enables Mondial Relay shipping method on your Sylius website.
-Note that this plugin only works with a Google map API Key in order to display a map in the FO.
 
 ![image](https://user-images.githubusercontent.com/12657400/222396640-ecdf3c1d-7532-4ee9-85d7-44bdf628936c.png)
 
@@ -47,8 +46,6 @@ sherlockode_sylius_mondial_relay:
     wsdl: The mondial relay WSDL
     merchant_id: Your merchant ID
     private_key: Your private key
-    google_api_key: '%env(GOOGLE_API_KEY)%'
-    enable_ticket_printing: true
 ```
 
 Import routing:
@@ -112,7 +109,16 @@ For the Shipping charges option, select "Mondial Relay"
 ### Google API integration
 
 In order to show a map to select pickup points, you need to enable Google Map API for your token.
-You can do it in the [Google Cloud Console](https://console.cloud.google.com)
+You can do it in the [Google Cloud Console](https://console.cloud.google.com).
+Then, update the plugin configuration:
+
+```yaml
+# config/packages/sherlockode_sylius_mondial_relay.yaml
+
+sherlockode_sylius_mondial_relay:
+    # ...
+    google_api_key: '%env(GOOGLE_API_KEY)%'
+```
 
 Additionally, you may want to enable Google Place API to show places suggestions when searching pickup points. 
 

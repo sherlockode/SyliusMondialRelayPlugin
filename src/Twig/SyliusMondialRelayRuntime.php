@@ -13,6 +13,8 @@ use Twig\Extension\RuntimeExtensionInterface;
  */
 class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
 {
+    public const MAP_PROVIDER_GOOGLE = 'google';
+
     /**
      * @var MondialRelay
      */
@@ -30,14 +32,26 @@ class SyliusMondialRelayRuntime implements RuntimeExtensionInterface
 
     /**
      * @param MondialRelay $apiClient
-     * @param string       $googleApiKey
+     * @param string|null  $googleApiKey
      * @param bool         $enableTicketPrinting
      */
-    public function __construct(MondialRelay $apiClient, string $googleApiKey, bool $enableTicketPrinting)
+    public function __construct(MondialRelay $apiClient, ?string $googleApiKey, bool $enableTicketPrinting)
     {
         $this->apiClient = $apiClient;
         $this->googleApiKey = $googleApiKey;
         $this->enableTicketPrinting = $enableTicketPrinting;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMapProvider(): ?string
+    {
+        if ($this->googleApiKey) {
+            return self::MAP_PROVIDER_GOOGLE;
+        }
+
+        return null;
     }
 
     /**
