@@ -1,8 +1,8 @@
-.smr_wrapper p {
+#modal-mondial-relay p {
     margin: 0;
 }
 
-.smr_wrapper .pickup-points-search {
+#modal-mondial-relay .pickup-points-search {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -16,41 +16,41 @@
         align-items: flex-start;
     }
 
-    .smr_wrapper .pickup-points-search-results {
+    #modal-mondial-relay .pickup-points-search-results {
         width: 100%;
     }
 
-    .smr_wrapper .pickup-points-search-form .search-pickup-point-form {
+    #modal-mondial-relay .pickup-points-search-form .search-pickup-point-form {
         display: flex;
         flex-direction: column;
     }
 }
 
-.smr_wrapper .pickup-points-search-form {
+#modal-mondial-relay .pickup-points-search-form {
     margin-bottom: 20px;
 }
 
-.smr_wrapper .pickup-points-search-form .pickup-points-input {
+#modal-mondial-relay .pickup-points-search-form .pickup-points-input {
     height: 50px;
 }
 
 @media only screen and (max-width : 1024px) {
-    .smr_wrapper .pickup-points-search-results {
+    #modal-mondial-relay .pickup-points-search-results {
         margin-top: 20px;
     }
 }
 
-.smr_wrapper .pickup-points-map {
+#modal-mondial-relay .pickup-points-map {
     height: calc(100% - 70px);
 }
 
-.smr_wrapper .pickup-points-map button {
+#modal-mondial-relay .pickup-points-map button {
     border: none;
     background: transparent;
     padding: 0;
 }
 
-.smr_wrapper .pickup-point-controls button {
+#modal-mondial-relay .pickup-point-controls button {
     margin-right: 10px;
 }
 
@@ -210,6 +210,7 @@
 
 #modal-mondial-relay .pickup-points-search-results .pickup-points-results-list ul {
     overflow-y: scroll;
+    max-height: 100%;
 }
 
 #modal-mondial-relay .pickup-points-search-results .pickup-points-pagination {
@@ -283,7 +284,7 @@
     border-left-color:  #f6abb6;
 }
 
-#modal-mondial-relay .relay-point-list-item.highlight.close .pickup-point-card,
+#modal-mondial-relay .relay-point-list-item.highlight:not(.close) .pickup-point-card,
 #modal-mondial-relay .relay-point-list-item:hover:not(.close) .pickup-point-card {
     border-left-color: #96154a;
     background: #eee;

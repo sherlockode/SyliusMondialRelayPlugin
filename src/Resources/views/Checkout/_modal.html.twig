@@ -1,11 +1,18 @@
-<div id="modal-mondial-relay" class="ui modal">
+<div
+        id="modal-mondial-relay"
+        class="ui modal"
+        data-load-url="{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}"
+        data-autocomplete-url="{{ path('sherlockode_sylius_mondial_relay_autocomplete') }}"
+        data-find-url="{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}"
+        data-choose-label="{{ 'sylius.mondial_relay.choose_relay_point'|trans }}"
+        data-marker="{{ asset('build/shop/images/marker.svg', 'shop') }}"
+        data-marker-selected="{{ asset('build/shop/images/marker-selected.svg', 'shop') }}"
+>
     <div class="header">
         {{ 'sylius.mondial_relay.modal.title'|trans }}
         <span class="close-modal"></span>
     </div>
-    <div class="content">
-        <div class="smr_wrapper"></div>
-    </div>
+    <div class="content"></div>
     <div class="actions">
         <div class="ui button deny">{{ 'sylius.mondial_relay.modal.close'|trans }}</div>
         <div class="ui button approve primary" id="mr-select-btn">{{ 'sylius.mondial_relay.modal.choose'|trans }}</div>
