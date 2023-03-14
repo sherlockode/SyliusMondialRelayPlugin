@@ -11,7 +11,7 @@ export default class MondialRelay
         this.currentPage = 1;
         this.resultsSet = [];
         this.currentPickupPoint = null;
-        this.mapProvider = options.mapProvider;
+        this.mapProvider = this.modal.getAttribute('data-map-provider');
         this.mapAdapter = null;
 
         this.debounce = (function () {
@@ -170,6 +170,12 @@ export default class MondialRelay
         request.send().then(function (rawResponse) {
             let response = JSON.parse(rawResponse);
             this.modal.querySelector('.content').innerHTML = response.form || '';
+
+            if (!this.mapProvider) {
+                this.modal.querySelector('.pickup-points-map').style.display = 'none';
+                this.modal.querySelector('button[data-mr-geolocalisation]').style.display = 'none';
+            }
+
             $(this.modal).modal('show');
 
             this.onSearchResultsUpdated(response.points || []);
@@ -193,17 +199,21 @@ export default class MondialRelay
     }
 
     createMapAdapter() {
-        this.mapAdapter = new Gmap({
-            el: this.modal.querySelector('.pickup-points-map'),
-            icons: {
-                markerDefault: this.modal.getAttribute('data-marker'),
-                markerSelected: this.modal.getAttribute('data-marker-selected'),
-            },
-            translations: {
-                choose: this.modal.getAttribute('data-choose-label'),
-            },
-            onSelectMarker: this.selectPickupPoint.bind(this),
-        });
+        if ('google' === this.mapProvider) {
+            this.mapAdapter = new Gmap({
+                el: this.modal.querySelector('.pickup-points-map'),
+                icons: {
+                    markerDefault: this.modal.getAttribute('data-marker'),
+                    markerSelected: this.modal.getAttribute('data-marker-selected'),
+                },
+                translations: {
+                    choose: this.modal.getAttribute('data-choose-label'),
+                },
+                onSelectMarker: this.selectPickupPoint.bind(this),
+            });
+        }
+
+        return null;
     }
 
     changeLocation(location) {
@@ -215,7 +225,7 @@ export default class MondialRelay
     }
 
     geolocation() {
-        if ("undefined" === typeof(navigator.geolocation)) {
+        if ("undefined" === typeof(navigator.geolocation) || !this.getMapAdapter()) {
             return;
         }
 
@@ -291,7 +301,9 @@ export default class MondialRelay
         resultsListWrapper.classList.remove('no-pagination');
 
         if (0 === this.resultsSet.length) {
-            this.getMapAdapter().clearMarkers();
+            if (this.getMapAdapter()) {
+                this.getMapAdapter().clearMarkers();
+            }
             this.hideResultList();
             this.modal.querySelector('.pickup-points-no-results').style.display = 'block';
 
@@ -344,7 +356,9 @@ export default class MondialRelay
         }.bind(this));
 
         resultsListWrapper.append(resultsList);
-        this.getMapAdapter().updateMarkers(this.getDisplayResultsSet());
+        if (this.getMapAdapter()) {
+            this.getMapAdapter().updateMarkers(this.getDisplayResultsSet());
+        }
     }
 
     showPage(page) {
@@ -494,7 +508,9 @@ export default class MondialRelay
             item.classList.add('highlight');
         }
 
-        this.getMapAdapter().selectMarker(id);
+        if (this.getMapAdapter()) {
+            this.getMapAdapter().selectMarker(id);
+        }
         this.currentPickupPoint = id;
     }
 

@@ -186,6 +186,10 @@
     overflow-y: hidden;
 }
 
+#modal-mondial-relay.no-map .pickup-points-search-results {
+    flex-basis: 100%;
+}
+
 #modal-mondial-relay .pickup-points-search-results .pickup-points-no-results {
     display: none;
     width: 100%;

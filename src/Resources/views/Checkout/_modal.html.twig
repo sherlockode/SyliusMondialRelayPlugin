@@ -1,12 +1,14 @@
+{% set mapProvider = get_map_provider() %}
 <div
         id="modal-mondial-relay"
-        class="ui modal"
+        class="ui modal{% if mapProvider is null %} no-map{% endif %}"
         data-load-url="{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}"
         data-autocomplete-url="{{ path('sherlockode_sylius_mondial_relay_autocomplete') }}"
         data-find-url="{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}"
         data-choose-label="{{ 'sylius.mondial_relay.choose_relay_point'|trans }}"
         data-marker="{{ asset('build/shop/images/marker.svg', 'shop') }}"
         data-marker-selected="{{ asset('build/shop/images/marker-selected.svg', 'shop') }}"
+        data-map-provider="{{ mapProvider }}"
 >
     <div class="header">
         {{ 'sylius.mondial_relay.modal.title'|trans }}
