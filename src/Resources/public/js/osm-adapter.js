@@ -1,3 +1,5 @@
+import AjaxRequest from './ajax-request';
+
 export default class OsmAdapter
 {
     constructor(options) {
@@ -20,7 +22,7 @@ export default class OsmAdapter
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.map)
+        }).addTo(this.map);
     }
 
     updateMarkers(markers) {
@@ -73,7 +75,20 @@ export default class OsmAdapter
 
     getZipCodeByPosition(position) {
         return new Promise(function (resolve, reject) {
-            return reject();
+            let request = new AjaxRequest('https://nominatim.openstreetmap.org/reverse', 'GET', {
+                format: 'jsonv2',
+                lat: position.lat,
+                lon: position.lng
+            });
+            request.send().then(function (rawResponse) {
+                let response = JSON.parse(rawResponse);
+
+                if ("undefined" !== response.address.postcode) {
+                    return resolve(response.address.postcode);
+                }
+
+                return reject();
+            }, reject);
         });
     }
 }
