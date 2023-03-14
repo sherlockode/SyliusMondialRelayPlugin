@@ -1,3 +1,6 @@
 {% if 'sylius_shop_checkout_select_shipping' == app.request.get('_route') %}
+    {% if get_map_provider() is constant('Sherlockode\\SyliusMondialRelayPlugin\\Manager\\MapProviderManager::MAP_PROVIDER_OSM') %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    {% endif %}
     {{ encore_entry_link_tags('sherlockode-mondial-relay', null, 'shop') }}
 {% endif %}

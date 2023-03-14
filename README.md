@@ -108,7 +108,7 @@ For the Shipping charges option, select "Mondial Relay"
 
 ### Google API integration
 
-In order to show a map to select pickup points, you need to enable Google Map API for your token.
+In order to show a Google map to select pickup points, you need to enable Google Map API for your token.
 You can do it in the [Google Cloud Console](https://console.cloud.google.com).
 Then, update the plugin configuration:
 
@@ -117,10 +117,23 @@ Then, update the plugin configuration:
 
 sherlockode_sylius_mondial_relay:
     # ...
+    map_provider: google
     google_api_key: '%env(GOOGLE_API_KEY)%'
 ```
 
-Additionally, you may want to enable Google Place API to show places suggestions when searching pickup points. 
+Additionally, you may want to enable Google Place API to show places suggestions when searching pickup points.
+
+### Open Street Map integration
+
+This plugin also supports Open Street Map. To enable it, you just have to update the `map_provider` setting in your plugin configuration:
+
+```yaml
+# config/packages/sherlockode_sylius_mondial_relay.yaml
+
+sherlockode_sylius_mondial_relay:
+    # ...
+    map_provider: open_street_map
+```
 
 ### Print expedition tickets
 

@@ -1,5 +1,6 @@
 import AjaxRequest from './ajax-request';
 import Gmap from './gmap-adapter';
+import Osm from './osm-adapter';
 
 export default class MondialRelay
 {
@@ -199,21 +200,23 @@ export default class MondialRelay
     }
 
     createMapAdapter() {
-        if ('google' === this.mapProvider) {
-            this.mapAdapter = new Gmap({
-                el: this.modal.querySelector('.pickup-points-map'),
-                icons: {
-                    markerDefault: this.modal.getAttribute('data-marker'),
-                    markerSelected: this.modal.getAttribute('data-marker-selected'),
-                },
-                translations: {
-                    choose: this.modal.getAttribute('data-choose-label'),
-                },
-                onSelectMarker: this.selectPickupPoint.bind(this),
-            });
-        }
+        let params = {
+            el: this.modal.querySelector('.pickup-points-map'),
+            icons: {
+                markerDefault: this.modal.getAttribute('data-marker'),
+                markerSelected: this.modal.getAttribute('data-marker-selected'),
+            },
+            translations: {
+                choose: this.modal.getAttribute('data-choose-label'),
+            },
+            onSelectMarker: this.selectPickupPoint.bind(this),
+        };
 
-        return null;
+        if ('google' === this.mapProvider) {
+            this.mapAdapter = new Gmap(params);
+        } else if ('open_street_map' === this.mapProvider) {
+            this.mapAdapter = new Osm(params);
+        }
     }
 
     changeLocation(location) {

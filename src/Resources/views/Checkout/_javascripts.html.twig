@@ -1,6 +1,9 @@
 {% if 'sylius_shop_checkout_select_shipping' == app.request.get('_route') %}
     {{ encore_entry_script_tags('sherlockode-mondial-relay', null, 'shop') }}
-    {% if get_map_provider() is constant('Sherlockode\\SyliusMondialRelayPlugin\\Twig\\SyliusMondialRelayRuntime::MAP_PROVIDER_GOOGLE') %}
+    {% set mapProvider = get_map_provider() %}
+    {% if mapProvider is constant('Sherlockode\\SyliusMondialRelayPlugin\\Manager\\MapProviderManager::MAP_PROVIDER_GOOGLE') %}
         <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key() }}&callback=Function.prototype"></script>
+    {% elseif mapProvider is constant('Sherlockode\\SyliusMondialRelayPlugin\\Manager\\MapProviderManager::MAP_PROVIDER_OSM') %}
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     {% endif %}
 {% endif %}
