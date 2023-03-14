@@ -116,7 +116,7 @@ export default class MondialRelay
             if (event.target.getAttribute('data-mr-autocomplete')) {
                 this.debounce(function () {
                     this.autocomplete();
-                }.bind(this), 100)();
+                }.bind(this), 300)();
             }
         }.bind(this));
     }

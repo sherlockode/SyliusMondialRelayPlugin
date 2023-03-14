@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sherlockode.sylius_mondial_relay_plugin.place_finder.registry" class="Sherlockode\SyliusMondialRelayPlugin\PlaceFinder\PlaceFinderRegistry">
+            <argument type="tagged_iterator" tag="sherlockode.sylius_mondial_relay_plugin.place_finder" />
+        </service>
+        <service id="sherlockode.sylius_mondial_relay_plugin.place_finder.google" class="Sherlockode\SyliusMondialRelayPlugin\PlaceFinder\GooglePlaceFinder">
+            <argument>%sherlockode_sylius_mondial_relay.google_api_key%</argument>
+            <tag name="sherlockode.sylius_mondial_relay_plugin.place_finder" />
+        </service>
+        <service id="sherlockode.sylius_mondial_relay_plugin.place_finder.nominatim" class="Sherlockode\SyliusMondialRelayPlugin\PlaceFinder\NominatimPlaceFinder">
+            <tag name="sherlockode.sylius_mondial_relay_plugin.place_finder" />
+        </service>
+    </services>
+</container>
