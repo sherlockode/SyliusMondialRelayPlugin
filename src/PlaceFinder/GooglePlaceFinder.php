@@ -1,8 +1,10 @@
 <?php
 
-namespace Sherlockode\SyliusMondialRelayPlugin\Google;
+namespace Sherlockode\SyliusMondialRelayPlugin\PlaceFinder;
 
-class Place
+use Sherlockode\SyliusMondialRelayPlugin\Manager\MapProviderManager;
+
+class GooglePlaceFinder implements PlaceFinderInterface
 {
     /**
      * @var string|null
@@ -18,11 +20,21 @@ class Place
     }
 
     /**
+     * @param string|null $type
+     *
+     * @return bool
+     */
+    public function supports(?string $type): bool
+    {
+        return MapProviderManager::MAP_PROVIDER_GOOGLE === $type;
+    }
+
+    /**
      * @param string $query
      *
-     * @return string[]
+     * @return array
      */
-    public function getPlaces(string $query): array
+    public function search(string $query): array
     {
         $url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?' . http_build_query([
             'input' => $query,
@@ -41,16 +53,16 @@ class Place
     }
 
     /**
-     * @param string $placeId
+     * @param string $id
      *
      * @return string|null
      */
-    public function retrieveSuggestionZipCode(string $placeId): ?string
+    public function find(string $id): ?string
     {
         $url = 'https://maps.googleapis.com/maps/api/place/details/json?' . http_build_query([
-                'place_id' => $placeId,
-                'key' => $this->apiKey,
-            ]);
+            'place_id' => $id,
+            'key' => $this->apiKey,
+        ]);
         $response = $this->get($url);
 
         foreach ($response['result']['address_components'] ?? [] as $component) {
@@ -75,7 +87,9 @@ class Place
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Curl');
 
             $raw = curl_exec($ch);
             $response = json_decode($raw, true);

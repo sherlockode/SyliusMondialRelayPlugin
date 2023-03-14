@@ -3,8 +3,8 @@
 namespace Sherlockode\SyliusMondialRelayPlugin\Controller\Shop;
 
 use Sherlockode\SyliusMondialRelayPlugin\Form\Type\Shop\SearchPickupPointType;
-use Sherlockode\SyliusMondialRelayPlugin\Google\Place;
 use Sherlockode\SyliusMondialRelayPlugin\MondialRelay\MondialRelay;
+use Sherlockode\SyliusMondialRelayPlugin\PlaceFinder\PlaceFinderRegistry;
 use Sherlockode\SyliusMondialRelayPlugin\Serializer\PointSerializer;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
@@ -50,14 +50,19 @@ class CheckoutController
     private $apiClient;
 
     /**
-     * @var Place
+     * @var PlaceFinderRegistry
      */
-    private $googlePlace;
+    private $placeFinderRegistry;
 
     /**
      * @var PointSerializer
      */
     private $pointSerializer;
+
+    /**
+     * @var string
+     */
+    private $mapProvider;
 
     /**
      * CheckoutController constructor.
@@ -67,8 +72,9 @@ class CheckoutController
      * @param CartContextInterface  $cartContext
      * @param Environment           $twig
      * @param MondialRelay          $apiClient
-     * @param Place                 $googlePlace
+     * @param PlaceFinderRegistry   $placeFinderRegistry
      * @param PointSerializer       $pointSerializer
+     * @param string                $mapProvider
      */
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
@@ -76,16 +82,18 @@ class CheckoutController
         CartContextInterface $cartContext,
         Environment $twig,
         MondialRelay $apiClient,
-        Place $googlePlace,
-        PointSerializer $pointSerializer
+        PlaceFinderRegistry $placeFinderRegistry,
+        PointSerializer $pointSerializer,
+        ?string $mapProvider
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->formFactory = $formFactory;
         $this->cartContext = $cartContext;
         $this->twig = $twig;
         $this->apiClient = $apiClient;
-        $this->googlePlace = $googlePlace;
+        $this->placeFinderRegistry = $placeFinderRegistry;
         $this->pointSerializer = $pointSerializer;
+        $this->mapProvider = $mapProvider;
     }
 
     /**
@@ -155,10 +163,14 @@ class CheckoutController
             $actions = $form->get('types')->getData();
 
             if ($suggestion) {
-                $suggestedZipCode = $this->googlePlace->retrieveSuggestionZipCode($suggestion);
+                $finder = $this->placeFinderRegistry->getFinder($this->mapProvider);
 
-                if ($suggestedZipCode) {
-                    $zipCode = $suggestedZipCode;
+                if ($finder) {
+                    $suggestedZipCode = $finder->find($suggestion);
+
+                    if ($suggestedZipCode) {
+                        $zipCode = $suggestedZipCode;
+                    }
                 }
             }
 
@@ -215,12 +227,13 @@ class CheckoutController
     public function autocomplete(Request $request): JsonResponse
     {
         $query = $request->query->get('query');
+        $finder = $this->placeFinderRegistry->getFinder($this->mapProvider);
 
-        if (!$query) {
+        if (!$query || !$finder) {
             return new JsonResponse();
         }
 
-        return new JsonResponse($this->googlePlace->getPlaces($query));
+        return new JsonResponse($finder->search($query));
     }
 
     /**

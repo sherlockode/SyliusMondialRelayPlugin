@@ -147,7 +147,7 @@
     display: none;
     right: 0;
     top: 45px;
-    z-index: 2;
+    z-index: 1500;
     box-shadow: rgba(149, 157, 165, 0.5) 0 8px 24px;
 }
 
