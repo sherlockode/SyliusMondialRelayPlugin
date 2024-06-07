@@ -80,7 +80,7 @@ class Client
             throw new ApiException();
         }
 
-        $details = $response->WSI4_PointRelais_RechercheResult->PointsRelais->PointRelais_Details;
+        $details = $response->WSI4_PointRelais_RechercheResult->PointsRelais->PointRelais_Details ?? [];
 
         if (!is_array($details)) {
             $details = [$details];
