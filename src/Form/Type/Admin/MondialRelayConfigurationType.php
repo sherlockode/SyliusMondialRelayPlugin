@@ -2,6 +2,8 @@
 
 namespace Sherlockode\SyliusMondialRelayPlugin\Form\Type\Admin;
 
+use Sylius\Bundle\CoreBundle\Form\Type\ChannelCollectionType;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -28,30 +30,36 @@ class MondialRelayConfigurationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $builder
-            ->add('ranges', CollectionType::class, [
-                'label' => 'sylius.form.shipping_calculator.mondial_relay.weight_ranges',
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_type' => MondialRelayRangeType::class,
-                'entry_options' => ['currency' => $this->channelContext->getChannel()->getBaseCurrency()->getCode()],
+        $resolver
+            ->setDefaults([
+                'entry_type' => MondialRelayRangesType::class,
+                'entry_options' => fn (ChannelInterface $channel): array => [
+                    'currency' => $channel->getBaseCurrency()->getCode(),
+                    'label' => $channel->getName(),
+                ],
+                'currency' => $this->channelContext->getChannel()->getBaseCurrency()->getCode(),
+                'limit' => 10
             ])
-        ;
+
+            ->setAllowedTypes('limit', 'integer')
+            ->setAllowedTypes('currency', ['null', 'string']);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function getParent(): string
     {
-        $resolver
-            ->setDefaults([
-                'data_class' => null,
-                'limit' => 10,
-            ])
-            ->setAllowedTypes('limit', 'integer')
-        ;
+        return ChannelCollectionType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'sylius_shipping_calculator_mondial_relay_collection';
     }
 }

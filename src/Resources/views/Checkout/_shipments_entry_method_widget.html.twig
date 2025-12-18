@@ -1,0 +1,15 @@
+{% set form = hookable_metadata.context.form %}
+{% set hasMondialRelay = false %}
+
+{% for shipment in form.children.method.children %}
+    {% if shipment.vars.attr['data-mr']|default(false) %}
+        {% set hasMondialRelay = true %}
+    {% endif %}
+{% endfor %}
+
+{% if hasMondialRelay is defined %}
+    {% include '@SherlockodeSyliusMondialRelayPlugin/Checkout/_pickup_point_form_widget.html.twig' with {'form': form} only %}
+    <div id="current-pickup-point" class="mr-current-pickup-point-card" style="display: none;">
+        <button data-load-pickup-point-list type="button">{{ 'sylius.mondial_relay.select_a_relay_point'|trans }}</button>
+    </div>
+{% endif %}

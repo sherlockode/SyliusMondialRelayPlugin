@@ -20,6 +20,12 @@ class MondialRelayCalculator implements CalculatorInterface
      */
     public function calculate(ShipmentInterface $subject, array $configuration): int
     {
+        if (!isset($configuration['default'])) {
+            return 0;
+        }
+
+        $configuration = $configuration['default'];
+
         if (
             !isset($configuration['ranges']) ||
             !is_iterable($configuration['ranges']) ||

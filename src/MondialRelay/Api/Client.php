@@ -77,6 +77,7 @@ class Client
         }
 
         if ($response->WSI4_PointRelais_RechercheResult->STAT) {
+            dd($response);
             throw new ApiException();
         }
 

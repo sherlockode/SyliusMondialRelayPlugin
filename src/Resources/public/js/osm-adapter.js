@@ -47,7 +47,11 @@ export default class OsmAdapter
         }
 
         if (this.markers.length > 0) {
-            this.map.fitBounds(L.latLngBounds(points));
+            setTimeout(() => {
+                this.map.invalidateSize(true);
+                //this.map.fitBounds(L.latLngBounds(points));
+                this.map.fitBounds(points, { padding: [40, 40] });
+            }, 500);
         }
     }
 
@@ -90,5 +94,11 @@ export default class OsmAdapter
                 return reject();
             }, reject);
         });
+    }
+
+    invalidateSize() {
+        if (this.map) {
+            this.map.invalidateSize();
+        }
     }
 }

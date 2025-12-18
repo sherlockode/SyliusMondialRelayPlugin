@@ -3,6 +3,7 @@
 namespace Sherlockode\SyliusMondialRelayPlugin\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 /**
  * Trait PickupPointTrait
@@ -14,6 +15,7 @@ trait PickupPointTrait
      *
      * @ORM\Column(name="pickup_point_id", type="string", nullable=true)
      */
+    #[ORM\Column(name: "pickup_point_id", type: Types::STRING, nullable: true)]
     private $pickupPointId;
 
     /**

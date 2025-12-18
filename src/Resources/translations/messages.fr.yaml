@@ -15,6 +15,7 @@ sylius:
         zipcode: Code postal
         search_zipcode: Rechercher par code postal
         search: Rechercher
+        geolocation: Géolocalisation
         no_result_for_your_search: Aucun résultat pour votre recherche
         show_on_map: Voir sur la carte
         close: Fermé

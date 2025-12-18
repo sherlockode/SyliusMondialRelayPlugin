@@ -29,7 +29,7 @@ class SearchPickupPointType extends AbstractType
                 'expanded' => true,
                 'choices' => [
                     'sylius.mondial_relay.pickup_point_types.24r' => '24R',
-                    'sylius.mondial_relay.pickup_point_types.drive' => 'DRI',
+                    //'sylius.mondial_relay.pickup_point_types.drive' => 'DRI',
                 ],
             ])
         ;

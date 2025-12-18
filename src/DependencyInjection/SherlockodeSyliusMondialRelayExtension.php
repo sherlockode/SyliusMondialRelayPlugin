@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class SherlockodeSyliusMondialRelayExtension
@@ -21,7 +23,9 @@ class SherlockodeSyliusMondialRelayExtension extends Extension implements Prepen
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $locator = new FileLocator(__DIR__ . '/../Resources/config');
+
+        $loader = new XmlFileLoader($container, $locator);
         $loader->load('services.xml');
 
         $configuration = new Configuration();
@@ -47,5 +51,23 @@ class SherlockodeSyliusMondialRelayExtension extends Extension implements Prepen
         if ($container->hasExtension('twig')) {
             $container->prependExtensionConfig('twig', ['form_themes' => ['@SherlockodeSyliusMondialRelayPlugin/form_theme.html.twig']]);
         }
+
+        if (!$container->hasExtension('sylius_twig_hooks')) {
+            return;
+        }
+
+        $config = Yaml::parseFile(
+            __DIR__ . '/../Resources/config/sylius_twig_hooks.yaml'
+        );
+
+        $container->prependExtensionConfig(
+            'sylius_twig_hooks',
+            $config['sylius_twig_hooks']
+        );
+    }
+
+    public function getAlias(): string
+    {
+        return 'sherlockode_sylius_mondial_relay';
     }
 }

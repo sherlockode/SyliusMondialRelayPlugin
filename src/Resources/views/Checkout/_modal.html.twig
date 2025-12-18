@@ -1,4 +1,5 @@
 {% set mapProvider = get_map_provider() %}
+{#
 <div
         id="modal-mondial-relay"
         class="ui modal{% if mapProvider is null %} no-map{% endif %}"
@@ -18,5 +19,47 @@
     <div class="actions">
         <div class="ui button deny">{{ 'sylius.mondial_relay.modal.close'|trans }}</div>
         <div class="ui button approve primary" id="mr-select-btn">{{ 'sylius.mondial_relay.modal.choose'|trans }}</div>
+    </div>
+</div>
+#}
+
+{% set mapProvider = get_map_provider() %}
+<div
+        class="modal fade{% if mapProvider is null %} no-map{% endif %}"
+        id="modal-mondial-relay"
+        tabindex="-1"
+        aria-hidden="true"
+        data-load-url="{{ path('sherlockode_sylius_mondial_relay_select_shipping') }}"
+        data-autocomplete-url="{{ path('sherlockode_sylius_mondial_relay_autocomplete') }}"
+        data-find-url="{{ path('sherlockode_sylius_mondial_relay_get_pickup_point') }}"
+        data-choose-label="{{ 'sylius.mondial_relay.choose_relay_point'|trans }}"
+        data-marker="{{ asset('build/app/shop/images/marker.svg', 'app.shop') }}"
+        data-marker-selected="{{ asset('build/app/shop/images/marker-selected.svg', 'app.shop') }}"
+        data-map-provider="{{ mapProvider }}"
+>
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'sylius.mondial_relay.modal.title'|trans }}</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="{{ 'sylius.mondial_relay.modal.close'|trans }}"
+                ></button>
+            </div>
+
+            <div class="modal-body"></div>
+
+            <div class="modal-footer">
+                <div class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    {{ 'sylius.mondial_relay.modal.close'|trans }}
+                </div>
+
+                <div class="btn btn-primary" id="mr-select-btn">
+                    {{ 'sylius.mondial_relay.modal.next'|trans }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>

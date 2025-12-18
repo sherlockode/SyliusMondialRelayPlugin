@@ -182,6 +182,7 @@ class CheckoutController
                     $points = $this->apiClient->findPickupPointsAround($cart->getShippingAddress());
                 }
             } catch (\Exception $e) {
+                dd($e->getMessage());
             }
         }
 
